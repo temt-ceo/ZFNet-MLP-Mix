@@ -1,0 +1,69 @@
+  233  sudo apt-get update -y
+  234  sudo apt-get install -y git python-pip
+  235  sudo pip install google-cloud-bigquery
+  236  sudo pip install pandas
+  237  echo "
+  238  from google.auth import compute_engine
+  239  from google.cloud import bigquery
+  240  credentials = compute?engine.Credentials(
+  241      service_account_email= bigquery-lab@eminent-maker-258601.iam.gserviceaccount.com
+  242  echo "
+  243  from google.auth import compute_engine
+  244  from google.cloud import bigquery
+  245  credentials = compute?engine.Credentials(
+  246      service_account_email= bigquery-lab@eminent-maker-258601.iam.gserviceaccount.com
+  247  )
+  248  query = '''
+  249  SELECT year,
+  250  echo "
+  251  from google.auth import compute_engine
+  252  from google.cloud import bigquery
+  253  credentials = compute?engine.Credentials(
+  254      service_account_email= bigquery-lab@eminent-maker-258601.iam.gserviceaccount.com
+  255  )
+  256  query = '''
+  257  SELECT
+  258    year,
+  259    COUNT(1) as num_babies
+  260  FROM publicdata.samples.natality
+  261  WHERE
+  262    year > 2000
+  263  GROUP BY
+  264    year
+  265  '''
+  266  client = bigquery.Client(
+  267      project=eminent-maker-258601,
+  268      credentials=credentials)
+  269  print(client.query(query).to_dataframe())
+  270  " > query.py
+  271  ls
+  272  nano query.py 
+  273  sed -i -e "s/YOUR_PROJECT_ID/$(gcloud config get-value project)/g" query.py
+  274  cat query.py 
+  275  sed -i -e "s/YOUR_SERVICE_ACCOUNT/bigquery-lab@$(gcloud config get-value project).iam.gserviceaccount.com/g" query.py
+  276  cat query.py 
+  277  python query.py 
+  278  nano query.py 
+  279  python query.py 
+  280  nano query.py 
+  281  python query.py 
+  282  nano query.py 
+  283  python query.py 
+  284  exit
+  285  history 10
+  286  history 100
+  287  python query.py 
+  288  nano query.py 
+  289  history 100
+  290  sudo pip install pandas
+  291  sudo apt-get install -y git python-pip
+  292  sudo pip install pandas
+  293  sudo systemctl restart nginx
+  294  python query.py 
+  295  sudo pip --no-cache-dir install pandas
+  296  python query.py 
+
+おまけ
+  233  gcloud iam service-accounts create my-service-account --display-name "my service account test"
+  234  gcloud projects add-iam-policy-binding $DEVSHELL_PROJECT_ID --member serviceAccount:my-service-account@$DEVSHELL_PROJECT_ID.iam.gserviceaccount.com --role roles/edit
+or

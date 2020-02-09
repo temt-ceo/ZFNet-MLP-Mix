@@ -1,0 +1,110 @@
+  250  gcloud compute http-health-checks create basic-http-check
+  251  gcloud compute instance-templates create web-template --machine-type=f1-micro --image-family=debian-9 --image-project=debian-cloud --tags=network-lb-tag --metadeta=startup-script=\#\!\ /bin/bash$'\n'apt-get\ update$'\n'apt-get\ install\ apache2\ -y$'\n'service\ apache2\ restart$'\n'ZONE=\$\(curl\ \"http://metadata.google.internal/computeMetadata/v1/instance/zone\"\ -H\ \"Metadata-Flavor:\ Google\"\)$'\n'echo\ \'\<\!doctype\ html\>\<html\>\<body\>\<h1\>Web\ server\</h1\>\<h2\>This\ server\ is\ in\ zone:\ ZONE_HERE\</h2\>\</body\>\</html\>\'\ \|\ tee\ /var/www/html/index.html$'\n'sed\ -i\ \"s\|ZONE_HERE\|\$ZONE\|\"\ /var/www/html/index.html
+  252  gcloud compute instance-templates create web-template --machine-type=f1-micro --image-family=debian-9 --image-project=debian-cloud --tags=network-lb-tag --metadata=startup-script=\#\!\ /bin/bash$'\n'apt-get\ update$'\n'apt-get\ install\ apache2\ -y$'\n'service\ apache2\ restart$'\n'ZONE=\$\(curl\ \"http://metadata.google.internal/computeMetadata/v1/instance/zone\"\ -H\ \"Metadata-Flavor:\ Google\"\)$'\n'echo\ \'\<\!doctype\ html\>\<html\>\<body\>\<h1\>Web\ server\</h1\>\<h2\>This\ server\ is\ in\ zone:\ ZONE_HERE\</h2\>\</body\>\</html\>\'\ \|\ tee\ /var/www/html/index.html$'\n'sed\ -i\ \"s\|ZONE_HERE\|\$ZONE\|\"\ /var/www/html/index.html
+  253  gcloud compute instance-templates create web-template --machine-type=f1-micro --image-family=debian-9 --image-project=debi
+  254  gcloud compute instance-templates create web-template --machine-type=f1-micro --image-family=debian-9 --image-project=debian-cloud --tags=network-lb-tag --metadata=startup-script=
+  255  gcloud compute instance-templates create web-template --machine-type=f1-micro --image-family=debian-9 --image-project=debian-cloud --tags=network-lb-tag --network=temtprivatenet2 --metadata=startup-script=\#\!\ /bin/bash$'\n'apt-get\ update$'\n'apt-get\ install\ apache2\ -y$'\n'service\ apache2\ restart$'\n'ZONE=\$\(curl\ \"http://metadata.google.internal/computeMetadata/v1/instance/zone\"\ -H\ \"Metadata-Flavor:\ Google\"\)$'\n'echo\ \'\<\!doctype\ html\>\<html\>\<body\>\<h1\>Web\ server\</h1\>\<h2\>This\ server\ is\ in\ zone:\ ZONE_HERE\</h2\>\</body\>\</html\>\'\ \|\ tee\ /var/www/html/index.html$'\n'sed\ -i\ \"s\|ZONE_HERE\|\$ZONE\|\"\ /var/www/html/index.html
+  256  gcloud compute instance-templates create web-template --machine-type=f1-micro --image-family=debian-9 --image-project=debian-cloud --tags=network-lb-tag --network=temtprivatenet2 --subnet=temtprivatesubnet --metadata=startup-script=\#\!\ /bin/bash$'\n'apt-get\ update$'\n'apt-get\ install\ apache2\ -y$'\n'service\ apache2\ restart$'\n'ZONE=\$\(curl\ \"http://metadata.google.internal/computeMetadata/v1/instance/zone\"\ -H\ \"Metadata-Flavor:\ Google\"\)$'\n'echo\ \'\<\!doctype\ html\>\<html\>\<body\>\<h1\>Web\ server\</h1\>\<h2\>This\ server\ is\ in\ zone:\ ZONE_HERE\</h2\>\</body\>\</html\>\'\ \|\ tee\ /var/www/html/index.html$'\n'sed\ -i\ \"s\|ZONE_HERE\|\$ZONE\|\"\ /var/www/html/index.html
+  257  gcloud compute instance-groups managed create web-gropu --template web-template --size 2 --zones us-west1-a, us-west1-b
+  258  gcloud compute instance-groups managed create web-gropu --template web-template --size 2 --zones us-west1-a, us-west1-a
+  259  gcloud compute instance-groups managed create web-gropu --template web-template --size 2 --zones us-west1-a,us-west1-b
+  260  clear
+  261  gcloud compute instance-groups managed set-named-ports web-group --named-ports http:80 --region us-west1
+  262  history 30
+  263  gcloud compute instance-groups managed set-named-ports web-gropu --named-ports http:80 --region us-west1
+  264  gcloud compute backend-services create web-backend --global --port-name=http --protocol HTTP --http-health-checks basic-http-check
+  265  gcloud compute backend-services add-backend web-backend --instance-group web-gropu --global --instance-group-region us-west1
+  266  gcloud compute url-maps create web-lb --default-service web-backend
+  267  gcloud compute target-http-proxies create web-lb-proxy --url-map web-lb
+  268  gcloud compute forwarding-rules create web-rule --global --target-http-proxy web-lb-proxy --ports 80
+
+The above commands performed the following
+
+Created a named port (http) and map it to the instance group at port 80
+
+Create a backend service and add the web-group instance group
+
+Create a default URL map that directs all incoming requests to all instances in the backend
+
+Create a target HTTP proxy to route requests to your URL map:
+
+Create a global forwarding rule to handle and route incoming requests.
+
+$ gcloud compute backend-services get-health web-backend --global
+
+backend: https://www.googleapis.com/compute/v1/projects/eminent-maker-258601/regions/us-west1/instanceGroups/web-gropu
+status:
+  healthStatus:
+  - healthState: HEALTHY
+    instance: https://www.googleapis.com/compute/v1/projects/eminent-maker-258601/zones/us-west1-b/instances/web-gropu-rldn
+    ipAddress: 10.0.0.6
+    port: 80
+  - healthState: HEALTHY
+    instance: https://www.googleapis.com/compute/v1/projects/eminent-maker-258601/zones/us-west1-a/instances/web-gropu-9sht
+    ipAddress: 10.0.0.5
+    port: 80
+  kind: compute#backendServiceGroupHealth
+
+
+IP Addres取得
+$ gcloud compute forwarding-rules describe web-rule --global
+access to IP ADDRESS
+$ while true; do curl -m1 35.190.121.175; done
+
+
+NAME
+    gcloud compute instance-templates create - create a Compute Engine virtual
+        machine instance template
+SYNOPSIS
+    gcloud compute instance-templates create NAME
+        [--accelerator=[count=COUNT],[type=TYPE]] [--no-boot-disk-auto-delete]
+        [--boot-disk-device-name=BOOT_DISK_DEVICE_NAME]
+        [--custom-cpu=CUSTOM_CPU --custom-memory=CUSTOM_MEMORY
+          : --custom-extensions --custom-vm-type=CUSTOM_VM_TYPE]
+        [--image-project=IMAGE_PROJECT --image=IMAGE
+          | --image-family=IMAGE_FAMILY]
+        [--node=NODE | --node-affinity-file=NODE_AFFINITY_FILE
+          | --node-group=NODE_GROUP]
+        [--reservation=RESERVATION
+          --reservation-affinity=RESERVATION_AFFINITY; default="any"]
+        [--scopes=[SCOPE,...] | --no-scopes]
+        [--service-account=SERVICE_ACCOUNT | --no-service-account]
+        [GCLOUD_WIDE_FLAG ...]
+DESCRIPTION
+    gcloud compute instance-templates create facilitates the creation of Google
+    Compute Engine virtual machine instance templates. Instance templates are
+    global resources, and can be used to create instances in any zone.
+POSITIONAL ARGUMENTS
+     NAME
+        Name of the instance template to create.
+FLAGS
+     --accelerator=[count=COUNT],[type=TYPE]
+        Attaches accelerators (e.g. GPUs) to the instances.
+         type
+            The specific type (e.g. nvidia-tesla-k80 for nVidia Tesla K80) of
+            accelerator to attach to the instances. Use 'gcloud compute
+            accelerator-types list' to learn about all available accelerator
+            types.
+         count
+            Number of accelerators to attach to each instance. The default
+            value is 1.
+     --boot-disk-auto-delete
+        Automatically delete boot disks when their instances are deleted.
+        Enabled by default, use --no-boot-disk-auto-delete to disable.
+     --boot-disk-device-name=BOOT_DISK_DEVICE_NAME
+        The name the guest operating system will see for the boot disk. This
+        option can only be specified if a new boot disk is being created (as
+        opposed to mounting an existing persistent disk).
+     --boot-disk-size=BOOT_DISK_SIZE
+        The size of the boot disk. This option can only be specified if a new
+
+  280  gcloud compute instance-templates create temt-web-template --machine-type=f1-micro --image=temt-web-image --tags=network-lb-tag --network=temtprivatenet2 
+--subnet=temtprivatesubnet --metadata=startup-script=\#\!\ /bin/bash$'\n'sudo\ systemctl\ restart\ php5-fpm\$'\n'sudo\ systemctl\ restart\ nginx
+  281  gcloud compute instance-groups managed create web-temt-group --template temt-web-template --size 1 --zones us-west1-a
+  282  gcloud compute instance-groups managed set-named-ports web-temt-group --named-ports http:80 --region us-west1
+  283  gcloud compute backend-services create temt-web-backend --global --port-name=http --protocol HTTP --http-health-checks basic-http-check
+  284  gcloud compute backend-services add-backend temt-web-backend --instance-group web-temt-group --global --instance-group-region us-west1
+  285  gcloud compute url-maps create web-lb2 --default-service temt-web-backend
+  286  gcloud compute target-http-proxies create web-lb-proxy2 --url-map web-lb2
+  287  gcloud compute forwarding-rules create temt-web-rule --global --target-http-proxy web-lb-proxy2 --ports 80
+  288  gcloud compute backend-services get-health temt-web-backend --global
