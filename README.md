@@ -1,6 +1,8 @@
 # ZFNet-MLP-Mix
 ZFNet-MLP Mix ML Project
 
+This Homepage is used as aggregation of Kaggle Research Results. Each portfolios can be seen in following link.
+
 ### Kaggle web sites
 **◉the region and the domain category**<br>
 **Japan and Linguistics**<br><br>
