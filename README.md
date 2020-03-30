@@ -29,8 +29,7 @@ URL. https://www.kaggle.com/takashitahara/concrete-data-and-strength-analysis
 ・ I have numerous images which are taken at lots of concrete structure sites.<br>
 ・ Those images are devided into Positive(include crack) and Negative folders.<br>
 ・ I must create a model to classify the picture is including crack or not.<br>
-**これはIBM認定AI Engineering Professionalの最終課題、127x127x3の画像をPyTorchを使って解析する、を**<br>
-**無料環境では最も早いkaggle上で解析したものです。Modelは全て手作りです。**<br>
-
+**これはIBM認定AI Engineering Professionalの最終課題、127x127x3の画像をPyTorchを使って解析する、**<br>
+**を無料環境では最も早いkaggle上で解析したものです。Modelは全て手作りです。**<br>
 URL. https://www.kaggle.com/takashitahara/recognizing-concrete-crack-using-pytorch
 <br><br>
