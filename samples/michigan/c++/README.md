@@ -15,31 +15,35 @@ https://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list
 ```
 #pragma once
 
-class Cube {
-  public:
-    double getVolume();
-    double getSurfaceArea();
-    void setLength(double length);
+namespace uiuc {
+  class Cube {
+    public:
+      double getVolume();
+      double getSurfaceArea();
+      void setLength(double length);
 
-  private:
-    double length_;
-};
+    private:
+      double length_;
+  };
+}
 ```
 
 **Cube.cpp**<br>
 ```
 #include "Cube.h"
 
-double Cube::getVolume() {
-  return length_ * length_ * length_;
-}
+namespace uiuc {
+  double Cube::getVolume() {
+    return length_ * length_ * length_;
+  }
 
-double Cube::getSurfaceArea() {
-  return 6 *length_ * length_l
-}
+  double Cube::getSurfaceArea() {
+    return 6 *length_ * length_l
+  }
 
-void Cube::setLength(double length) {
-  length_ = length;
+  void Cube::setLength(double length) {
+    length_ = length;
+  }
 }
 ```
 
@@ -53,7 +57,7 @@ using std::cout;
 using std::endl;
 
 int main() {
-  Cube c;
+  uuic::Cube c;
 
   c.setLength(3.48);
   double volume = c.getVolume();
