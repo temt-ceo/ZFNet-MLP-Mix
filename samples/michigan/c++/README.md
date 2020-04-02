@@ -43,6 +43,23 @@ void Cube::setLength(double length) {
 }
 ```
 
+**main.cpp**<br>
+This also includes C++'s Standard Library(std) memo
+```
+#include <iostream>
+#include "Cube.h"
+
+int main() {
+  Cube c;
+
+  c.setLength(3.48);
+  double volume = c.getVolume();
+  std::cout << "Volume: " << volume << std::endl; // cout means console out. endl means end of line.
+
+  return 0;
+}
+```
+
 **Makefile**<br>
 ```
 EXE = main
