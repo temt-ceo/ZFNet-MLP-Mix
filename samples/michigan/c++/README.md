@@ -10,7 +10,7 @@ https://en.cppreference.com/w/
 https://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list
 
 ## Illinois of University study memo
-#### C++ Classes
+#### Week1. C++ Classes
 **Cube.h**<br>
 ```
 #pragma once
