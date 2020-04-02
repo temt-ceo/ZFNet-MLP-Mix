@@ -49,12 +49,15 @@ This also includes C++'s Standard Library(std) memo
 #include <iostream>
 #include "Cube.h"
 
+using std::cout;
+using std::endl;
+
 int main() {
   Cube c;
 
   c.setLength(3.48);
   double volume = c.getVolume();
-  std::cout << "Volume: " << volume << std::endl; // cout means console out. endl means end of line.
+  cout << "Volume: " << volume << endl; // cout means console out. endl means end of line.
 
   return 0;
 }
