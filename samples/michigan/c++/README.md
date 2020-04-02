@@ -57,7 +57,7 @@ using std::cout;
 using std::endl;
 
 int main() {
-  uuic::Cube c;
+  uiuc::Cube c;
 
   c.setLength(3.48);
   double volume = c.getVolume();
