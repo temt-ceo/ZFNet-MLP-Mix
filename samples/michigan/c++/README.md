@@ -130,7 +130,7 @@ int main() {
 #include "Cube.h"
 using uiuc::Cube;
 
-Cube *CreateCube() { // Cubeオブジェクトのpointerを返す関数なので、返却値のtypeに「 *」をつける。（返した形式と同じ形式にする必要がある。）
+Cube *CreateCube() { // Cubeオブジェクトのpointerを返す関数なので、return typeに「 *」をつける。（返した形式と同じ形式にする必要がある。）
   Cube cube;
   cube.setLength(15);
   return &cube; // addressを返す = pointerに保存される。この関数が終了するのでそのアドレスは解放される。
@@ -194,3 +194,10 @@ $ ./puzzle
 > Surface Area: 0 <-- 本当なら6 * 15 * 15 (ローカル変数のメモリアドレスは返してはならない。)
 > Volume: 0 <-- 本当なら15 * 15 * 15
 ```
+
+**#include <...>**<br>
+ This means compiler includes a standard library header from the system library.<br>
+ The compiler will look for the ... header file in a system-wide library path that is located outside of current directory.<br>
+**#include "~.h"**<br>
+ But there is no need to write **#include "~.cpp"** . Because compiler generates objectfiles for each<br> "main.cpp" => "main.o" and "~.h" => "~.o". "~.cpp" files are linked by compiler, and linker combines files into executable "main" file.
+ 
