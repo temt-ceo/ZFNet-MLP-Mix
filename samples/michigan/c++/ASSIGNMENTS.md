@@ -1,4 +1,4 @@
-#### Week 1 challenge quiz backup note
+#### Object-Oriented Data Structures in C++ (Week1) study memo
 ```
 class Pair {
   public:
