@@ -112,8 +112,8 @@ int main() {
   foo();
 
   int *p = &num;
-  std::cout << " p: " << p << std::endl; // address
-  std::cout << "&p: " << &p << std::endl; // pointerのaddress(pより少し小さい)
+  std::cout << " p: " << p << std::endl; // address, pointer変数の宣言時、typeに「 *」をつける。
+  std::cout << "&p: " << &p << std::endl; // pointerのaddress(pより少し小さい, security researchの分野なので深追いは必要ない。)
   std::cout << "*p: " << *p << std::endl; // dereferencing(7)
 
   *p = 42;
