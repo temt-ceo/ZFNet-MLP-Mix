@@ -199,10 +199,10 @@ $ ./puzzle
  This means compiler includes a standard library header from the system library.<br>
  The compiler will look for the ... header file in a system-wide library path that is located outside of current directory.<br>
 <br>
-**#include "~.h"**<br>
- In this time there is no need to write **#include "~.cpp"** . Because compiler generates objectfiles for each<br> "main.cpp" => "main.o" and "~.h" => "~.o". "~.cpp" files are linked by compiler, and linker combines files into executable "main" file.
+**#include "--.h"**<br>
+ In this time there is no need to write **#include "--.cpp"** . Because compiler generates objectfiles for each<br> "main.cpp" => "main.o" and "--.h" => "--.o". "--.cpp" files are linked by compiler, and linker combines files into executable "main" file.
 <br>
 <br>
-**"~.o"**<br>
+**"--.o"**<br>
  This is an object file. Each cpp file is separately combined into object files. So Cube.cpp will be combined into Cube.o and main.cpp will be combined into main.o.<br>
  The main.o file will be linked against the compiled definitions in the Cube.o file. The linker program will also link system-wide object files, such as for iostream. After the compiler and linker programs finish processing the codes, then we can get an executable file as a result. In this case, that file name is simply named main.
