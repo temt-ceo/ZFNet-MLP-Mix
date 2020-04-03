@@ -89,8 +89,8 @@ $ ./main
 
 #### Week2. Stack/Heap Memory
 **Key Concepts**<br>
- ・ Pointers and dereferencing ... 変数のaddressを保存する変数。Pointers/dereferencingどちらも*で表す。<br>
- ・ Local(stack) memory ... 関数の実行中のみ。実行後は解放。メモリがfffから始まるのは最高値から割当てるため。<br>
+ ・ Pointers and dereferencing ... 変数のaddressを保存する変数。<br>
+ ・ Local(stack) memory ... 関数の実行中のみ。実行後は解放。メモリがfffから始まるのは最高値から割当てるため。最高値から積み重なる。<br>
  ・ Allocated(heap) memory<br>
 
 **addressOf.cpp**<br>
@@ -115,6 +115,30 @@ int main() {
 }
 ```
 
+**puzzle.cpp**<br>
+```
+#include <iostream>
+#include "Cube.h"
+using uiuc::Cube;
+
+Cube *CreateCube() { // Cubeオブジェクトのpointerを返す関数なので、返却値のtypeに「 *」をつける。（返した形式と同じ形式にする必要がある。）
+  Cube cube;
+  cube.setLength(15);
+  return &cube; // addressを返す = pointerに保存される。この関数が終了するのでそのアドレスは解放される。
+}
+
+int main() {
+  /* pointersの説明 */
+  Cube *c = CreateCube(); // addressの変数をメモリに割当。実際はメモリの下の方にあるCube cubeを指す。
+  someOtherFunction(); // ここの関数のメモリがCube cubeのメモリを使うため以降の処理は不可能になる。
+  double a = c->getSurfaceArea();
+  double v = c->getVolume();
+  std::cout << "Surface Area: " << a << std::endl;
+  std::cout << "Volume: " << v << std::endl;
+  return 0;
+}
+```
+上記は利用不可能なメモリをmain内で使用するのでコンパイル時に「warning: address of stack memory associated with local variable 'cube' returned [-Wreturn-stack-address]」と警告が出る。
 **Makefile**<br>
 ```
 EXE = main
@@ -152,4 +176,7 @@ $ ./addressOf
 > &num in main(): 0x7fff52c0ba68
 >  x in foo(): 42
 > &x in foo(): 0x7fff52c0ba1c
+$ ./puzzle
+> Surface Area: 0 <-- 本当なら6 * 15 * 15
+> Volume: 0 <-- 本当なら15 * 15 * 15
 ```
