@@ -217,9 +217,18 @@ $ ./puzzle
 <br>
 <br>
 **Segfault (Segmentation fault)**<br>
+case 1.
 ```
 int* n = nullptr;
-std::cout << *n << std::endl; // This dereference will almost certainly cause a segfault and crash immediately.
 // This code might be compiled successfully, but this is called "undefined behavior". (単に未定義変数を参照したeasy miss.)
+std::cout << *n << std::endl; // This dereference will almost certainly cause a segfault and crash immediately.
+```
+case 2.
+```
+int* x; // This pointer x contains a seemingly random memory address.
+int* y2(nullptr); // built-in type int is not class types and there are no constructors. however we can still specify an initialization this way.
+int* y3{nullptr}; // This is a new feature since C++11. This make it clear that we are performing an initialization not some kind of function call.
+int h; // (built-in types are) not initialized
+Box b; // (Class types are) ok.
 ```
 
