@@ -90,18 +90,24 @@ $ ./main
 #### Week2. Stack/Heap Memory
 **Key Concepts**<br>
  ・ Pointers and dereferencing<br>
- ・ Local(stack) memory<br>
+ ・ Local(stack) memory ... 関数の実行中のみ。実行後は解放。メモリがfffから始まるのは最高値から割当てるため。<br>
  ・ Allocated(heap) memory<br>
 
 **addressOf.cpp**<br>
 ```
 #include <iostream>
 
+void foo() {
+  int x = 42;
+  std::cout << " x in foo(): " << x << std::endl;
+  std::cout << "&x in foo(): " << &x << std::endl;
+}
+
 int main() {
   int num = 7;
 
-  std::cout << "Value: " << num << std::endl;
-  std::cout << "Address: " << &num << std::endl;
+  std::cout << " num in main(): " << num << std::endl;
+  std::cout << "&num in main(): " << &num << std::endl;
 
   return 0;
 }
@@ -118,14 +124,11 @@ include ../_make/generic.mk
 addressOf: addressOf.cpp
   $(LD) $^ $(LDFLAGS) -o $@
 
-foo: foo.cpp
-  $(LD) $^ $(LDFLAGS) -o $@
-
 puzzle: puzzle.cpp
   $(LD) $^ $(LDFLAGS) ./objs/Cube.o -o $@
 
-all: addressOf foo puzzle
-CLEAN_RM += addressOf foo puzzle
+all: addressOf puzzle
+CLEAN_RM += addressOf puzzle
 ```
 
 **compile and execute**<br>
@@ -135,7 +138,6 @@ $ make
 > g++ -std=c++14 -O0 -pedantic -Wall  -Wfatal-errors -Wextra  -MMD -MP -g -c  Cube.cpp -o .objs/Cube.o
 > g++ .objs/main.o .objs/Cube.o -std=c++14  -o main
 > g++ addressOf.cpp -std=c++14  -o addressOf
-> g++ foo.cpp -std=c++14  -o foo
 > g++ puzzle.cpp -std=c++14  .objs/Cube.o -o puzzle
 > puzzle.cpp:17:11: warning: address of stack memory associated with local variable 'cube' returned
 >       [-Wreturn-stack-address]
@@ -144,6 +146,8 @@ $ make
 > 1 warning generated.
 
 $ ./addressOf
-> Value: 7
-> Address: 0x7fff55b5da48
+>  num in main(): 7
+> &num in main(): 0x7fff52c0ba68
+>  x in foo(): 42
+> &x in foo(): 0x7fff52c0ba1c
 ```
