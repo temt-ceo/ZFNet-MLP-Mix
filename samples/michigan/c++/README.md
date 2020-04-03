@@ -109,6 +109,8 @@ int main() {
   std::cout << " num in main(): " << num << std::endl;
   std::cout << "&num in main(): " << &num << std::endl;
 
+  foo();
+  
   return 0;
 }
 ```
