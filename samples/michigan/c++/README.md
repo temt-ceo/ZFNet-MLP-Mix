@@ -92,6 +92,57 @@ $ ./main
  ・ Pointers and dereferencing<br>
  ・ Local(stack) memory<br>
  ・ Allocated(heap) memory<br>
-**Cube.h**<br>
+**addressOf.cpp**<br>
 ```
+#include <iostream>
+
+int main() {
+  int num = 7;
+
+  std::cout << "Value: " << num << std::endl;
+  std::cout << "Address: " << &num << std::endl;
+
+  return 0;
+}
+```
+
+**Makefile**<br>
+```
+EXE = main
+OBJS = main.o Cube.o
+CLEAN_RM =
+
+include ../_make/generic.mk
+
+addressOf: addressOf.cpp
+  $(LD) $^ $(LDFLAGS) -o $@
+
+foo: foo.cpp
+  $(LD) $^ $(LDFLAGS) -o $@
+
+puzzle: puzzle.cpp
+  $(LD) $^ $(LDFLAGS) ./objs/Cube.o -o $@
+
+all: addressOf foo puzzle
+CLEAN_RM += addressOf foo puzzle
+```
+
+**compile and execute**<br>
+```
+$ make
+> g++ -std=c++14 -O0 -pedantic -Wall  -Wfatal-errors -Wextra  -MMD -MP -g -c  main.cpp -o .objs/main.o
+> g++ -std=c++14 -O0 -pedantic -Wall  -Wfatal-errors -Wextra  -MMD -MP -g -c  Cube.cpp -o .objs/Cube.o
+> g++ .objs/main.o .objs/Cube.o -std=c++14  -o main
+> g++ addressOf.cpp -std=c++14  -o addressOf
+> g++ foo.cpp -std=c++14  -o foo
+> g++ puzzle.cpp -std=c++14  .objs/Cube.o -o puzzle
+> puzzle.cpp:17:11: warning: address of stack memory associated with local variable 'cube' returned
+>       [-Wreturn-stack-address]
+>   return &cube;
+>           ^~~~
+> 1 warning generated.
+
+$ ./addressOf
+> Value: 7
+> Address: 0x7fff55b5da48
 ```
