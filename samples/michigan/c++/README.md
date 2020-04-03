@@ -86,11 +86,12 @@ $ ./main
 > Volume: 42.1442
 ```
 <br>
+
 #### Week2. Stack/Heap Memory
 **Key Concepts**<br>
- - Pointers and dereferencing
- - Local(stack) memory
- - Allocated(heap) memory
+ ・ Pointers and dereferencing<br>
+ ・ Local(stack) memory<br>
+ ・ Allocated(heap) memory<br>
 **Cube.h**<br>
 ```
 ```
