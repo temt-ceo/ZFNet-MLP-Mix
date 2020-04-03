@@ -1,4 +1,4 @@
-## C++ Classes study memo
+#### Week 1 challenge quiz backup note
 ```
 class Pair {
   public:
