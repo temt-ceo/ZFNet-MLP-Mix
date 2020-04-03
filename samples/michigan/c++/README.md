@@ -205,4 +205,16 @@ $ ./puzzle
 <br>
 **"--.o"**<br>
  This is an object file. Each cpp file is separately combined into object files. So Cube.cpp will be combined into Cube.o and main.cpp will be combined into main.o.<br>
- The main.o file will be linked against the compiled definitions in the Cube.o file. The linker program will also link system-wide object files, such as for iostream. After the compiler and linker programs finish processing the codes, then we can get an executable file as a result. In this case, that file name is simply named main.
+ The main.o file will be linked against the compiled definitions in the Cube.o file. The linker program will also link system-wide object files, such as for iostream. After the compiler and linker programs finish processing the codes, then we can get an executable file as a result. In this case, that file name is simply named **main** .
+<br>
+<br>
+**./main**<br>
+ When we want to run a program that is in the current directory, we have to specify that by writing **./** in front of the name. Otherwise, Linux would look for system-wide command with that name instead.
+<br>
+<br>
+**make clean**<br>
+ This allow as clear out all the compiled object and executable files in order to ensure program get recompiled from scratch.
+<br>
+<br>
+
+
