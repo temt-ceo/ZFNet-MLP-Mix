@@ -216,5 +216,10 @@ $ ./puzzle
  This allow as clear out all the compiled object and executable files in order to ensure program get recompiled from scratch.
 <br>
 <br>
-
+**Segfault (Segmentation fault)**<br>
+```
+int* n = nullptr;
+std::cout << *n << std::endl; // This dereference will almost certainly cause a segfault and crash immediately.
+// This code might be compiled successfully, but this is called "undefined behavior". (単に未定義変数を参照したeasy miss.)
+```
 
