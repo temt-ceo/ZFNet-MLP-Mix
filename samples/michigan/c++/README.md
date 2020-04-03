@@ -93,7 +93,7 @@ $ ./main
  ・ Local(stack) memory ... 関数の実行中のみ。実行後は解放。メモリがfffから始まるのは最高値から割当てるため。最高値から積み重なる。<br>
  ・ Allocated(heap) memory<br>
 
-**addressOf.cpp**<br>
+**main.cpp**<br>
 ```
 #include <iostream>
 
@@ -110,7 +110,18 @@ int main() {
   std::cout << "&num in main(): " << &num << std::endl;
 
   foo();
-  
+
+  int *p = &num;
+  std::cout << " p: " << p << std::endl; // address
+  std::cout << "&p: " << &p << std::endl; // pointerのaddress(pより少し小さい)
+  std::cout << "*p: " << *p << std::endl; // dereferencing(7)
+
+  *p = 42;
+  std::cout << "*p changed to 42" << p << std::endl;
+  std::cout << " num:" << num << std::endl; // dereferencingを使い、置き換えられ
+7->42
+
+
   return 0;
 }
 ```
@@ -163,7 +174,6 @@ $ make
 > g++ -std=c++14 -O0 -pedantic -Wall  -Wfatal-errors -Wextra  -MMD -MP -g -c  main.cpp -o .objs/main.o
 > g++ -std=c++14 -O0 -pedantic -Wall  -Wfatal-errors -Wextra  -MMD -MP -g -c  Cube.cpp -o .objs/Cube.o
 > g++ .objs/main.o .objs/Cube.o -std=c++14  -o main
-> g++ addressOf.cpp -std=c++14  -o addressOf
 > g++ puzzle.cpp -std=c++14  .objs/Cube.o -o puzzle
 > puzzle.cpp:17:11: warning: address of stack memory associated with local variable 'cube' returned
 >       [-Wreturn-stack-address]
@@ -171,12 +181,18 @@ $ make
 >           ^~~~
 > 1 warning generated.
 
-$ ./addressOf
+$ ./main
 >  num in main(): 7
-> &num in main(): 0x7fff52c0ba68
+> &num in main(): 0x7fff5571ca18
 >  x in foo(): 42
-> &x in foo(): 0x7fff52c0ba1c
+> &x in foo(): 0x7fff5571c99c
+>  p: 0x7fff5571ca18
+> &p: 0x7fff5571ca10
+> *p: 7
+> *p changed to 42
+>  num: 42
 $ ./puzzle
 > Surface Area: 0 <-- 本当なら6 * 15 * 15
 > Volume: 0 <-- 本当なら15 * 15 * 15
 ```
+ローカル変数のメモリアドレスは返してはならない。<br><br>
