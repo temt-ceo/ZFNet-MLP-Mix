@@ -1,11 +1,5 @@
-## University of Illinois study memo
-#### Week1. C++ Classes
-**Week 1 quiz**<br>
+## C++ Classes study memo
 ```
-// You should define Pair here:
-// (Use as many lines as you need!)
-// ...
-// ...
 class Pair {
   public:
     int sum();
@@ -16,9 +10,6 @@ int Pair::sum() {
   return a + b;
 }
 // This main() function will help you test your work.
-// Click Run to see what happens.
-// When you're sure you're finished, click Submit for grading
-// with our additional hidden tests.
 int main() {
   Pair p;
   p.a = 100;
