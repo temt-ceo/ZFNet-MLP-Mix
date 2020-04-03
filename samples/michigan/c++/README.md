@@ -89,7 +89,7 @@ $ ./main
 
 #### Week2. Stack/Heap Memory
 **Key Concepts**<br>
- ・ Pointers and dereferencing<br>
+ ・ Pointers and dereferencing ... 変数のaddressを保存する変数。Pointers/dereferencingどちらも*で表す。<br>
  ・ Local(stack) memory ... 関数の実行中のみ。実行後は解放。メモリがfffから始まるのは最高値から割当てるため。<br>
  ・ Allocated(heap) memory<br>
 
