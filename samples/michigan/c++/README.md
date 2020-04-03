@@ -91,7 +91,7 @@ $ ./main
 **Key Concepts**<br>
  ・ Pointers and dereferencing ... 変数のaddressを保存する変数。<br>
  ・ Local(stack) memory ... 関数の実行中のみ。実行後は解放。メモリがfffから始まるのは最高値から割当てるため。最高値から積み重なる。<br>
- ・ Allocated(heap) memory<br>
+ ・ Allocated(heap) memory ... The only way to create heap memory is with the new keyword. The new operator returns a **pointer** to the memory<br>
 
 **main.cpp**<br>
 ```
