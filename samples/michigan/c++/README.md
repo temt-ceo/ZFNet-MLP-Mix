@@ -9,7 +9,7 @@ https://en.cppreference.com/w/
 **◉useful paperbook for the c++**<br>
 https://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list
 
-## Illinois of University study memo
+## University of Illinois study memo
 #### Week1. C++ Classes
 **Cube.h**<br>
 ```
@@ -85,4 +85,12 @@ $ make
 $ ./main
 > Volume: 42.1442
 ```
-
+<br>
+#### Week2. Stack/Heap Memory
+**Key Concepts**<br>
+ - Pointers and dereferencing
+ - Local(stack) memory
+ - Allocated(heap) memory
+**Cube.h**<br>
+```
+```
