@@ -118,9 +118,7 @@ int main() {
 
   *p = 42;
   std::cout << "*p changed to 42" << p << std::endl;
-  std::cout << " num:" << num << std::endl; // dereferencingを使い、置き換えられ
-7->42
-
+  std::cout << " num:" << num << std::endl; // dereferencingを使い、置き換えられ7->42
 
   return 0;
 }
