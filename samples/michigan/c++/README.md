@@ -138,7 +138,7 @@ int main() {
   int &y = *x; // heapのint情報にyという名前を与える。「type &」はreference variableでエイリアスをつける。
   y = 4;
 
-  std::cout << &x << std::endl;　// ポインタのstackアドレス
+  std::cout << &x << std::endl;　// pointer(stack memory)のaddress
   std::cout <<  x << std::endl;　// x自体はheapのアドレス
   std::cout << *x << std::endl;  // 4(dereferencing)
   
