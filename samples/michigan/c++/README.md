@@ -122,7 +122,7 @@ int main() {
   std::cout << " num:" << num << std::endl; // dereferencingを使い、置き換えられ7->42
 
   /* heap memoryの説明 */
-  int *numPtr = new int; // heap meooryのintの情報をstack memoryのポインターにアドレスとして渡す。
+  int *numPtr = new int; // heapにint情報のメモリを割当て、newを付けることでそのアドレスのみstackへ保存される
   std::cout << "*numPtr: " << *numPtr << std::endl;
   std::cout << " numPtr: " <<  numPtr << std::endl;
   std::cout << "&numPtr: " << &numPtr << std::endl;
