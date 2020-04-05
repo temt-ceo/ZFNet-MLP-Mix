@@ -309,29 +309,47 @@ Box b; // (Class types are) ok.
 ```
   ...
     public:
-      //Cube(); // Custom default constructor(未定義でも自動で作成されるが、次行のように何らかの引数有りConstructorを定義すると作成されないので注意。)
+      Cube(); // Custom default constructor(未定義でも自動で作成されるが、次行のように何らかの引数有りConstructorを定義すると作成されないので注意。)
       Cube(double length); // One argument constructor
+
+      Cube(const Cube & obj); // Custom copy constructor
   ...
 ```
 
 **Cube.cpp**<br>
 ```
   ...
-  /*Cube::Cube() {
+  Cube::Cube() {
     length_ = 1;
-  }*/
+    std::cout << "Default constructor invoked!" << std::endl;
+  }
 
   Cube::Cube(double length) {
     length_ = length;
+  }
+
+  Cube::Cube(const Cube & obj) { // 実はこれも自動で作ってくれるので、作成は必要無い。
+    length_ = obj.length_;
+    std::cout << "Copy constructor invoked!" << std::endl;
   }
   ...
 ```
 
 **main.cpp**<br>
 ```
-  ...
-  uiuc::Cube c; // Compile Error!
-  ...
+#include "../Cube.h"
+using uiuc::Cube;
+
+void foo(Cube cube) { // Then this function is called, the Object is copied and invoke Copy constructor.
+  // Nothing
+}
+
+int main() {
+  uiuc::Cube c; // -> This invoke Default Constructor
+  foo(c) // -> This invoke Copy Constructor
+
+  return 0;
+}
 ```
 
 **Makefile**<br>
@@ -344,6 +362,12 @@ include ../_make/generic.mk
 
 ```
 
+**compile and execute**<br>
+```
+$ ./main
+> Default constructor invoked!
+> Copy constructor invoked!
+```
 
 **../_make/generic.mk**(for the reference; 参考までに)<br>
 ```
