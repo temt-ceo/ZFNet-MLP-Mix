@@ -340,7 +340,7 @@ Box b; // (Class types are) ok.
 #include "../Cube.h"
 using uiuc::Cube;
 
-void foo(Cube cube) { // Then this function is called, the Object is copied and invoke Copy constructor.
+void foo(Cube cube) { // When this function is called, the Object is copied and invoke Copy constructor.
   // Nothing
 }
 
