@@ -298,7 +298,7 @@ Box b; // (Class types are) ok.
 ```
 <br>
 
-#### Week3. Constructor/Destructor Memory
+#### Week3. Constructor/Destructor
 **Key Concepts**<br>
  ・ Constructors and destructors<br>
  ・ Methods and operators<br>
