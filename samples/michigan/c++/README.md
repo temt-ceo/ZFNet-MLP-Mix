@@ -144,7 +144,7 @@ int main() {
   
   std::cout << &y << std::endl;　// heapのアドレス
   std::cout <<  y << std::endl;　// 4(y自体がheapを指す)
-  //std::cout << *y << std::endl;  -> yはpointerでは無い為
+  //std::cout << *y << std::endl;  -> yはpointerでは無い, これはcompile errorになる
 
   return 0;
 }
