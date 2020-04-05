@@ -296,4 +296,15 @@ int* y3{nullptr}; // This is a new feature since C++11. This make it clear that 
 int h; // (built-in types are) not initialized
 Box b; // (Class types are) ok.
 ```
+<br>
+
+#### Week3. Constructor/Destructor Memory
+**Key Concepts**<br>
+ ・ Constructors and destructors<br>
+ ・ Methods and operators<br>
+ ・ Access through pointers and references<br>
+
+**main.cpp**<br>
+```
+```
 
