@@ -304,7 +304,20 @@ Box b; // (Class types are) ok.
  ・ Methods and operators<br>
  ・ Access through pointers and references<br>
 
-**main.cpp**<br>
+**Cube.h**<br>
 ```
+  ...
+    public:
+      Cube(); // Custom default constructor
+  ...
+```
+
+**Cube.cpp**<br>
+```
+  ...
+  Cube::Cube() {
+    length_ = 1;
+  }
+  ...
 ```
 
