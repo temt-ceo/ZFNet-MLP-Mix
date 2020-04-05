@@ -133,6 +133,19 @@ int main() {
   std::cout << " numPtr: " <<  numPtr << std::endl;  // こっちはheapのアドレス
   std::cout << "&numPtr: " << &numPtr << std::endl;  // こっちはstackのアドレス(pointerのaddress)
 
+  /* reference variable(alias)の説明 */
+  int *x = new int;
+  int &y = *x; // heapのint情報にyという名前を与える。「type &」はreference variableでエイリアスをつける。
+  y = 4;
+
+  std::cout << &x << std::endl;　// -> 0x7fff548c9a10(ポインタのアドレス)
+  std::cout <<  x << std::endl;　// -> 0x7fbb32c03290(x自体はheapのアドレス)
+  std::cout << *x << std::endl;  // -> 4(dereferencing)
+  
+  std::cout << &y << std::endl;　// -> 0x7fbb32c03290(heapのint情報のアドレス)
+  std::cout <<  y << std::endl;　// -> 4(y自体がheapのint情報を指す)
+  //std::cout << *y << std::endl;  -> yはpointerでは無い為
+
   return 0;
 }
 ```
