@@ -161,6 +161,30 @@ int main() {
 }
 ```
 上記は利用不可能なメモリをmain内で使用するのでコンパイル時に「warning: address of stack memory associated with local variable 'cube' returned [-Wreturn-stack-address]」と警告が出る。<br><br>
+
+**heap.cpp**<br>
+```
+#include "Cube.h"
+using uiuc::Cube;
+
+int main() {
+  /* heap memoryのサイクル */
+  int *p = new int;
+  Cube *c = new Cube; // heapにCubeのメモリを割当て、newを付けることでそのアドレスのみstackへ保存される
+
+  *p = 42;
+  (*c).setLength(4); // これは有効だがほとんど実際には見ない
+
+  Cube *c2 = c; // heapのアドレスをstackのポインタに保存
+  c->setLength(4); // stackからheapのオブジェクトにアクセスできる
+
+  delete c; c = nullptr; // heapのCubeを削除、stackのcはこのままでは不安定の為、Null Pointer（0x0）をセットしてアクセスされた時は必ずエラーが発生するようにする。
+  delete p; p = nullptr; // これでheapの積み上がったCubeとintが削除される
+  delete c2; // これはcompile errorになる
+  return 0;
+}
+
+```
 **Makefile**<br>
 ```
 EXE = main
@@ -175,8 +199,11 @@ addressOf: addressOf.cpp
 puzzle: puzzle.cpp
   $(LD) $^ $(LDFLAGS) ./objs/Cube.o -o $@
 
-all: addressOf puzzle
-CLEAN_RM += addressOf puzzle
+heap: heap.cpp
+	$(LD) $^ $(LDFLAGS) .objs/Cube.o -o $@
+
+all: addressOf puzzle heap
+CLEAN_RM += addressOf puzzle heap
 ```
 
 **compile and execute**<br>
