@@ -104,6 +104,7 @@ void foo() {
 }
 
 int main() {
+  /* stack memoryの説明 */
   int num = 7;
 
   std::cout << " num in main(): " << num << std::endl;
@@ -119,6 +120,18 @@ int main() {
   *p = 42;
   std::cout << "*p changed to 42" << p << std::endl;
   std::cout << " num:" << num << std::endl; // dereferencingを使い、置き換えられ7->42
+
+  /* heap memoryの説明 */
+  int *numPtr = new int; // heap meooryのintの情報をstack memoryのポインターにアドレスとして渡す。
+  std::cout << "*numPtr: " << *numPtr << std::endl;
+  std::cout << " numPtr: " <<  numPtr << std::endl;
+  std::cout << "&numPtr: " << &numPtr << std::endl;
+
+  *numPtr = 42;
+  std::cout << "*numPtr assigned 42." << std::endl;
+  std::cout << "*numPtr: " << *numPtr << std::endl;
+  std::cout << " numPtr: " <<  numPtr << std::endl;  // こっちはheapのアドレス
+  std::cout << "&numPtr: " << &numPtr << std::endl;  // こっちはstackのアドレス(pointerのaddress)
 
   return 0;
 }
@@ -189,7 +202,14 @@ $ ./main
 > *p: 7
 > *p changed to 42
 >  num: 42
-$
+> *numPtr: 0
+>  numPtr: 0x7fa038c03290
+> &numPtr: 0x7fff5d03ba00
+> *numPtr assigned 42.
+> *numPtr: 42
+>  numPtr: 0x7fa038c03290
+> &numPtr: 0x7fff5d03ba00
+
 $ ./puzzle
 > Surface Area: 0 <-- 本当なら6 * 15 * 15 (ローカル変数のメモリアドレスは返してはならない。)
 > Volume: 0 <-- 本当なら15 * 15 * 15
