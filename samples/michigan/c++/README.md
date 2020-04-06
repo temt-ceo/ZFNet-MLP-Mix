@@ -191,7 +191,7 @@ int main() {
   Cube *c2 = c; // heapのアドレスをstackのポインタに保存
   c->setLength(4); // stackからheapのオブジェクトにアクセスできる
 
-  delete c; c = nullptr; // heapのCubeを削除、stackのcはこのままでは不安定の為、Null Pointer（0x0）をセットしてアクセスされた時は必ずエラーが発生するようにする。
+  delete c; c = nullptr; // heapのCubeを削除、stackのcはこのままでは不安定の為、Null Pointer（0x0）をセットしてアクセスされた時は必ずエラーが発生するようにする。(nullptrをdeleteしたとしても無視されるという利点もある。)
   delete p; p = nullptr; // これでheapの積み上がったCubeとintが削除される
   delete c2; // これはcompile errorになる
   return 0;
@@ -416,8 +416,47 @@ $ ./main
 > Copy constructor invoked!
 ```
 
+**for ( temporary variable declaration : container ) { loop body }**<br>
+In the standard library, a std::vector is an array with automatic size.<br>
+```
+#include <iostream>
+#include <vector>
+int main() {
+  std::vector<int> int_list;
+  int_list.push_back(1);
+  int_list.push_back(2);
+  int_list.push_back(3);
 
+  // これはメモリを一時的に割り当てる為、遅い。
+  for (int x : int_list) {
+    // This version of the loop makes a temporary copy of each list item by value.
+    // Since x is a temporary copy, any changes to x do not modify the actual container.
+    x = 99;
+  }
+  for (int x : int_list) {
+    std::cout << x << std::endl;
+  }
+  std::cout << "If that worked correctly, you never saw 99." << std::endl;
 
+  // これはメモリを一時的にも割り当て無い為、早い。
+  for (int& x : int_list) {
+    // This version of the loop will modify each item directly.
+    x = 99;
+  }
+  for (int x : int_list) {
+    std::cout << x << std::endl;
+  }
+  std::cout << "Everything was replaced with 99." << std::endl;
+
+  // 大きなオブジェクトなど、早く処理したくてもitemの変更が必要無い場合は、以下にすると早く、変更の心配も無い。
+  for (const int& x : int_list) {
+    //x = 99; // This line could cause an error.
+  }
+
+  return 0;
+}
+
+```
 
 
 
