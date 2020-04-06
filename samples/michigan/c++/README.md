@@ -309,18 +309,24 @@ Box b; // (Class types are) ok.
 ```
   ...
     public:
+      /* Constructor */
       Cube(); // Custom default constructor(未定義でも自動で作成されるが、次行のように何らかの引数有りConstructorを定義すると作成されないので注意。)
       Cube(double length); // One argument constructor
 
       Cube(const Cube & obj); // Custom copy constructor
 
+      /* Custom assignment operator */
       Cube & operator=(const Cube & obj); // Custom assignment operator(引数はconst reference of this class' typeと言う。１つしか入れられない。)
+
+      /* Destructor */
+      ~Cube();
   ...
 ```
 
 **Cube.cpp**<br>
 ```
   ...
+  /* Constructor */
   Cube::Cube() {
     length_ = 1;
     std::cout << "Default constructor invoked!" << std::endl;
@@ -335,13 +341,17 @@ Box b; // (Class types are) ok.
     std::cout << "Copy constructor invoked!" << std::endl;
   }
 
-  // Custom assignment operator
+  /* Custom assignment operator */
   Cube & Cube::operator=(const Cube & obj) {
     length_ = obj.length_;
     std::cout << "Assignment operator invoked!" << std::endl;
     std::cout << "Transformed " << getVolume() << " -> " << obj.getVolume() << std::endl;
     return *this; // -> return the dereference of this
   }
+  
+  /* Destructor */
+  ~Cube();
+  
   ...
 ```
 
