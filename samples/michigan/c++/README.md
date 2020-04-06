@@ -339,6 +339,7 @@ Box b; // (Class types are) ok.
   Cube & Cube::operator=(const Cube & obj) {
     length_ = obj.length_;
     std::cout << "Assignment operator invoked!" << std::endl;
+    std::cout << "Transformed " << getVolume() << " -> " << obj.getVolume() << std::endl;
     return *this; // -> return the dereference of this
   }
   ...
@@ -349,13 +350,21 @@ Box b; // (Class types are) ok.
 #include "../Cube.h"
 using uiuc::Cube;
 
-void foo(Cube cube) { // When this function is called, the Object is copied and invoke Copy constructor.
+void foo(Cube c) { // When this function is called, the Object is copied and invoke Copy constructor.（Copy by value(メモリ消費)）
   // Nothing
 }
 
 void foo2() {
   Cube c; // -> This invoke Default Constructor
   return c;
+}
+
+void foo3(Cube & c) { // Copy by reference(メモリ非消費)
+  // Nothing
+}
+
+void foo４(Cube * c) { // Copy by pointer(メモリ非消費)
+  // Nothing
 }
 
 int main() {
@@ -368,6 +377,11 @@ int main() {
   Cube cube1;
   Cube cube2;
   cube2 = cube1; // Assignment Operator(代入のみでConstructorを呼ばない. Assignment Operatorを呼ぶ)
+  /* ↑ メモリ２つ消費(値渡し)。↓メモリ１つ消費(参照渡し)。 */
+  Cube & cube3 = cube1;
+
+  foo3(c)
+  foo4(&c)
   
   return 0;
 }
