@@ -133,7 +133,7 @@ int main() {
   std::cout << " numPtr: " <<  numPtr << std::endl;  // こっちはheapのアドレス
   std::cout << "&numPtr: " << &numPtr << std::endl;  // こっちはstackのアドレス(pointerのaddress)
 
-  /* reference variable(alias)の説明 */
+  /* reference variable(alias)の説明(reference variableはポインターと違ってアドレスが無い。エイリアス先そのものを指す。) */
   int *x = new int;
   int &y = *x; // heapのint情報にyという名前を与える。「type &」はreference variableでエイリアスをつける。
   y = 4;
@@ -336,10 +336,10 @@ Box b; // (Class types are) ok.
   }
 
   // Custom assignment operator
-  Cube & operator=(const Cube & obj) {
+  Cube & Cube::operator=(const Cube & obj) {
     length_ = obj.length_;
     std::cout << "Assignment operator invoked!" << std::endl;
-    return *this;
+    return *this; // -> return the dereference of this
   }
   ...
 ```
@@ -367,7 +367,7 @@ int main() {
   // Assignment Operator
   Cube cube1;
   Cube cube2;
-  cube2 = cube1; // Assignment Operator(代入のみでConstructorを呼ばない)
+  cube2 = cube1; // Assignment Operator(代入のみでConstructorを呼ばない. Assignment Operatorを呼ぶ)
   
   return 0;
 }
