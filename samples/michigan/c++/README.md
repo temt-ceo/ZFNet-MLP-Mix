@@ -319,7 +319,7 @@ Box b; // (Class types are) ok.
       Cube & operator=(const Cube & obj); // Custom assignment operator(引数はconst reference of this class' typeと言う。１つしか入れられない。)
 
       /* Destructor */
-      ~Cube();
+      ~Cube(); // Custom Destructor(No argument, no return type)
   ...
 ```
 
@@ -350,7 +350,9 @@ Box b; // (Class types are) ok.
   }
   
   /* Destructor */
-  ~Cube();
+  Cube::~Cube() {
+    std::cout << "Destroyed " << getVolume() << std::endl;
+  }
   
   ...
 ```
