@@ -313,6 +313,8 @@ Box b; // (Class types are) ok.
       Cube(double length); // One argument constructor
 
       Cube(const Cube & obj); // Custom copy constructor
+
+      Cube & operator=(const Cube & obj); // Custom assignment operator(引数はconst reference of this class' typeと言う。１つしか入れられない。)
   ...
 ```
 
@@ -332,6 +334,13 @@ Box b; // (Class types are) ok.
     length_ = obj.length_;
     std::cout << "Copy constructor invoked!" << std::endl;
   }
+
+  // Custom assignment operator
+  Cube & operator=(const Cube & obj) {
+    length_ = obj.length_;
+    std::cout << "Assignment operator invoked!" << std::endl;
+    return *this;
+  }
   ...
 ```
 
@@ -350,10 +359,16 @@ void foo2() {
 }
 
 int main() {
+  // Copy Constructor
   Cube c; // -> This invoke Default Constructor
   foo(c) // -> This invoke Copy Constructor
   Cube c2 = foo2(); // -> This invoke Copy Constructor twice.(右辺(関数間)で１回、左辺(main内)で一回)
 
+  // Assignment Operator
+  Cube cube1;
+  Cube cube2;
+  cube2 = cube1; // Assignment Operator(代入のみでConstructorを呼ばない)
+  
   return 0;
 }
 ```
