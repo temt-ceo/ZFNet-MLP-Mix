@@ -344,9 +344,15 @@ void foo(Cube cube) { // When this function is called, the Object is copied and 
   // Nothing
 }
 
+void foo2() {
+  Cube c; // -> This invoke Default Constructor
+  return c;
+}
+
 int main() {
-  uiuc::Cube c; // -> This invoke Default Constructor
+  Cube c; // -> This invoke Default Constructor
   foo(c) // -> This invoke Copy Constructor
+  Cube c2 = foo2(); // -> This invoke Copy Constructor twice.(右辺(関数間)で１回、左辺(main内)で一回)
 
   return 0;
 }
@@ -368,6 +374,11 @@ $ ./main
 > Default constructor invoked!
 > Copy constructor invoked!
 ```
+
+
+
+
+
 
 **../_make/generic.mk**(for the reference; 参考までに)<br>
 ```
