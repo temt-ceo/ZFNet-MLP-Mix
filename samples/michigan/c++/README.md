@@ -573,6 +573,23 @@ class Shape {
 
 **Cube.h**<br>
 ```
+#pragma once
+
+#include "Shape.h"
+#include "HSLAPixel.h"
+
+namespace uiuc {
+  /* Class Cube inherits class Shape.(99%のinheritsはpublic inherit) */
+  class Cube : public Shape {
+    public:
+      Cube(double width, uiuc::HSLAPixel color); // Two arguments Constructor
+      double getVolume() const;
+
+    private:
+      uiuc::HSLAPixel color_;
+  };
+}
+
 
 ```
 
