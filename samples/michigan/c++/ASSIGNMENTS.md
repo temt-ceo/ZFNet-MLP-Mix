@@ -131,3 +131,106 @@ int main() {
   return 0;
 }
 ```
+
+#### Assignment: Week4. the Tower of Hanoi problem
+
+**main.cpp**<br>
+```
+#include "Game.h"
+#include <iostream>
+
+int main() {
+  Game g;
+
+  std::cout << "Initial game state: " << std::endl;
+  std::cout << g << std::endl;
+
+  g.solve();
+
+  std::cout << "Final game state: " << std::endl;
+  std::cout << g << std::endl;
+
+  return 0;
+}
+```
+
+**Game.h**<br>
+```
+#pragma once
+
+#include "Stack.h"
+#include <vector>
+
+class Game {
+  public:
+    Game(); // Constructor
+    void solve();
+
+    // An overload `operator<<` , allowing us to print via `cout <<`.
+    friend std::ostream & operator<<(std::ostream & os, const Game & game);
+
+  private:
+    std::vector<Stack> stacks_;
+}
+```
+
+**Game.cpp**<br>
+```
+#include "Game.h"
+#include "Stack.h"
+#include "uiuc/Cube.h"
+#include "uiuc/HSLAPixel.h"
+
+#include <iostream>
+using std::cout;
+using std::endl;
+
+// Solves the Tower of Hanoi puzzle.
+void Game::solve() {
+  cout << *this << endl;
+}
+
+Game::Game() {
+  // 3つの"Cube" template typeのvectorを用意
+  for (int i = 0; i < 3; i++) {
+    Stack stackOfCubes;
+    stacks_.push_back(stackOfCubes);
+  }
+  Cube blue(4, uiuc::HSLAPixel::BLUE);
+  stacks_[0].push_back(blue);
+  Cube orange(3, uiuc::HSLAPixel::ORANGE);
+  stacks_[0].push_back(blue);
+  Cube purpule(2, uiuc::HSLAPixel::PURPLE);
+  stacks_[0].push_back(blue);
+  Cube yellow(1, uiuc::HSLAPixel::YELLOW);
+  stacks_[0].push_back(blue);
+}
+```
+
+**Makefile**<br>
+```
+EXE = main
+OBJS = main.o uiuc/Cube.o uiuc/HSLAPixel.o Game.o Stack.o
+CLEAN_RM =
+
+include ../_make/generic.mk
+
+```
+
+**compile and execute**<br>
+```
+$ ./main
+> Initial game state: 
+> Stack[0]: 4 3 2 1 
+> Stack[1]: 
+> Stack[2]: 
+> 
+> Stack[0]: 4 3 2 1 
+> Stack[1]: 
+> Stack[2]: 
+> 
+> Final game state: 
+> Stack[0]: 4 3 2 1 
+> Stack[1]: 
+> Stack[2]: 
+```
