@@ -485,6 +485,7 @@ int main() {
   return 0;
 }
 ```
+
 **Makefile**<br>
 ```
 EXE = main
@@ -571,6 +572,7 @@ class Shape {
   private:
     double width_;
 };
+```
 
 **Cube.h**<br>
 ```
