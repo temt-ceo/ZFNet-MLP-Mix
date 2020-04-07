@@ -462,13 +462,46 @@ int main() {
 ### Week4. the Tower of Hanoi problem
 **Key Concepts**<br>
  ・ Object-oriented design<br>
- ・ Templates<br>
+ ・ Templates(template type or <T>: this can take on different types)<br>
  ・ Class hierarchies and inheritance<br>
 
-**Cube.h**<br>
+**main.cpp**<br>
 ```
+#include <vector>
+#include <iostream>
+
+int main() {
+  // Template Type
+  std::vector<int> v;
+  v.push_back(2);
+  v.push_back(3);
+  v.push_back(5);
+
+  std::cout << v[0] << std::endl;
+  std::cout << v[1] << std::endl;
+  std::cout << v[2] << std::endl;
+
+  return 0;
+}
+```
+**Makefile**<br>
+```
+EXE = main
+OBJS = main.o
+CLEAN_RM =
+
+include ../_make/generic.mk
+
 ```
 
+**compile and execute**<br>
+```
+$ ./main
+> 2
+> 3
+> 5
+
+```
 
 
 
