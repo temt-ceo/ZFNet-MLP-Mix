@@ -531,6 +531,7 @@ int main() {
 }
 
 ```
+
 **Makefile**<br>
 ```
 EXE = main
@@ -592,6 +593,36 @@ namespace uiuc {
 
 
 ```
+
+**Cube.cpp**<br>
+```
+  ...
+  /* Inheritしたclassはdefault constructorでbase classをinitializeしなければならない */
+  Cube::Cube(double width, uiuc::HSLAPixel color) : Shape(width) { // -> c++にShapeをinitializeするように依頼している。
+    color_ = color;
+  }
+  ...
+```
+
+**Shape.cpp**<br>
+```
+#include "Shape.h"
+
+/* 1行も中身が無いが、single argument constructorに1を渡している */
+Shape::Shape() : Shape(1) {
+  // Nothing
+}
+
+/* 1行も中身が無いが、private variableにwidthを渡している */
+Shape::Shape(double width) : width_(width) {
+  // Nothing
+}
+...
+```
+
+
+
+
 
 
 
