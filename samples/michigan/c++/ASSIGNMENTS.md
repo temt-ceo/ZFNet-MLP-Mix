@@ -27,30 +27,20 @@ int main() {
 ```
 #include <iostream>
 
-// This class Pair has already been defined for you.
-// (You may not change this definition.)
 class Pair {
-public:
-  int first, second;
-  void check() {
-    first = 5;
-    std::cout << "Congratulations! The check() method of the Pair class \n has executed. (But, this isn't enough to guarantee \n that your code is correct.)" << std::endl;
-  }
+  public:
+    int first, second;
+    void check() {
+      first = 5;
+      std::cout << "Congratulations! The check() method of the Pair class \n has executed. (But, this isn't enough to guarantee \n that your code is correct.)" << std::endl;
+    }
 };
-
-// Insert your declaration and implementation of the function pairFactory()
-// below, by replacing "..." with proper C++ code. Be sure to declare the
-// function type to return a pointer to a Pair.
 
 Pair *pairFactory() {
   Pair *p =  new Pair;
   return p;
 }
 
-// Your function should be able to satisfy the tests below. You should try
-// some other things to convince yourself. If you have a bug in this problem,
-// the usual symptom is that after you submit, the grader will crash with a
-// system error. :-)
 int main() {
   Pair *p;
   p = pairFactory();
@@ -93,4 +83,51 @@ int main() {
 
 // Also note, the autograder does not care about letter case, punctuation,
 // or spacing! But it does care about spelling and the order of words!
+```
+
+
+#### Object-Oriented Data Structures in C++ (Week3) study memo
+```
+/* Class Pair has already been declared
+ * as shown in the following comments:
+ *
+ * class Pair {
+ * public:
+ *   int *pa,*pb;
+ *   Pair(int, int);
+ *   Pair(const Pair &);
+ *  ~Pair();
+ * };
+ *
+ * Implement its member functions below.
+ */
+/* (Assignment1)Constructor */
+Pair::Pair(int a, int b) {
+  pa = new int(a);
+  pb = new int(b);
+}
+
+/* (Assignment2)Copy Constructor( It should set up the newly constructed Pair as a "deep copy".) */
+Pair::Pair(const Pair & other) {
+  pa = new int(* other.pa);
+  pb = new int(* other.pb);
+}
+
+/* (Assignment3)Destructor */
+Pair::~Pair() {
+  delete pa; pa = nullptr;
+  delete pb; pb = nullptr;
+}
+
+int main() {
+  Pair p(15,16);
+  Pair q(p);
+  Pair *hp = new Pair(23,42);
+  delete hp;
+  
+  std::cout << "If this message is printed,"
+    << " at least the program hasn't crashed yet!\n"
+    << "But you may want to print other diagnostic messages too." << std::endl;
+  return 0;
+}
 ```
