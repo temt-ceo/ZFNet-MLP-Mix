@@ -465,6 +465,7 @@ int main() {
  ・ Templates(template type or <T>: this can take on different types)<br>
  ・ Class hierarchies and inheritance<br>
 
+#### template type 1
 **main.cpp**<br>
 ```
 #include <vector>
@@ -503,9 +504,77 @@ $ ./main
 
 ```
 
+#### template type 2
+**main.cpp**<br>
+```
+#include <iostream>
+using std::cout;
+using std::endl;
 
+#include "Cube.h"
+using uiuc::Cube;
 
+/* Use Template Type */
+template <typename T>
+T max(T a, T b) {
+  if (a > b) { return a; }
+  return b
+}
 
+int main() {
+  cout << "max(3, 5): " << max(3, 5) << endl; // -> 5
+  cout << "max('a', 'd'): " << max('a', 'd') << endl; // -> d
+  cout << "max(\"Hello\", \"World\"): " << max("Hello", "World") << endl; // -> "World"
+  cout << "max(Cube(3), Cube(6)): " << max(Cube(3), Cube(6)) << endl; // -> Need to define.
+
+  return 0;
+}
+
+```
+**Makefile**<br>
+```
+EXE = main
+OBJS = main.o Cube.o
+CLEAN_RM =
+
+include ../_make/generic.mk
+
+```
+
+**compile and execute**<br>
+```
+$ make
+> g++ -std=c++14 -O0 -pedantic -Wall  -Wfatal-errors -Wextra  -MMD -MP -g -c  main.cpp -o .objs/main.o
+> main.cpp:17:9: fatal error: invalid operands to binary expression ('uiuc::Cube' and 'uiuc::Cube')
+>   if (a > b) { return a; }
+>       ~ ^ ~
+> main.cpp:25:42: note: in instantiation of function template specialization 'max<uiuc::Cube>' requested here
+>   cout << "max( Cube(3), Cube(6) ): " << max( Cube(3), Cube(6) ) << endl;
+>                                          ^
+> 1 error generated.
+> make: *** [.objs/main.o] Error 1
+
+```
+
+#### template type 3(Inheritance) Shape -> Cube
+**Shape.h**<br>
+```
+#pragma once
+
+class Shape {
+  public:
+    Shape(); // Custom Default Constructor
+    Shape(double width); // Single Argument Constructor
+    double getWidth() const;
+
+  private:
+    double width_;
+};
+
+**Cube.h**<br>
+```
+
+```
 
 
 
