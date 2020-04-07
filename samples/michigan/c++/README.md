@@ -10,7 +10,7 @@ https://en.cppreference.com/w/
 https://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list
 
 ## University of Illinois study memo
-#### Week1. C++ Classes
+### Week1. C++ Classes
 **Cube.h**<br>
 ```
 #pragma once
@@ -87,7 +87,7 @@ $ ./main
 ```
 <br>
 
-#### Week2. Stack/Heap Memory
+### Week2. Stack/Heap Memory
 **Key Concepts**<br>
  ・ Pointers and dereferencing ... 変数のaddressを保存する変数。<br>
  ・ Local(stack) memory ... 関数の実行中のみ。実行後は解放。メモリがfffから始まるのは最高値から割当てるため。最高値から積み重なる。<br>
@@ -299,7 +299,7 @@ Box b; // (Class types are) ok.
 ```
 <br>
 
-#### Week3. Constructor/Destructor
+### Week3. Constructor/Destructor
 **Key Concepts**<br>
  ・ Constructors and destructors<br>
  ・ Methods and operators<br>
@@ -459,7 +459,7 @@ int main() {
 ```
 <br>
 
-#### Week4. the Tower of Hanoi problem
+### Week4. the Tower of Hanoi problem
 **Key Concepts**<br>
  ・ Object-oriented design<br>
  ・ Templates<br>
