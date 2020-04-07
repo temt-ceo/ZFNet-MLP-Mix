@@ -346,7 +346,7 @@ Box b; // (Class types are) ok.
     length_ = obj.length_;
     std::cout << "Assignment operator invoked!" << std::endl;
     std::cout << "Transformed " << getVolume() << " -> " << obj.getVolume() << std::endl;
-    return *this; // -> return the dereference of this
+    return *this; // -> return the dereference of this("this" is a pointer to the current object instance)
   }
   
   /* Destructor */
