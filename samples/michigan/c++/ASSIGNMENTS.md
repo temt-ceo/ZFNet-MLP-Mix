@@ -254,3 +254,59 @@ int main() {
   return 0;
 }
 ```
+
+#### Object-Oriented Data Structures in C++ (Week4) submission task
+
+**uiuc/PNG.h**<br>
+```
+#pragma once
+
+#include <string>
+#include <vector>
+#include "HSLAPixcel.h"
+
+using namespace std;
+
+namespace uiuc {
+  class PNG {
+    public:
+      PNG(); // -> creates an empty PNG image
+      PNG(unsigned int width, unsigned int height); // -> Creates a PNG image of the specified dimensions.
+      PNG(PNG const & other);
+      ~PNG();
+      bool operator== (PNG const & other) const; // -> Equality operator: checks if two images are the same.
+      bool operator!= (PNG const & other) const; // -> Equality operator: checks if two images are different.
+      bool readFromFile(string const & filename);
+      bool writeToFile(string const & filename);
+
+      HSLAPixcel & getPixel(unsigned int x, unsigned int y) const; // -> Gets a reference to the pixel at the given coordinates in the image.
+      
+      unsigned int width() const;
+      unsigned int height() const;
+      void resize(unsigned int newWidth, unsigned int newHeight);
+
+      std::size_t computeHash() const; // -> Computes a hash of the image.
+
+    private:
+      unsigned int width_;
+      unsigned int height_;
+      HSLAPixel *imageData_;
+      HSLAPixel defaultPixel_;
+      void _copy(PNG const & other);
+  };
+
+  std::ostream & operator<<(std::ostream & out, PNG const & pixel);
+  std::stringstream & operator<<(std::stringstream & out, PNG const & pixel);
+}
+```
+
+**uiuc/PNG.cpp**<br>
+```
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <functional>
+#include <cassert>
+#include "lodepng/lodepnh.h"
+
+```
