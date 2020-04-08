@@ -347,10 +347,19 @@ namespace uiuc {
   }
 
   PNG const & PNG::operator=(PNG const & other) {
-    if (this != &other)
+    if (this != &other) { _copy(other); }
+    return *this
   }
+  
+  // Equality operator: checks if two images are the same.
+  bool operator== (PNG const & other) const {
+    if (width_ != other.width_) { return false; }
+    if (height_ != other.height_) { return false; }
 
-      bool operator== (PNG const & other) const; // -> Equality operator: checks if two images are the same.
+    for (unsigned i = 0; i < width_ * height_; i++) {
+      HSLAPixel & p1 = imageData_[i];
+    }
+  }
       bool operator!= (PNG const & other) const; // -> Equality operator: checks if two images are different.
       bool readFromFile(string const & filename);
       bool writeToFile(string const & filename);
