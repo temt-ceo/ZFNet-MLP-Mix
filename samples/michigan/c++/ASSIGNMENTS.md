@@ -308,5 +308,69 @@ namespace uiuc {
 #include <functional>
 #include <cassert>
 #include "lodepng/lodepnh.h"
+#include "HSLAPixel.h"
+#include "PNG.h"
+#include "RGB_HSL.h"
 
+namespace uiuc {
+  void PNG::_copy(PNG const & other) {
+    delete[] imageData_; // Clear self
+    width_ = other.width_;
+    height_ = other.height_;
+    imageData_ = new HSLAPixel(wisth_ * height_);
+    for (unsigned i = 0; i < width_ * height_; i++) {
+      imageData_[i] = other.imageData_[i];
+    }
+  }
+
+  // creates an empty PNG image
+  PNG() {
+    width_ = 0;
+    height_ = 0;
+    imageData_ = new HSLAPixel[width * height];
+  }
+  
+  // Creates a PNG image of the specified dimensions.
+  PNG(unsigned int width, unsigned int height) {
+    width_ = width;
+    height_ = height;
+    imageData_ = new HSLAPixel[width * height];
+  }
+
+  PNG(PNG const & other) {
+    imageData_ = NULL;
+    _copy(other);
+  }
+
+  ~PNG() {
+    delete[] imageData_;
+  }
+
+  PNG const & PNG::operator=(PNG const & other) {
+    if (this != &other)
+  }
+
+      bool operator== (PNG const & other) const; // -> Equality operator: checks if two images are the same.
+      bool operator!= (PNG const & other) const; // -> Equality operator: checks if two images are different.
+      bool readFromFile(string const & filename);
+      bool writeToFile(string const & filename);
+
+      HSLAPixcel & getPixel(unsigned int x, unsigned int y) const; // -> Gets a reference to the pixel at the given coordinates in the image.
+      
+      unsigned int width() const;
+      unsigned int height() const;
+      void resize(unsigned int newWidth, unsigned int newHeight);
+
+      std::size_t computeHash() const; // -> Computes a hash of the image.
+
+    private:
+      unsigned int width_;
+      unsigned int height_;
+      HSLAPixel *imageData_;
+      HSLAPixel defaultPixel_;
+      void _copy(PNG const & other);
+
+  std::ostream & operator<<(std::ostream & out, PNG const & pixel);
+  std::stringstream & operator<<(std::stringstream & out, PNG const & pixel);
+}
 ```
