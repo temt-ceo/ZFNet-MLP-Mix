@@ -358,16 +358,108 @@ namespace uiuc {
 
     for (unsigned i = 0; i < width_ * height_; i++) {
       HSLAPixel & p1 = imageData_[i];
+      HSLAPixel & p2= other.imagData_[i]
+      if (p1.h != p2.h || p1.s != p2.s || p1.l != p2.l || p1.a != p2.a) { return false; }
     }
-  }
-      bool operator!= (PNG const & other) const; // -> Equality operator: checks if two images are different.
-      bool readFromFile(string const & filename);
-      bool writeToFile(string const & filename);
 
-      HSLAPixcel & getPixel(unsigned int x, unsigned int y) const; // -> Gets a reference to the pixel at the given coordinates in the image.
+    return true;
+  }
+
+  // Equality operator: checks if two images are different.
+  bool operator!= (PNG const & other) const {
+    return !(*this == other);
+  }
+
+  bool readFromFile(string const & filename) {
+    vector<unsigned char>byteData;
+    unsigned error = lodepng::decode(byteData, width_, height_, fileName);
+
+    if (error) {
+      cerr << "PNG decoder error " << error << ": " << lodepng_error_text(error) << endl;
+      return false;
+    }
+
+    delete[] imageData_;
+    imageData_ = new HSLAPixel[width_ * height_]l
+
+    for (unsigned i = 0; i < byteData.size(); i += 4) {
+      rgbaColor rgb;
+      rgb.r = byteData[i];
+      rgb.g = byteData[i + 1];
+      rgb.b = byteData[i + 2];
+      rgb.a = byteData[i + 3];
+
+      hslaColor hsl = rgb2hs(rgb);
+      HSLAPixel & pixel = imageData_[i/4];
+      rgb.h = hsl.h;
+      rgb.s = hsl.s;
+      rgb.l = hsl.l;
+      rgb.a = hsl.a;
+    }
+
+    return true;
+  }
       
-      unsigned int width() const;
-      unsigned int height() const;
+  bool writeToFile(string const & fileName) {
+    unsigned char *byteData = new unsigned char[width_ * height_ * 4];
+
+    for (unsigned i = 0; i < width_ * height_; i++) {
+      hslaColor hsl;
+      hsl.h = imageData_[i].h;
+      hsl.s = imageData_[i].s;
+      hsl.l = imageData_[i].l;
+      hsl.a = imageData_[i].a;
+
+      rgbaColor rgb = hsl2rgb(hsl);
+      byteData[(i * 4)] = rgb.r;
+      byteData[(i * 4) + 1] = rgb.g;
+      byteData[(i * 4) + 2] = rgb.b;
+      byteData[(i * 4) + 3] = rgb.a;
+    }
+
+    unsigned error = lodepng::encode(fileName, byteData, width_, height_);
+    if (error) {
+      cerr << "PNG encoding error " << error << ": " << lodepng_error_text(error) << endl;
+    }
+
+    delete[] byteData;
+    return (error == 0);
+  }
+
+  // Gets a reference to the pixel at the given coordinates in the image.
+  HSLAPixcel & getPixel(unsigned int x, unsigned int y) const {
+    if (width_ == 0 || height_ == 0) {
+      cerr << "ERROR: Call to uiuc::PNG::getPixel() made on an image width no pixels." << endl;
+      assert(width_ > 0);
+      assert(width_ > 0);
+    }
+
+    if (x >= width_) {
+      cerr << "WARNING: Call to uiuc::PNG::getPixel(" << x << "," << y << ") tries to access x=" << x
+          << ", which is outside of the image (image width: " << width_ << ")." << endl;
+      cerr << "       : Truncating x to " << (width_ - 1) << endl;
+      x = width_ - 1;
+    }
+
+    if (y >= height_) {
+      cerr << "WARNING: Call to uiuc::PNG::getPixel(" << x << "," << y << ") tries to access y=" << y
+          << ", which is outside of the image (image height: " << height_ << ")." << endl;
+      cerr << "       : Truncating y to " << (height_ - 1) << endl;
+      y = height_ - 1;
+    }
+
+    unsigned index = x + (y * width_);
+    return imageData_[index];
+  }
+      
+  unsigned int width() const {
+    return width_;
+  }
+
+  unsigned int height() const {
+    return height_;
+  }
+
       void resize(unsigned int newWidth, unsigned int newHeight);
 
       std::size_t computeHash() const; // -> Computes a hash of the image.
