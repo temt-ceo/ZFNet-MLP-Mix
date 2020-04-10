@@ -625,6 +625,9 @@ Shape::Shape(double width) : width_(width) {
 <br>
 **::**<br>
 the scope resolution operator, ::, denotes the fully-qualified name of a function or variable that is a member of a class (or namespace). So, you will see things like class name::member name in writing and in code, in some contexts. Note how this is different from the member selection operator, ., which appears in contexts like class instance.member name. This is because :: shows a relationship to an entire class or to a namespace, whereas the . operator shows a relationship to a single instance of an object.
-
+<br>
+<br>
+**pass-by-reference(&)**<br>
+the class members utilize pass-by-reference as shown by the & operator; It means that a direct reference to the memory is being passed, which uses the same concept of indirection that pointers offer, but with a simple syntax—you just use the variable as you would normally, not by dereferencing a memory address explicitly with the * operator as pointers do, and yet you are still able to implicitly manipulate the data located at the original memory location. This convenience feature was one of the benefits of C++ over the older C language.
 
 
