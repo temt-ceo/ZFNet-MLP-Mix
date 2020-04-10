@@ -323,4 +323,10 @@ $ ./ImageTransform
 $ ./test
   (pass)
 $ make zip
+> form.h ImageTransform.cpp
+>   adding: uiuc/HSLAPixel.h (deflated 52%)
+>   adding: uiuc/HSLAPixel.cpp (deflated 32%)
+>   adding: ImageTransform.h (deflated 34%)
+>   adding: ImageTransform.cpp (deflated 61%)
+> Created zip file:  ImageTransform_submission.zip
 ```
