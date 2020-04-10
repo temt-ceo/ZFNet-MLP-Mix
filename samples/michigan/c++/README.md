@@ -623,6 +623,12 @@ Shape::Shape(double width) : width_(width) {
 ```
 <br>
 <br>
+**./main**<br>
+ When we want to run a program that is in the current directory, we have to specify that by writing **./** in front of the name. Otherwise, Linux would look for system-wide command with that name instead.
+<br>
+
+<br>
+<br>
 **"::"**<br>
 the scope resolution operator, ::, denotes the fully-qualified name of a function or variable that is a member of a class (or namespace). So, you will see things like class name::member name in writing and in code, in some contexts. Note how this is different from the member selection operator, ., which appears in contexts like class instance.member name. This is because :: shows a relationship to an entire class or to a namespace, whereas the . operator shows a relationship to a single instance of an object.
 <br>
