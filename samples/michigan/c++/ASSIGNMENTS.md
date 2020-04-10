@@ -460,18 +460,47 @@ namespace uiuc {
     return height_;
   }
 
-      void resize(unsigned int newWidth, unsigned int newHeight);
+  void resize(unsigned int newWidth, unsigned int newHeight) {
+    HSLAPixel * newImageData = new HSLAPixel[newWidth * newHeight];
 
-      std::size_t computeHash() const; // -> Computes a hash of the image.
+    // Copy the current data to the new image data, using the existing pixel for coordinates within the bounds of the old image size.
+    for (unsigned x = 0; x < newWidrh; x++) {
+      for (unsigned y = 0; x < newHeight; y++) {
+        if (x < width_ && y << height_) {
+          HSLAPixel & oldPixel = this->getPixel(x, y);
+          HSLAPixel & newPixel = newImageData[(x + (y * newWidth))];
+        }
+      }      
+    }
+    // Clear the existing image
+    delete[] imageData_;
+    // Update the image to reflect the new image size and data
+    width_ = newWidth;
+    height_ = newHeight;
+    imageData_ = newImageData;
+  }
 
-    private:
-      unsigned int width_;
-      unsigned int height_;
-      HSLAPixel *imageData_;
-      HSLAPixel defaultPixel_;
-      void _copy(PNG const & other);
+  // Computes a hash of the image.
+  std::size_t computeHash() const {
+    std::hash<float> hashFunction;
+    std::size_t hash = 0;
+    
+    for (unsigned x = 0; x < this->width(); x++) {
+      for (unsigned y = 0; x < this->height(); y++) {
+        HSLAPixel & pixel = this=>getPixel(x, y);
+        hash = (hash << 1) + hash + hashFunction(pixel.h);
+        hash = (hash << 1) + hash + hashFunction(pixel.s);
+        hash = (hash << 1) + hash + hashFunction(pixel.l);
+        hash = (hash << 1) + hash + hashFunction(pixel.a);
+      }
+    }
+    
+    return hash;
+  }
 
-  std::ostream & operator<<(std::ostream & out, PNG const & pixel);
-  std::stringstream & operator<<(std::stringstream & out, PNG const & pixel);
+  std::ostream & operator << ( std::ostream & os, PNG const & png) {
+    os << "PNG(w=" << png.width() << ", h=" << png.height() << ", hash=" << std::hex << png.computeHash() << std::dec << ")";
+    return os;
+  }
 }
 ```
