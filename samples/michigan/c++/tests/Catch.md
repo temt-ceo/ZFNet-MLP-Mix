@@ -119,7 +119,7 @@ TEST_CASE("createSpotlight", "[weight=1]") {
     REQUIRE( png.getPixel(100, 50 + 20).l * 0.9 == Approx(result.getPixel(100, 50 + 20).l );
   }
 
-  SECTION("Spotlight should not modify the center pixel") {
+  SECTION("Spotlight should be correct at 5 pixels away from center") {
     REQUIRE( png.getPixel(100 + 3, 50 + 4).l * 0.975== Approx(result.getPixel(100 + 3, 50 + 4).l );
   }
 }
