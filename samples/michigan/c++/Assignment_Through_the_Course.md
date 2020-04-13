@@ -71,7 +71,22 @@ will be a gray pixel
  *
  * @return The image with a spotlight.
  */
-PNG grayscale(PNG image, int centerX, int centerY) {
+PNG createSpotlight(PNG image, int centerX, int centerY) {
+  for (unsigned x = 0; x < image.width(); x++) {
+    for (unsigned y = 0; y < image.height(); y++) {
+      HSLAPixel & pixel = image.getPixel(x, y);
+      int diff_x = (int)x - centerX;
+      int diff_y = (int)y - centerY;
+      double euclidean = sqrt(diff_x * diff_x + diff_y * diff_y);
+      if (euclidean >= 160) {
+        pixel.l = pixel.l * 0.2;
+      } else {
+        double darken_rate =  euclidean * 0.5;
+        // luminance - (luminance * darken_rate(%))
+        pixel.l = pixel.l - (pixel.l * darken_rate * 0.01);
+      }
+    }
+  }
   
   return image;
 }
@@ -86,8 +101,31 @@ PNG grayscale(PNG image, int centerX, int centerY) {
  *
  * @return The illinify'd image.
  */
-PNG grayscale(PNG image) {
-  
+PNG illinify(PNG image) {
+  double illini_orange = 11;
+  double illini_blue = 216;
+  for (unsigned x = 0; x < image.width(); x++) {
+    for (unsigned y = 0; y < image.height(); y++) {
+      HSLAPixel & pixel = image.getPixel(x, y);
+      double target_hue = pixel.h;
+      if (target_hue <= illini_orange) {
+        pixel.h = illini_orange;
+      } else if (target_hue <= illini_blue) {
+        if ((target_hue - illini_orange) < (illini_blue - target_hue)) {
+          pixel.h = illini_orange;
+        } else {
+          pixel.h = illini_blue;
+        }
+      } else {
+        if ((target_hue - illini_blue) < (illini_orange + 360 - target_hue)) {
+          pixel.h = illini_blue;
+        } else {
+          pixel.h = illini_orange;
+        }
+      }
+    }
+  }
+
   return image;
 }
 
@@ -103,7 +141,20 @@ PNG grayscale(PNG image) {
  * @return The watermarked image.
  */
 PNG watermark(PNG firstImage, PNG secondImage) {
-  
+  for (unsigned x = 0; x < firstImage.width(); x++) {
+    if (x < secondImage.width()) {
+      for (unsigned y = 0; y < firstImage.height(); y++) {
+        if (y < secondImage.height()) {
+          HSLAPixel & pixel_s = secondImage.getPixel(x, y);
+          if (pixel_s.l == 1.0) {
+            HSLAPixel & pixel_f = firstImage.getPixel(x, y);
+            pixel_f.l = pixel_f.l > 0.8 ? 1.0 : pixel_f.l + 0.2;
+          }
+        }
+      }
+    }
+  }
+
   return firstImage;
 }
 
