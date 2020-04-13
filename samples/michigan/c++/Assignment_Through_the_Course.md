@@ -1,7 +1,7 @@
 
 #### Object-Oriented Data Structures in C++ (Week4) submission task
 
-**uiuc/ImageTransform.h**<br>
+**ImageTransform.h**<br>
 ```
 #pragma once
 
@@ -15,7 +15,7 @@ PNG watermark(PNG image, PNG secondImage);
 
 ```
 
-**uiuc/ImageTransform.cpp**<br>
+**ImageTransform.cpp**<br>
 ```
 #include <iostream>
 #include <cmath>
@@ -107,6 +107,35 @@ PNG watermark(PNG firstImage, PNG secondImage) {
   return firstImage;
 }
 
+```
+
+**uiuc/HSLAPixel.h**<br>
+```
+#pragma once
+
+#include <iostream>
+#include <sstream>
+
+namespace uiuc {
+  class HSLAPixel {
+    public:
+      double h; // the hue
+      double s; // the saturation
+      double l; // the luminance
+      double a; // the alpha      
+  }
+}
+```
+
+**uiuc/HSLAPixel.cpp**<br>
+```
+#include <cmath>
+#include <iostream>
+#include "HSLAPixel.h"
+using namespace std;
+
+namespace uiuc {
+}
 ```
 
 **uiuc/PNG.h**<br>
