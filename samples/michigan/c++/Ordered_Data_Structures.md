@@ -2,7 +2,7 @@
 ### Linear Structures
 #### Arrays
 ・ Elements are all the same type.<br>
-・ The size of the type od data is known.<br>
+・ The size of the type of data is known.(指定のIndexまでのメモリ = Index ✖️ 固定のメモリ量)<br>
 **main.cpp**<br>
 ```
 #include <iostream>
@@ -13,6 +13,13 @@ int main() {
   
   // Outputs the 4th prime.
   std::cout << values[3] << std::endl;
+  // Print the size of each type `int`:
+  std::cout << sizeof(int) << std::endl; // -> 4
+  
+  // the offset from the beginning of the array to [2]:
+  int offset = (long)&(values[2]) - (long)&(values[0])
+  std::cout << offset << std::endl; // -> 2 x 4 = 8
+  
   return 0;
 }
 ```
