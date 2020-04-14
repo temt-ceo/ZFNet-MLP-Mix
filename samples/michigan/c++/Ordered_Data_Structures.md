@@ -101,7 +101,9 @@ int main() {
 ```
 
 #### Linked Memory
+・ Elements are all the same type.<br>
 ・ A list node refers to pair of both the data and the link.<br>
+・ リストの中間へのInsertが可能になる（但しarraysに比べると遅い）<br>
 
 **List.h**<br>
 ```
@@ -124,4 +126,28 @@ template <typename T>
   }
 ```
 
+**List.cpp**<br>
+```
+#include "List.h"
+template <typename T>
+const T & List<T>::operator[](unsigned index) {
+  ListNode *thru = head_; // head_=0番目の前, Start a `thru` pointer to advance thru the list
+  
+  // Loop until the end of the list.
+  whild (index > 0 && thru->next != nullptr) {
+    thru = thru->next;
+    index--; // これは目的のメモリまであといくつ辿っていくかを指す
+  }
+  
+  return thru->data; // Return the data.
+}
+
+/* 先頭にpush */
+template <typename T>
+void List<t>::insertAtFront(const T & data) {
+  ListNode *node = new ListNode(data); // Create a new ListNode on the heap.
+  node->next = head_; // Set the new node's next pointer to the current head of the List.
+  head_ = node;
+}
+```
 
