@@ -1,12 +1,15 @@
-### Ordered Data Structures in C++
-#### Linear Structures
+## Ordered Data Structures in C++
+### Linear Structures
+#### Arrays
+・ Elements are all the same type.<br>
+・ The size of the type od data is known.<br>
 **main.cpp**<br>
 ```
 #include <iostream>
 
 int main() {
   // Create a fixed sized array of 9 primes:
-  int values[9] = { 2, 3, 5, 7, 11, 13, 15, 17, 19 };
+  int values[9] = { 2, 3, 5, 7, 11, 13, 17, 19, 23 };
   
   // Outputs the 4th prime.
   std::cout << values[3] << std::endl;
@@ -61,5 +64,21 @@ tidy: clean
 .PHONY: all tidy clean
 }
 ```
+
+#### Arrays
+**main.cpp**<br>
+```
+#include <iostream>
+
+int main() {
+  // Create a fixed sized array of 9 primes:
+  int values[9] = { 2, 3, 5, 7, 11, 13, 17, 19, 23 };
+  
+  // Outputs the 4th prime.
+  std::cout << values[3] << std::endl;
+  return 0;
+}
+```
+
 
 
