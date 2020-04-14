@@ -2,7 +2,7 @@
 ### Linear Structures
 #### Arrays
 ・ Elements are all the same type.<br>
-・ The size of the type of data is known.(指定のIndexまでのメモリ = Index ✖️ 固定のメモリ量)<br>
+・ The size of the type of data is known.(指定のIndexまでのメモリ = Index x 固定のメモリ量)<br>
 ・ Arrays must store their data sequentially in memory<br>
 　　(The capacity of an array is the maximum number of elements that can be stored.).<br>
 　　(より大きなメモリを割り当て、そこに内容物を全てコピーすることで増やすことができる。)<br>
@@ -26,7 +26,7 @@ int main() {
   // standard vector = dinamically growing array libraly
   std::cout << "Capacity:" << values2.capacity() << std::endl; // -> 9
   values2.push_back(23));
-  std::cout << "Size:" << values2.size() << std::endl; // -> 10
+  std::cout << "Size:" << values2.size() << std::endl; // -> 10(現在のサイズ)
   std::cout << "Capacity:" << values2.capacity() << std::endl; // -> 18(vectorのサイズをそのまま増やしている)
 
   // the offset from the beginning of the array to [2]:
@@ -100,5 +100,28 @@ int main() {
 }
 ```
 
+#### Linked Memory
+・ A list node refers to pair of both the data and the link.<br>
+
+**List.h**<br>
+```
+#pragma once
+
+template <typename T>
+  class List {
+    public:
+      const T & operator[](unsigned index);  <- l[0] (after the List<int> l;)
+      void insertAtFront(const T & data);
+      
+    private:
+      class ListNode {
+        public:
+	  const T & data;
+	  ListNode *next;
+	  ListNode(const T & data) : data(data), next(nullptr) { }
+      }
+      ListNode *head_; // head pointer
+  }
+```
 
 
