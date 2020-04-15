@@ -9,7 +9,7 @@
 **main.cpp**<br>
 ```
 #include <iostream>
-#include <vector>
+#include <vector> /* 幅が足りなくなると倍々に用意し中身をコピーする。（倍にすることでO(n)となり処理がより早い） */
 
 int main() {
   // Create a fixed sized array of 9 primes:
@@ -167,7 +167,22 @@ Insert After(任意の後にinsert):
 Delete After:
   Array: O(n)
   List: O(1)
-
-
   
+```
+#### Queue
+**main.cpp**<br>
+```
+#include <iostream>
+#include <queue>
+
+int main() {
+  // Create a std::queue:
+  std::queue<std::string> q;
+
+  // Add
+  q.push("Orange"); q.push("Blue"); q.push("Illinois");
+  
+  std::cout << "First pop():" << q.front() << std::endl; // q.front() -> "Orange"
+  q.pop();
+}
 ```
