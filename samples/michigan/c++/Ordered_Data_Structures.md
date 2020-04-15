@@ -151,3 +151,23 @@ void List<t>::insertAtFront(const T & data) {
 }
 ```
 
+#### Estimate Arrays and List Operations Speeds
+```
+Access:
+  Array: O(1)      O...Operation
+  List: O(n)       ...([n]でアクセスする時に)n倍時間がかかる
+Find Data:
+  Array: O(n)      ...ソートされているなら、Binary Search(中央から探索する手段)が可能なのでより早い
+  List: O(n)       ...ソートされていても、Binary Search出来ない（処理が効率化されない）
+ ↑↑Arrayが優れている↑↑
+ ↓↓Listが優れている↓↓
+Insert After(任意の後にinsert):
+  Array: O(n)      ...遅い
+  List: O(1)       ...早い
+Delete After:
+  Array: O(n)
+  List: O(1)
+
+
+  
+```
