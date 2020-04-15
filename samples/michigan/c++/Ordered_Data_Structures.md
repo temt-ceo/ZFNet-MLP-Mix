@@ -27,7 +27,7 @@ int main() {
   std::cout << "Capacity:" << values2.capacity() << std::endl; // -> 9
   values2.push_back(23));
   std::cout << "Size:" << values2.size() << std::endl; // -> 10(現在のサイズ)
-  std::cout << "Capacity:" << values2.capacity() << std::endl; // -> 18(vectorのサイズをそのまま増やしている)
+  std::cout << "Capacity:" << values2.capacity() << std::endl; // -> 18
 
   // the offset from the beginning of the array to [2]:
   int offset = (long)&(values[2]) - (long)&(values[0]) # &によりアドレスを取得
@@ -167,7 +167,12 @@ Insert After(任意の後にinsert):
 Delete After:
   Array: O(n)
   List: O(1)
-  
+Queue Data Structure:
+  Array: O(1)
+  List: O(1)  
+Stack Data Structure:
+  Array: O(1)
+  List: O(1)  
 ```
 #### Queue
 **main.cpp**<br>
