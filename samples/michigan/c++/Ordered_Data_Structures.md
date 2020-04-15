@@ -167,6 +167,8 @@ Insert After(任意の後にinsert):
 Delete After:
   Array: O(n)
   List: O(1)
+
+ ↓↓どちらもok(ややListが速度で有利だが無視できるほど)↓↓
 Queue Data Structure:
   Array: O(1)
   List: O(1)  
@@ -174,6 +176,7 @@ Stack Data Structure:
   Array: O(1)
   List: O(1)  
 ```
+
 #### Queue
 **main.cpp**<br>
 ```
@@ -189,5 +192,23 @@ int main() {
   
   std::cout << "First pop():" << q.front() << std::endl; // q.front() -> "Orange"
   q.pop();
+}
+```
+
+#### Stack
+**main.cpp**<br>
+```
+#include <iostream>
+#include <stack>
+
+int main() {
+  // Create a std::queue:
+  std::stack<std::string> s;
+
+  // Add
+  s.push("Orange"); s.push("Blue"); s.push("Illinois");
+  
+  std::cout << "First pop():" << s.top() << std::endl; // q.top() -> "Illinois"
+  s.pop();
 }
 ```
