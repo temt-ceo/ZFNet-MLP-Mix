@@ -36,6 +36,87 @@ class LinkedList {
       int size_;
     
   public:
+    static constexpr char LIST_GENERAL_BUG_MESSAGE[] = "[ERROR] Probable causes: wrong head_ or tail_ pointer, or some next or prev pointer not updated, or wrong size_";
+    Node* getHeadPtr() { return head_; }
+    Node* getTailPtr() { return tail_; }
+    int size() const { return size_; }
+    bool empty() const { return !head_; }
+    
+    // Return a reference to the actual front data.
+    T& front() {
+      if (!head_) {
+        throw std::runtime_error("front() called on empty LinkedList");
+      }
+      else {
+        return head_->data;
+      }
+    }
+
+    // Instanceがconstの場合の為にoverloadしたfront()。
+    const T& front() const {
+      if (!head_) {
+        throw std::runtime_error("front() called on empty LinkedList");
+      }
+      else {
+        return head_->data;
+      }      
+    }
+
+    T& back() {
+      if (!tail_) {
+        throw std::runtime_error("back() called on empty LinkedList");
+      }
+      else {
+        return tail_->data;
+      }
+    }
+
+    const T& back() const {
+      if (!tail_) {
+        throw std::runtime_error("back() called on empty LinkedList");
+      }
+      else {
+        return tail_->data;
+      }
+    }
+    
+    void pushFront(const T& newData); // Push a copy of the new data item onto the front of the list.
+    void pushBack(const T& newData);
+    void popFront(); // Delete the front item.
+    void popBack();
+    void clear() { // Delete all items.
+      while (head_) {
+        popBack();
+      }
+    
+      if (0 != size_) throw std::runtime_error(std::string("Error in clear: ") + LIST_GENERAL_BUG_MESSAGE);
+    }
+    
+    bool equals(const LinkedList<T>& other) const;
+    bool operator==(const LinkedList<T>& other) const {
+      return equals(other);
+    }
+    bool operator!=(const LinkedList<T>& other) const {
+      return !equals(other);
+    }
+    // This requires that the data type T supports stream output iteself. This is used by the operator<< overload defined in this file.
+    std::ostream& print(std::ostream& os) const;
+
+    // Assuming the list was previously sorted.
+    void insertOrdered(const T& newData);
+    bool isSorted() const;
+    
+    // The insertion sort algorythm thar relies on insertOrdered. This is not an efficient operation; insertion sort is O(n^2).
+    LinkedList<T> insertionSort() const;
+    LinkedList<LinkedList<T>> splitHalves() const;
+    // [1,2,3] => [[1],[2],[3]]
+    LinkedList<LinkedList<T>> explode() const;
+    
+    // Assuming this list instance is currently sorted, and the "other" list is also already sorted.
+    LinkedList<T> merge(const LinkedList<T>& other) const;
+    LinkedList<t> mergeSort() const; // wrapper function that call one of either mergeSortRecursive or mergeSortIterative.
+    
+    
 }
 
 ```
