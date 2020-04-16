@@ -380,6 +380,269 @@ TEST_CASE("Benchmark: Measuring slowdown for sorting algorithms", "[weight=0][.]
 
   }
 }
+// ====================================================
+// Tests: insertOrdered
+// ====================================================
+
+TEST_CASE("Testing insertOrdered: Insert at front", "[weight=1]") {
+  LinkedList<int> l;
+  l.pushBack(1);
+  l.pushBack(2);
+  l.pushBack(3);
+  l.pushBack(7);
+  l.pushBack(49);
+  
+  auto expectedList = l;
+  expectedList.pushFront(-100);
+  auto studentResultList = l;
+  auto* expectedAddress = studentResultList.getTailPtr();
+  studentResultList.insertOrdered(-100);
+  
+  SECTION("Checking that values are correct") {
+    REQUIRE(studentResultList == expectedList);
+  }
+  
+  SECTION("Checking that the list prev links and tail pointer are being set correctly") {
+    REQUIRE(studentResultList.assertPrevLinks());
+  }
+  
+  SECTION("Checking that the list size is being tracked correctly") {
+    REQUIRE(studentResultList.assertCorrectSize());
+  }
+  
+  SECTION("Checking that the existing node addresses didn't change") {
+    auto* studentAddress = studentResultList.getTailPtr();
+    REQUIRE(studentAddress == expectedAddress);
+  } 
+}
+
+TEST_CASE("Testing insertOrdered: Insert at end", "[weight=1]") {
+  LinkedList<int> l;
+  l.pushBack(1);
+  l.pushBack(2);
+  l.pushBack(3);
+  l.pushBack(7);
+  l.pushBack(49);
+  
+  auto expectedList = l;
+  expectedList.pushBack(100);
+  auto studentResultList = l;
+  auto* expectedAddress = studentResultList.getHeadPtr();
+  studentResultList.insertOrdered(100);
+  
+  SECTION("Checking that values are correct") {
+    REQUIRE(studentResultList == expectedList);
+  }
+  
+  SECTION("Checking that the list prev links and tail pointer are being set correctly") {
+    REQUIRE(studentResultList.assertPrevLinks());
+  }
+  
+  SECTION("Checking that the list size is being tracked correctly") {
+    REQUIRE(studentResultList.assertCorrectSize());
+  }
+  
+  SECTION("Checking that the existing node addresses didn't change") {
+    auto* studentAddress = studentResultList.getHeadPtr();
+    REQUIRE(studentAddress == expectedAddress);
+  } 
+}
+
+TEST_CASE("Testing insertOrdered: Insert to empty list", "[weight=1]") {
+  LinkedList<int> l;
+  auto expectedList = l;
+  expectedList.pushBack(100);
+  auto studentResultList = l;
+  studentResultList.insertOrdered(100);
+  
+  SECTION("Checking that values are correct") {
+    REQUIRE(studentResultList == expectedList);
+  }
+  
+  SECTION("Checking that the list prev links and tail pointer are being set correctly") {
+    REQUIRE(studentResultList.assertPrevLinks());
+  }
+  
+  SECTION("Checking that the list size is being tracked correctly") {
+    REQUIRE(studentResultList.assertCorrectSize());
+  }
+}
+
+TEST_CASE("Testing insertOrdered: Insert in middle", "[weight=1]") {
+  LinkedList<int> l;
+  l.pushBack(1);
+  l.pushBack(2);
+  l.pushBack(3);
+  l.pushBack(7);
+  l.pushBack(49);
+  
+  auto studentResultList = l;
+  auto* expectedAddress = studentResultList.getHeadPtr();
+  studentResultList.insertOrdered(5);
+  
+  SECTION("Checking that values are correct") {
+    REQUIRE(studentResultList == expectedList);
+  }
+  
+  SECTION("Checking that the list prev links and tail pointer are being set correctly") {
+    REQUIRE(studentResultList.assertPrevLinks());
+  }
+  
+  SECTION("Checking that the list size is being tracked correctly") {
+    REQUIRE(studentResultList.assertCorrectSize());
+  }
+  
+  SECTION("Checking that the existing node addresses didn't change") {
+    auto* studentAddress = studentResultList.getHeadPtr();
+    REQUIRE(studentAddress == expectedAddress);
+  } 
+}
+
+TEST_CASE("Testing merge: Left list empty; right list non-empty", "[weight=1]") {
+  LinkedList<int> left;
+  LinkedList<int> right;
+  right.pushBack(1);
+  right.pushBack(2);
+  right.pushBack(3);
+  auto expectedList = right;
+
+  auto studentResultList = left.merge(right);
+  
+  SECTION("Checking that values are correct") {
+    REQUIRE(studentResultList == expectedList);
+  }
+  
+  SECTION("Checking that the list prev links and tail pointer are being set correctly") {
+    REQUIRE(studentResultList.assertPrevLinks());
+  }
+  
+  SECTION("Checking that the list size is being tracked correctly") {
+    REQUIRE(studentResultList.assertCorrectSize());
+  }
+}
+
+TEST_CASE("Testing merge: Left list non-empty; right list empty", "[weight=1]") {
+  LinkedList<int> left;
+  left.pushBack(1);
+  left.pushBack(2);
+  left.pushBack(3);
+  LinkedList<int> right;
+  auto expectedList = left;
+
+  auto studentResultList = left.merge(right);
+  
+  SECTION("Checking that values are correct") {
+    REQUIRE(studentResultList == expectedList);
+  }
+  
+  SECTION("Checking that the list prev links and tail pointer are being set correctly") {
+    REQUIRE(studentResultList.assertPrevLinks());
+  }
+  
+  SECTION("Checking that the list size is being tracked correctly") {
+    REQUIRE(studentResultList.assertCorrectSize());
+  }
+}
+
+TEST_CASE("Testing merge: Left and right lists non-empty; same size", "[weight=1]") {
+  LinkedList<int> left;
+  left.pushBack(1);
+  left.pushBack(5);
+  left.pushBack(10);
+  left.pushBack(20);
+  LinkedList<int> right;
+  right.pushBack(2);
+  right.pushBack(4);
+  right.pushBack(11);
+  right.pushBack(19);
+  LinkedList<int> expectedList = left;
+  expectedList.pushBack(1);
+  expectedList.pushBack(2);
+  expectedList.pushBack(4);
+  expectedList.pushBack(5);
+  expectedList.pushBack(10);
+  expectedList.pushBack(11);
+  expectedList.pushBack(19);
+  expectedList.pushBack(20);
+
+  auto studentResultList = left.merge(right);
+  
+  SECTION("Checking that values are correct") {
+    REQUIRE(studentResultList == expectedList);
+  }
+  
+  SECTION("Checking that the list prev links and tail pointer are being set correctly") {
+    REQUIRE(studentResultList.assertPrevLinks());
+  }
+  
+  SECTION("Checking that the list size is being tracked correctly") {
+    REQUIRE(studentResultList.assertCorrectSize());
+  }
+}
+
+TEST_CASE("Testing merge: Left and right lists non-empty; left list is longer", "[weight=1]") {
+  LinkedList<int> left;
+  left.pushBack(1);
+  left.pushBack(5);
+  left.pushBack(10);
+  left.pushBack(20);
+  LinkedList<int> right;
+  right.pushBack(2);
+  right.pushBack(4);
+  LinkedList<int> expectedList = left;
+  expectedList.pushBack(1);
+  expectedList.pushBack(2);
+  expectedList.pushBack(4);
+  expectedList.pushBack(5);
+  expectedList.pushBack(10);
+  expectedList.pushBack(20);
+
+  auto studentResultList = left.merge(right);
+  
+  SECTION("Checking that values are correct") {
+    REQUIRE(studentResultList == expectedList);
+  }
+  
+  SECTION("Checking that the list prev links and tail pointer are being set correctly") {
+    REQUIRE(studentResultList.assertPrevLinks());
+  }
+  
+  SECTION("Checking that the list size is being tracked correctly") {
+    REQUIRE(studentResultList.assertCorrectSize());
+  }
+}
+
+TEST_CASE("Testing merge: Left and right lists non-empty; right list is longer", "[weight=1]") {
+  LinkedList<int> left;
+  left.pushBack(1);
+  left.pushBack(20);
+  LinkedList<int> right;
+  right.pushBack(2);
+  right.pushBack(4);
+  right.pushBack(11);
+  right.pushBack(19);
+  LinkedList<int> expectedList = left;
+  expectedList.pushBack(1);
+  expectedList.pushBack(2);
+  expectedList.pushBack(4);
+  expectedList.pushBack(11);
+  expectedList.pushBack(19);
+  expectedList.pushBack(20);
+
+  auto studentResultList = left.merge(right);
+  
+  SECTION("Checking that values are correct") {
+    REQUIRE(studentResultList == expectedList);
+  }
+  
+  SECTION("Checking that the list prev links and tail pointer are being set correctly") {
+    REQUIRE(studentResultList.assertPrevLinks());
+  }
+  
+  SECTION("Checking that the list size is being tracked correctly") {
+    REQUIRE(studentResultList.assertCorrectSize());
+  }
+}
 
 ```
 
