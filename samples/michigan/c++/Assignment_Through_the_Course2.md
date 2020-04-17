@@ -213,6 +213,33 @@ void LinkedList<T>::popFront() {
   size_--;
 }
 
+template <typename T>
+void LinkedList<T>::popBack() {
+  if (!head_) return;
+  // 最後の１つの場合
+  if (!tail_->prev) {
+    delete tail_;
+    head_ = nullptr;
+    tail_ = nullptr;
+    size_--;
+    if (0 != size_) throw std::runtime_error(std::string("Error in popBack: ") + LIST_GENERAL_BUG_MESSAGE);
+    return;
+  }
+  
+  Node* oldTail = tail_;
+  tail_ = tail_->prev;
+  tail_->next = nullptr;
+  delete oldTail;
+  ildTail = nullptr;
+  size_--;
+}
+
+template <typename T>
+bool LinkedList<T>::isSorted() const {
+  if (size_ < 2) return true; / size 0 or 1 are sorted.
+  if (!head_) throw std::runtime_error(std::string("Error in isSorted: ") + LIST_GENERAL_BUG_MESSAGE);
+  
+}
 
 ```
 
