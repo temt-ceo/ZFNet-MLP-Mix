@@ -239,7 +239,81 @@ bool LinkedList<T>::isSorted() const {
   if (size_ < 2) return true; / size 0 or 1 are sorted.
   if (!head_) throw std::runtime_error(std::string("Error in isSorted: ") + LIST_GENERAL_BUG_MESSAGE);
   
+  const Node* prev = nullptr;
+  const Node* cur = head_;
+  while (cur->next) {
+    prev = cur;
+    cur = cur->next;
+    if (!(prev->data <= cur->data)) {
+      return false;
+    }
+  }
+  
+  return true;
 }
+
+template <typename T>
+bool LinkedList<T>::equals(const LinkedList<T>& other) const { // This check runs in O(n) time.
+  if (size_ != other.size_) {
+    return false;
+  }
+  
+  const Node* thisCur = head_;
+  const Node* otherCur = other.head_;
+  
+  while (thisCur) {
+    if (!otherCur) {
+      throw std::runtime_error(std::string("Error in equals: ") + "otherCur missing a node or wrong item count");
+    }
+    
+    if (thisCur->data != otherCur->data) {
+      return false;
+    }
+    thisCur = thisCur->next;
+    otherCur = otherCur->next;
+  }
+  
+  return true;
+}
+
+// This is not an efficient operation: O(n^2)
+template <typename T>
+LinkedList<T> LinkedList<T>::insertionSort() const {
+  LinkedList<T> result;
+  
+  const Node* cur = head_;
+  while (cur) {
+    result.insertOrdered(cur->data);
+    cur = cur->next;
+  }
+  
+  return result;
+}
+
+/*
+// A different implementation of insertionSort that doesn't use pointers directly
+template <typename T>
+LinkedList<T> LinkedList<T>::insertionSort() const {
+  // Make result list
+  LinkedList<T> result;
+
+  // Temporary working copy of original list
+  LinkedList<T> temp = *this;
+
+  // Consume the temporary copy and insert items into the result in order
+  while (!temp.empty()) {
+    result.insertOrdered(temp.front());
+    temp.popFront();
+  }
+
+  return result;
+}
+*/
+
+// This is used by the operator<< overload
+template <typename T>
+std::ostream& LinkedList<T>::print(std::ostream)
+
 
 ```
 
