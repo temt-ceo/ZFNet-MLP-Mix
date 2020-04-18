@@ -312,7 +312,109 @@ LinkedList<T> LinkedList<T>::insertionSort() const {
 
 // This is used by the operator<< overload
 template <typename T>
-std::ostream& LinkedList<T>::print(std::ostream)
+std::ostream& LinkedList<T>::print(std::ostream) const {
+  // List format will be 【(1)(2)(3)】, etc.
+  os << "【";
+  Node* cur = head_;
+  while (cur) {
+    os << "(" << cur->data << ")";
+    cur = cur->next;
+  }
+  os << "】";
+  return os;
+}
+
+template <typename T>
+LinkedList<LinkedList<T>> LinkedList<T>::splitHalves() const {
+  LinkedList<LinkedList<T>> halves;
+  LinkedList<T> leftHalf = *this;
+  LinkedList<T> rightHalf;
+  
+  if (size_ < 2) {
+    halves.pushBack(leftHalf);
+    halves.pushBack(rightHalf);
+    return halves;
+  }
+  
+  int rightHalfLength = size_ / 2;
+  for (int i=0; i<rightHalfLength; i++) {
+    T dataToCopy = leftHalf.back();   // Copy a data element from right end of the left half
+    rightHalf.pushFront(dataToCopy);  // to the left end of the right half.
+    leftHalf.popBack();
+  }
+  
+  halves.pushBack(leftHalf);
+  halves.pushBack(rightHalf);
+  
+  return halves;
+}
+
+template <typename T>
+LinkedList<LinkedList<T>> LinkedList<T>::explode() const {
+  LinkedList<T> workingCopy = *this;
+  LinkedList< LinkedList<T> > lists;
+  while (!workingCopy.empty()) {
+    LinkedList<T> singletonList;
+    singletonList.pushBack(workingCopy.front());
+    workingCopy.popFront();
+    lists.pushBack(singletonList);
+  }
+  
+  return lists;
+}
+
+template <typename T>
+LinkedList<T> LinkedList<T>::mergeSortRecursive() const {
+  if (size_ < 2) {
+    return *this; // Return a copy of the current list.
+  }
+  
+  // split this list into a list of two lists.
+  LinkedList<LinkedList<T>> halves = splitHalves();
+  LinkedList<T>& left = halves.front();
+  LinkedList<T>& right = halves.back();
+  // recurse on each of the two halves.
+  left = left.mergeSortRecursive();
+  right = right.mergeSortRecursive();
+  return left.merge(right);
+}
+
+template <typename T>
+LinkedList<T> LinkedList<T>::mergeSortIterative() const {
+  if (size_ < 2) {
+    return *this;
+  }
+  LinkedList<LinkedList<T>> workQueue = explode();
+  
+  while(workQueue.size() > 1) {
+    LinkedList<T> left = workQueue.front():
+    workQueue.popFront();
+    LinkedList<T> right = workQueue.front():
+    workQueue.popFront();
+    LinkedList<T> merged = left.merge(right);
+    workQueue.pushBack(merged);
+  }
+  return workQueue.front();
+}
+
+// This is a wrapper function that calls one of either mergeSortRecursive or mergeSortIterative.
+template <typename T>
+LinkedList<T> LinkedList<T>::mergeSort() const {
+  return mergeSortRecursive();
+}
+
+template <typename T>
+bool LinkedList<T>::assertCorrectSize() const {
+  int itemCount = 0;
+  const Node* cur = head_;
+  
+}
+
+
+
+
+
+
 
 
 ```
