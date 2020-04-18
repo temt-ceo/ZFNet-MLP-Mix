@@ -1,6 +1,32 @@
 
 #### Object-Oriented Data Structures in C++ (Week4) submission task
 
+**LinkedListExcercises.h**<br>
+```
+#pragma once // Prevent the header from being included more than once per cpp file.
+
+include <iostream>
+include <string>
+
+#include "LinkedList.h"
+
+template <typename T>
+void LinkedList<T>::insertOrdered(const T& newData) {
+
+}
+
+template <typename T>
+LinkedList<T> LinkedList<T>::merge(const LinkedList<T>& other) const {
+  LinkedList<T> left = *this;
+  LinkedList<T> right = other;
+  
+  LinkedList<T> merged;
+  
+  return merged;
+}
+
+```
+
 **LinkedList.h**<br>
 ```
 #pragma once
@@ -438,11 +464,4 @@ bool LinkedList<T>::assertPrevLinks() const {
 }
 #include "LinkedListExcercise.h"
 
-
-
-
-
-
-
 ```
-
