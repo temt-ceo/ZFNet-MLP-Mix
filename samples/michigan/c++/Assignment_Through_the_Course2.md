@@ -407,9 +407,36 @@ template <typename T>
 bool LinkedList<T>::assertCorrectSize() const {
   int itemCount = 0;
   const Node* cur = head_;
-  
+  while (cur) {
+    itemCount++;
+    cur = cur->next;
+  }
+  if (itemCount != size_) throw std::runtime_error(std::string("Error in assertCorrectSize: ") + LIST_GENERAL_BUG_MESSAGE);
+  else return true;
 }
 
+template <typename T>
+bool LinkedList<T>::assertPrevLinks() const {
+  LinkedList<const Node*> forwardPtrList;
+  LinkedList<const Node*> reversePtrList;
+  {
+    const Node* cur = head_;
+    while (cur) {
+      forwardPtrList.pushBack(cur);
+      cur = cur->next;
+    }
+  }
+  {
+    const Node* cur = tail_;
+    while (cur) {
+      reversePtrList.pushFront(cur);
+      cur = cur->prev;
+    }
+  }
+  if (forwardPtrList == reversePtrList) return true;
+  else throw std::runtime_error(std::string("Error in assertPrevLinks: ") + LIST_GENERAL_BUG_MESSAGE);
+}
+#include "LinkedListExcercise.h"
 
 
 
