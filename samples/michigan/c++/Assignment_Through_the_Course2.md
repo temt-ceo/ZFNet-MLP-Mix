@@ -16,8 +16,7 @@ void LinkedList<T>::insertOrdered(const T& newData) {
 }
 
 template <typename T>
-LinkedList<T> LinkedList<T>::merge(const LinkedList<T>& other) const { // When functions do not modify
-an argument, the argument is marked const accordingly
+LinkedList<T> LinkedList<T>::merge(const LinkedList<T>& other) const {
   LinkedList<T> left = *this;
   LinkedList<T> right = other;
   
