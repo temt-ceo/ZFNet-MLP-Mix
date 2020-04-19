@@ -646,3 +646,15 @@ TEST_CASE("Testing merge: Left and right lists non-empty; right list is longer",
 
 ```
 
+To compile and run the main program:<br>
+```
+make clean && make && ./main
+```
+To compile and run the test suite:<br>
+```
+make clean && make test && ./test
+```
+To compile and run the benchmarks:<br>
+```
+make clean && make test && ./test [bench]
+```
