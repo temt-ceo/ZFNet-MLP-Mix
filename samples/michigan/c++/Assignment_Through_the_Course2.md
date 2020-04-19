@@ -15,6 +15,9 @@ void LinkedList<T>::insertOrdered(const T& newData) {
 
 }
 
+/*  When functions do not modify
+an argument, the argument is marked const accordingly; entire functions are also tagged const when they do
+not modify the current class object itself. */
 template <typename T>
 LinkedList<T> LinkedList<T>::merge(const LinkedList<T>& other) const {
   LinkedList<T> left = *this;
