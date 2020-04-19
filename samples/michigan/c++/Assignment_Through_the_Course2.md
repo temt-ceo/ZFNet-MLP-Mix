@@ -16,7 +16,8 @@ void LinkedList<T>::insertOrdered(const T& newData) {
 }
 
 template <typename T>
-LinkedList<T> LinkedList<T>::merge(const LinkedList<T>& other) const {
+LinkedList<T> LinkedList<T>::merge(const LinkedList<T>& other) const { // When functions do not modify
+an argument, the argument is marked const accordingly
   LinkedList<T> left = *this;
   LinkedList<T> right = other;
   
@@ -464,4 +465,17 @@ bool LinkedList<T>::assertPrevLinks() const {
 }
 #include "LinkedListExcercise.h"
 
+```
+
+To compile and run the main program:<br>
+```
+make clean && make && ./main
+```
+To compile and run the test suite:<br>
+```
+make clean && make test && ./test
+```
+To compile and run the benchmarks:<br>
+```
+make clean && make test && ./test [bench]
 ```
