@@ -233,10 +233,51 @@ class BinaryTree {
     class TreeNode {
       public:
         T & data;
-        TreeNode* left, right;
+        TreeNode *left, *right;
 	TreeNode(T & data) :
 	  data(data), left(nullptr), right(nullptr) { }
     };
     TreeNode *root_;
 };
+```
+
+#### Binary Search Tree(BST)
+・ (BST-Based)Dictionary...左側をペアレントより小さく、右側を大きくして上から探索可能にする<br>
+**Dictionary.h**<br>
+```
+...
+
+template <typename K, typename D>
+class Dictionary {
+  public:
+    Dictionary();
+    const D & find(const K & key);
+    void insert(const K & key, const D & data);
+    const D & remove(const K & key);
+    
+  private:
+    class TreeNode {
+      public:
+        const K & key;
+        const D & data;
+        TreeNode *left, *right;
+	//
+	// The ":" marks an initialization list for the constructor.
+	// keyにkeyを、dataにdataを、leftとrightにnullptrを渡している。（ソースコードがなくとも）-> README.mdのShape.cpp
+	//
+	TreeNode(const K & key, const D & data) :
+	  key(key), data(data), left(nullptr), right(nullptr) { }
+    };
+    TreeNode *head_;
+};
+```
+
+**Dictionary.cpp**<br>
+```
+...
+
+template <typename K, typename D>
+const D& Dictionary<K, D>::find(const K&)
+
+
 ```
