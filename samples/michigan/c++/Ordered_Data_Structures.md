@@ -295,6 +295,12 @@ typename Dictionary<K, D>::TreeNode *& Dictionary<K, D>::_find(const K & key, Tr
   else                     { return _find(key, cur->right); }
 }
 
+template <typename K, typename D>
+void Dictionary<K, D>::insert(const K & key, const D & data) {
+  TreeNode *& node = _find(key, _head);
+  //if (node) { throw std::runtime_error("error: insert() used on an existing key"); }
+  node = new TreeNode(key, data); // pointer by referenceのおかげでこの2行でinsertされたことになる。
+}
 
 ```
 Github repo: https://github.com/wadefagen/coursera/tree/master/bst<br>
