@@ -215,8 +215,8 @@ int main() {
 
 ### Tree Structures
 #### Binary Tree
-・ Elements are all the same type.<br>
-・ The size of the type of data is known.(指定のIndexまでのメモリ = Index x 固定のメモリ量)<br>
+・ Is a full tree complete? No(Full = 全てのノードが0または2つの子ノードを持つ).<br>
+・ Is a complete tree full? No(Complete:左が子ノードまでの高さが高く右が左のノードより高く無いこと。1つのノードもあり得る).<br>
 ・ Arrays must store their data sequentially in memory<br>
 **BinaryTree.h**<br>
 ```
@@ -230,9 +230,9 @@ class BinaryTree {
     class TreeNode {
       public:
         T & data;
-        TreeNode* left;
-        TreeNode* right;
-	TreeNode(T & data) : data(data), left(nullptr), right(nullptr) { }
+        TreeNode* left, right;
+	TreeNode(T & data) :
+	  data(data), left(nullptr), right(nullptr) { }
     };
     TreeNode *root_;
 };
