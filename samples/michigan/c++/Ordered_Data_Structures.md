@@ -299,7 +299,46 @@ template <typename K, typename D>
 void Dictionary<K, D>::insert(const K & key, const D & data) {
   TreeNode *& node = _find(key, _head);
   //if (node) { throw std::runtime_error("error: insert() used on an existing key"); }
-  node = new TreeNode(key, data); // pointer by referenceのおかげでこの2行でinsertされたことになる。
+  node = new TreeNode(key, data); // pointer by reference(*&)のおかげでこの2行目のnode = でinsertされたことになる。
+}
+
+template <typename K, typename D>
+const D & Dictionary<K, D>::remove(const K & key) {
+  TreeNode *& node = _find(key, head_);
+  return _remove(node);
+}
+
+template <typename K, typename D>
+const D & Dictionary<K, D>::_remove(TreeNode *& node) {
+  // Zero child remove(子ノードが無い（一番簡単）)
+  if (node->left == nullptr && node->right ==nullptr) {
+    const D & data = node->data;
+    delete node;
+    node = nullptr;
+    return data;
+  }
+  // One child(left) remove
+  else if (node->left != nullptr && node->right == nullptr) {
+    const D & data = node->data;
+    TreeNode *temp = node;
+    node = node->left; // swapping
+    delete temp;
+    return data;
+  }
+  // One child(left) remove
+  else if (node->left == nullptr && node->right != nullptr) {
+    const D & data = node->data;
+    TreeNode *temp = node;
+    node = node->right; // swapping
+    delete temp;
+    return data;
+  }
+  // Two-child remove
+  else {
+    TreeNode *& iop = _iop( node->left );
+    _swap( node, iop );
+    return _remove(node);
+  }
 }
 
 ```
