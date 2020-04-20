@@ -277,7 +277,23 @@ class Dictionary {
 ...
 
 template <typename K, typename D>
-const D& Dictionary<K, D>::find(const K&)
+const D& Dictionary<K, D>::find(const K & key) {
+  //
+  // "TreeNode*&" is a reference to a pointer to a TreeNode. This allows the tree's functions to rewire the tree based on the pointer connections.
+  // You can have pointers to pointers and references to pointers in C++.
+  //
+  TreeNode *& node = _find(key, head_);
+  if (node == nullptr) { throw std::runtime_error("key not found"); }
+  return node->data;
+}
+
+template <typename K, typename D>
+typename Dictionary<K, D>::TreeNode *& Dictionary<K, D>::_find(const K & key, TreeNode *& cur) const {
+  if (cur == nullptr) { return cur; }
+  else if (key == cur->key) { return cur; }
+  else if (key < cur->key) { return _find(key, cur->left); }
+  else                     { return _find(key, cur->right); }
+}
 
 
 ```
