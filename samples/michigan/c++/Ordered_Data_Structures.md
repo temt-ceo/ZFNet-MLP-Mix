@@ -212,3 +212,21 @@ int main() {
   s.pop();
 }
 ```
+
+### Tree Structures
+#### Binary Tree
+・ Elements are all the same type.<br>
+・ The size of the type of data is known.(指定のIndexまでのメモリ = Index x 固定のメモリ量)<br>
+・ Arrays must store their data sequentially in memory<br>
+　　(The capacity of an array is the maximum number of elements that can be stored.).<br>
+　　(より大きなメモリを割り当て、そこに内容物を全てコピーすることで増やすことができる。)<br>
+**main.cpp**<br>
+```
+#include <iostream>
+#include <vector> /* 幅が足りなくなると倍々に用意し中身をコピーする。（倍にすることでO(n)となり処理がより早い） */
+
+int main() {
+
+  return 0;
+}
+```
