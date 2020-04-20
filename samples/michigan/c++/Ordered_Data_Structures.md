@@ -343,3 +343,19 @@ const D & Dictionary<K, D>::_remove(TreeNode *& node) {
 
 ```
 Github repo: https://github.com/wadefagen/coursera/tree/master/bst<br>
+
+**main.cpp**<br>
+```
+...
+int main() {
+  Dictionary<int, std::string> t;
+  t.insert(34, "thirty four");
+  t.insert(19, "ninteen");
+  t.insert(51, "fifty one");
+  t.insert(55, "fifty five");
+  t.insert(4, "four");
+  t.insert(11, "eleven");
+  t.insert(20, "twenty");
+  t.insert(2, "two");
+}
+```
