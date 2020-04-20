@@ -217,7 +217,10 @@ int main() {
 #### Binary Tree
 ・ Is a full tree complete? No(Full = 全てのノードが0または2つの子ノードを持つ).<br>
 ・ Is a complete tree full? No(Complete:左が子ノードまでの高さが高く右が左のノードより高く無いこと。1つのノードもあり得る).<br>
-・ Arrays must store their data sequentially in memory<br>
+・ preOrder: ルートノードをSHOUT OUTしてから子ノードをSHOUT OUTする<br>
+・ inOrder: 子ノードをSHOUT OUTしてからルートノードをSHOUT OUTする<br>
+・ postOrder: ルートノードを後回しにする<br>
+・ levelOrder: ルートノードから左から右に降りていく<br>
 **BinaryTree.h**<br>
 ```
 #pragma once
