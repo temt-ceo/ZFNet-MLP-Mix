@@ -160,6 +160,7 @@ Find Data:
   Array: O(n)      ...ソートされているなら、Binary Search(中央から探索する手段)が可能なのでより早い
   List: O(n)       ...ソートされていても、Binary Search出来ない（処理が効率化されない）
   BST Dictionary: average case: O(lg(n)), worst case: O(n) ... Dictionaryが最も早い
+       BST = Binary Search Tree
  ↑↑Arrayが優れている↑↑ (が、DictionaryがBest)
  ↓↓Listが優れている↓↓
 Insert After(任意の後にinsert):
