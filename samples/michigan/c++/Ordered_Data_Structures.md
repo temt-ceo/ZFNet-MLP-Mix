@@ -380,3 +380,17 @@ int main() {
 > t.find(51): 
 > Caught exception with error message: error: key not found
 ```
+#### BST Rotations (AVL Trees)
+・ L...Left Rotation.<br>
+・ R...Right Rotation.<br>
+・ LR...Left-Right Rotation.<br>
+・ RL...Right-Left Rotation.<br>
+・ Rotation run in O(1) time.<br>
+**AVL.cpp**<br>
+```
+template <typename K, typename D>
+void AVL<K, D>::_ensureBalance(TreeNode *& cur) {
+  int balance = height
+
+}
+```
