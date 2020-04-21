@@ -219,8 +219,10 @@ int main() {
 
 ### Tree Structures
 #### Binary Tree
-・ Is a full tree complete? No(Full = 全てのノードが0または2つの子ノードを持つ).<br>
+・ Perfect = A binary tree is perfect if and only if all interior nodes have two children and leaves are at the same level.<br>
+・ Is a full tree complete? No(Full = 全てのノードが0または2つの子ノードを持つ。つまり１つだけの子ノードを持っていない。).<br>
 ・ Is a complete tree full? No(Complete:左が子ノードまでの高さが高く右が左のノードより高く無いこと。1つのノードもあり得る).<br>
+・ The height of a complete binary tree is floor(lg n)<br>
 ・ preOrder: ルートノードをSHOUT OUTしてから子ノードをSHOUT OUTする<br>
 ・ inOrder: 子ノードをSHOUT OUTしてからルートノードをSHOUT OUTする<br>
 ・ postOrder: ルートノードを後回しにする<br>
