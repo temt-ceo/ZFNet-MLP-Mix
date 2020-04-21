@@ -335,6 +335,7 @@ const D & Dictionary<K, D>::_remove(TreeNode *& node) {
   }
   // Two-child remove
   else {
+    // 削除するノードの左側で一番右のリーフノード（削除するノードに最も値が近い）を削除するノードと置き換える
     TreeNode *& iop = _iop( node->left );
     _swap( node, iop );
     return _remove(node);
@@ -357,5 +358,18 @@ int main() {
   t.insert(11, "eleven");
   t.insert(20, "twenty");
   t.insert(2, "two");
+  
+  cout << "t.find(51): " << t.find(51) << endl;
+  cout << "t.remove(11): " << t.remove(11) << endl;
+  cout << "t.remove(51): " << t.remove(51) << endl;
+  cout << "t.remove(19): " << t.remove(19) << endl;
+  cout << "t.find(51): " << t.find(51) << endl;
 }
+
+> t.find(51): fifty one
+> t.remove(11): eleven (zero child remove)
+> t.remove(51): fifty one (one child remove)
+> t.remove(19): nineteen (two child remove)
+> t.find(51): 
+> Caught exception with error message: error: key not found
 ```
