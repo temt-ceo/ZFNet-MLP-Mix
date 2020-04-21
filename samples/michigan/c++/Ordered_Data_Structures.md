@@ -159,9 +159,9 @@ Access:
 Find Data:
   Array: O(n)      ...ソートされているなら、Binary Search(中央から探索する手段)が可能なのでより早い
   List: O(n)       ...ソートされていても、Binary Search出来ない（処理が効率化されない）
-  BST Dictionary: average case: O(lg(n)), worst case: O(n) ... Dictionaryが最も早い
+  BST Dictionary: average case: O(lg(n)), worst case: O(n) ... Dictionaryも早いがワーストケースではArrayに劣る
        BST = Binary Search Tree
- ↑↑Arrayが優れている↑↑ (が、DictionaryがBest)
+ ↑↑Arrayが優れている↑↑
  ↓↓Listが優れている↓↓
 Insert After(任意の後にinsert):
   Array: O(n)      ...遅い
@@ -220,9 +220,10 @@ int main() {
 ### Tree Structures
 #### Binary Tree
 ・ Perfect = A binary tree is perfect if and only if all interior nodes have two children and leaves are at the same level.<br>
+・ Complete = A binary tree is complete if and only the tree is perfect up until the last level and all leaf nodes on the last level are pushed to the left. This means there can be only one node with one child, and that child will always be the left child.<br>
 ・ Is a full tree complete? No(Full = 全てのノードが0または2つの子ノードを持つ。つまり１つだけの子ノードを持っていない。).<br>
 ・ Is a complete tree full? No(Complete:左が子ノードまでの高さが高く右が左のノードより高く無いこと。1つのノードもあり得る).<br>
-・ The height of a complete binary tree is floor(lg n)<br>
+・ The height of a complete binary tree is floor(lg n).<br>
 ・ preOrder: ルートノードをSHOUT OUTしてから子ノードをSHOUT OUTする<br>
 ・ inOrder: 子ノードをSHOUT OUTしてからルートノードをSHOUT OUTする<br>
 ・ postOrder: ルートノードを後回しにする<br>
