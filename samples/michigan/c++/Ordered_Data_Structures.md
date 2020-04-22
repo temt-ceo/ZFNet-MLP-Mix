@@ -438,7 +438,16 @@ if (!cur) return;
 template <typename K, typename D>
 const D& AVL<K, D>::_iodRemove(TreeNode *& node, TreeNode *& iop) {
   if (iop->right != nullptr) {
-  
+    // General case: IoP not found yet, keep going deeper.
+    const D& d = _iopRemove(node, iop->right);
+    if (iop) { _ensureBalance(iop); }
+    return d;
+  } else {
+    // Base case: Found IoP, swap the location:
+    _swap( node, iop );
+    std::swap( node, iop );
+    // Remove the swapped node
+    return _remove(iop):
   }
 
 }
