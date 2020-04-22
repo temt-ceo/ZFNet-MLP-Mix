@@ -390,7 +390,20 @@ int main() {
 ```
 template <typename K, typename D>
 void AVL<K, D>::_ensureBalance(TreeNode *& cur) {
-  int balance = height
-
+  // Calculate the balance factor
+  int balance = height(cur->right) - height(cur->left);
+  
+  // Check if the node is current not in balance
+  if ( balance == -2 ) {
+    int l_balance = height(cur->left->right) - height(cur->left->left);
+    if (l_balance == -1) { _rotateRight( cur ); }
+    else                 { _rotateLeftRight( cur ); }
+  } else if ( balance == 2 ) {
+    int l_balance = height(cur->right->right) - height(cur->right->left);
+    if (l_balance == 1) { _rotateLeft( cur ); }
+    else                 { _rotateRightLeft( cur ); }  
+  }
+  
+  _updateHeight(cur);
 }
 ```
