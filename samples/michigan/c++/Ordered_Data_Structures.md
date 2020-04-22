@@ -406,4 +406,29 @@ void AVL<K, D>::_ensureBalance(TreeNode *& cur) {
   
   _updateHeight(cur);
 }
+
+template <typename K, typename D>
+void AVL<K, D>::_rotateLeft(TreeNode *& cur) {
+  // x points to the subtree root.
+  TreeNode *x = cur;
+  // y points to the right child.
+  TreeNode *y = cur->right;
+  
+  // Let node x's new right child to be the old left chld of y.
+  x->right = y->left;
+  // Node y's new left child is x. This puts node y on top.
+  y->left =x;
+  // Since cur is the original tree node pointer that points to the root of this subtree,
+  // we need it to now point to the new root of the subtree, which is node y.
+  cur = y;
+  
+  _updateHeight(x);
+  _updateHeight(y);
+}
+
+template <typename K, typename D>
+void AVL<K, D>::_updateHeight(TreeNode *& cur) {
+if (!cur) return;
+  cur->height = 1 + max(height(cur->left), height(cur->right));
+}
 ```
