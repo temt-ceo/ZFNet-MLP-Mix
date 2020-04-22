@@ -431,4 +431,15 @@ void AVL<K, D>::_updateHeight(TreeNode *& cur) {
 if (!cur) return;
   cur->height = 1 + max(height(cur->left), height(cur->right));
 }
+
+/**
+* Recursive IoP remove.(高さを均等化)
+*/
+template <typename K, typename D>
+const D& AVL<K, D>::_iodRemove(TreeNode *& node, TreeNode *& iop) {
+  if (iop->right != nullptr) {
+  
+  }
+
+}
 ```
