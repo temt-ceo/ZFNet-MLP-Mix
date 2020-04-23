@@ -463,6 +463,7 @@ const D& AVL<K, D>::_iodRemove(TreeNode *& node, TreeNode *& iop) {
 ・ Each internal node has exactly one more child than key.<br>
 ・ Aroot node can be a leaf or have ［2, m］ children.<br>
 ・ Each non-root, internal node has ［ceil(m/2), m］ children.<br>
+・ The number of seeks is no more than logm(n).<br>
 **BTree.h**<br>
 ```
 @pragma once
@@ -500,7 +501,7 @@ class BTree {
 template <typename K>
 bool BTree<K>::_exists(BTree<K>::BTreeNode & node, const K & key) {
   unsigned i;
-  for (i = 0; i < node.keys_ct_ && key < node.keys_[i]; i++) { }
+  for (i = 0; i < node.keys_ct_ && key < node.keys_[i]; i++) { } // keys_[i]がヒットした時点で止まるのでその時のiを保持して次の行に進む
   
   if ( i < node.keys_ct_ && key == node.keys_[i] ) {
     return true;
