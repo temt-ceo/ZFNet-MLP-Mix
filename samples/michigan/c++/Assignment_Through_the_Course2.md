@@ -1,5 +1,5 @@
 
-#### Object-Oriented Data Structures in C++ (Week4) submission task
+#### Ordered Data Structures in C++ (Week1) submission task
 
 **LinkedListExcercises.h**<br>
 ```
