@@ -23,17 +23,56 @@ class Node {
     }
 };
 
-int computeHeight(Node *n) {
-  // Implement computeHeight() here.
-  static int counter = 0;
-  if (!n) {
-    return 0;
-  }
-  counter++;
-  count(n->left);
-  count(n->right);
+#include <stack>
+void computeHeight(Node *n) {
 
-  return counter;
+  // Implement computeHeight() here.
+  static std::stack< Node* > s;
+
+  if (n->left && n->left->height == -1) {
+    // 左が未探索
+    s.push( n );
+    computeHeight(n->left);
+  } else if (n->right && n->right->height == -1) {
+    // 右が未探索
+    s.push( n );
+    computeHeight(n->right);
+  } else if (!(n->left) && !(n->right) ) {
+    // leaf nodeである
+    n->height = 0;
+    std::cout << "(" << n->height << ")" << std::endl;
+    if ( !s.empty() ) {
+      Node * parent = s.top();
+      s.pop();
+      computeHeight(parent);
+    }
+  } else {
+    // 深部まで探索済み、且つ、leaf nodeではない
+    int l_len = 0, r_len = 0;
+
+    if (n->left) {
+      l_len = n->left->height + 1;
+    }
+    if (n->right) {
+      r_len = n->right->height + 1;
+    }
+
+    std::cout << "l_len: " << l_len << ", r_len" << r_len << std::endl;
+
+    if ( l_len >= r_len ) {
+      n->height = l_len;
+    } else {
+      n->height = r_len;
+    }
+    std::cout << "(" << n->height << ")" << std::endl;
+    
+    if ( !s.empty() ) {
+      Node * parent = s.top();
+      s.pop();
+      computeHeight(parent);
+    }
+  }
+  return;
 }
 
 // This function prints the tree in a nested linear format.
