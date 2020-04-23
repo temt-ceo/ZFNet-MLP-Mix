@@ -380,6 +380,8 @@ int main() {
 > t.find(51): 
 > Caught exception with error message: error: key not found
 ```
+
+
 #### BST Rotations (AVL Trees)
 ・ L...Left Rotation.<br>
 ・ R...Right Rotation.<br>
@@ -451,4 +453,79 @@ const D& AVL<K, D>::_iodRemove(TreeNode *& node, TreeNode *& iop) {
   }
 
 }
+```
+
+
+#### B Tree
+・ All keys within a node are in sorted order.<br>
+・ Each node contains no more than m-1 keys.<br>
+・ Each internal node can have at most m children.<br>
+**BTree.h**<br>
+```
+@pragma once
+
+template <typename K>
+class BTree {
+  public:
+    // ,,,
+  
+  private:
+    class BTreeNode {
+      public:
+        K* keys_;
+	unsigned keys_ct_;
+	bool _isLeaf;
+	
+	BTreeNode(): keys_(nullptr), kes_ct_(0), isLeaf(true) { }
+	bool isLeaf() const;
+    };
+    BTreeNode *root_;
+    
+    BTreeNode & _fetchChild(unsigned index);
+    
+    bool _exists(BTreeNode & node, const K & key);
+    // ...
+};
+
+#include "BTree.hpp"
+```
+
+**BTree.h**<br>
+```
+#include "BTree.h"
+
+template <typename K>
+bool BTree<K>::_exists(BTree<K>::BTreeNode & node, const K & key) {
+  unsigned i;
+  for (i = 0; i < node.keys_ct_ && key < node.keys_[i]; i++) { }
+  
+  if ( i < node.keys_ct_ && key == node.keys_[i] ) {
+    return true;
+  }
+  
+  if ( node.isLeaf() ) {
+    return false;
+  } else {
+    BTreeNode nextChild = node._fetchChild(i);
+    return _exists(nextChild, key);
+  }
+  
+  template <typename K>
+  typename BTree<K>::BTreeNode::isLeaf() const {
+    // Stub implementation
+    return true;
+  }
+  
+  template <typename K>
+  typename BTree<K>::BTreeNode & BTree<K>::_fetchChild(unsigned index) {
+    // Stub implementation
+    return *root_;
+  }
+}
+```
+
+**BTree.h**<br>
+```
+
+
 ```
