@@ -460,6 +460,9 @@ const D& AVL<K, D>::_iodRemove(TreeNode *& node, TreeNode *& iop) {
 ・ All keys within a node are in sorted order.<br>
 ・ Each node contains no more than m-1 keys.<br>
 ・ Each internal node can have at most m children.<br>
+・ Each internal node has exactly one more child than key.<br>
+・ Aroot node can be a leaf or have ［2, m］ children.<br>
+・ Each non-root, internal node has ［ceil(m/2), m］ children.<br>
 **BTree.h**<br>
 ```
 @pragma once
