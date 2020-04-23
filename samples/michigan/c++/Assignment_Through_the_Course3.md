@@ -71,5 +71,16 @@ std::ostream& operator<<(std::ostream& os, const GenericTree<T>& tree) {
 //    Implementation section
 // =================================================
 
+template <typename T>
+typename GenericTree<T>::TreeNode* GenericTree<T>::createRoot(const T& rootData) {
+  if (nullptr != rootNodePtr) {
+    constexpr char ERROR_MESSAGE[] = "Tried to createRoot when root already exists";
+    std::cerr << ERROR_MESSAGE << std::endl;
+    throw std::runtime_error(ERROR_MESSAGE);
+  }
+  rootNodePtr = new TreeNode(rootData);
+  return rootNodePtr;
+}
+
 
 ```
