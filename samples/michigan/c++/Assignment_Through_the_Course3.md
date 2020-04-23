@@ -82,5 +82,91 @@ typename GenericTree<T>::TreeNode* GenericTree<T>::createRoot(const T& rootData)
   return rootNodePtr;
 }
 
+template <typename T>
+typename GenericTree<T>::TreeNode* GenericTree<T>::TreeNode::addChild(const T& childData) {
+  TreeNode* newChildPtr = new TreeNode(childData);
+  newChildPtr->parentPtr = this;
+  childrenPtrs.push_back(newChildPtr);
+  return newChildPtr;
+}
+
+template <typename T>
+void GenericTree<T>::deleteSubtree(TreeNode* targetRoot) {
+  if (nullptr == targetRoot) {
+    return;
+  }
+  // Check that the specified node to delete is in the same tree.
+  {
+    TreeNode* walkBack = targetRoot;
+    while (walkBack->parentPtr) {
+      walkBack = walkBack->parentPtr;
+    }
+    if (walkBack != rootNodePtr) {
+      throw std::runtime_error("Tried to delete a node from a different tree");
+    }
+  }
+  
+  bool targetingWholeTreeRoot = (rootNodePtr == targetRoot);
+  if (targetRoot->parentPtr) {
+    bool targetWasFound = false;
+    for (auto& currentChildPtr : targetRoot->parentPtr->childrenPtrs) {
+      if (currentChildPtr == targetRoot) {
+        currentChildPtr = nullPtr;
+        targetWasFound = true;
+        break;
+      }
+    }
+
+    if (!targetWasFound) {
+      constexpr char ERROR_MESSAGE[] = "Target node to delete was not listed as a child of its parent";
+      std::cerr << ERROR_MESSAGE << std::endl;
+      throw std::runtime_error(ERROR_MESSAGE);
+    }
+  }
+  
+  // Now, we need to make sure all the descendents get deleted.
+  std::stack<TreeNode*> nodesToExplore;
+  std::stack<TreeNode*> nodesToDelete;
+  nodesToExplore.push(targetRoot);
+  
+  while (!nodesToExplore.empty()) {
+    TreeNode* curNode = nodesToExplore.top();
+    
+    nodesToExplore.pop();
+    
+    if (showDebugMessages) {
+      std::cerr << "Exploring node: ";
+      if (curNode) {
+        std::cerr << curNode->data << std::endl;
+      }
+      else {
+        std::cerr << "[null]" << std::endl;      
+      }
+    }
+  
+    if (!curNode) { // If nullptr...
+      continue;
+    }
+
+    nodesToDelete.push(curNode);
+
+    for (auto childPtr : curNode->childrenPtrs) {
+      nodesToExplore.push(childPtr);
+    }
+  }
+  
+  while (!nodeToDelete.empty()) {
+    TreeNode * curNode = nodesToDelete.top();
+    nodesToDelete.pop();
+    
+    if (showDebugMessages) {
+      std::cerr << "Deleting node: ";
+      if (curNode) {
+        std::cerr << curNode->data << std::endl;
+      }
+    }
+  }
+}
+
 
 ```
