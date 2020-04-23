@@ -527,9 +527,3 @@ bool BTree<K>::_exists(BTree<K>::BTreeNode & node, const K & key) {
   }
 }
 ```
-
-**BTree.h**<br>
-```
-
-
-```
