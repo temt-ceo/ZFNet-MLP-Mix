@@ -164,9 +164,175 @@ void GenericTree<T>::deleteSubtree(TreeNode* targetRoot) {
       if (curNode) {
         std::cerr << curNode->data << std::endl;
       }
+      else {
+        std::cerr << "[null]" << std::endl;
+      }
     }
+  
+    delete curNode; // Delete the current node pointer
+    curNode = nullptr;
   }
+  
+  if (targetingWholeTreeRoot) { // If we deleted the root node of this class instance, then reset the root pointer.
+    rootNodePtr = nullptr;
+  }
+  
+  return;
 }
 
+template <typename T>
+void GenericTree<T>::compress() {
+  if (!rootNodePtr) return;
+  std::queue<TreeNode*> nodesToExplore;
+  nodesToRxplore.push(rootNodePtr);
+  while (!nodesToExplore.empty()) {
+    TreeNode* frontNode = nodesToExplore.front();
+    nodesToExplore.pop();
+    if (!frontNode) {
+      throw std::runtime_error("Error: Compression exploration queued a null pointer");
+    }
+    std::vector<TreeNode*> compressedChildrenPtrs;
+    for (auto childPtr : frontNode->childrenPtrs) {
+      if (childPtr) {
+        compressedChildrenPtrs.push_back(childPtr);
+        nodesToExplore.push(childPtr);
+      }
+    }
+    // the std::vector::swap() function lets us replace the node's actual children pointer
+    // vector with the new one, even though the compressed one is a local variable here. The
+    // standard template library swaps the internals of the two structures so that the old
+    // one expires here at local space, while the new one lives on with our node.
+    frontNode->chldrenPtrs.swap(compressedChildrenPtrs);
+  }
+
+}
+
+template <typename T>
+std::ostream& GenericTree<T>::Print(std::ostream& os) const {
+  const TreeNode* rootNodePtr = this->rootNodePtr;
+  if (nullptr == rootNodePtr) {
+    return os << "[empty tree]" << std::endl;
+  }
+  
+  std::stack<const TreeNode*> nodesToExplore;
+  nodesToExplore.push(rootNodePtr);
+  
+  std::stack<int> depthStack;
+  depthStack.push(0);
+  
+  std::stack<std::vector<bool>> curMarginStack;
+  curMarginStack.push( std::vector<bool>() ); // Each entry set to true means to display a vertical branch simbol; false meant to a blank space.
+  
+  std::stack<std::vector<bool>> trailingMarginStack;
+  trailingMarginStack.push( std::vector<bool>() );
+  
+  While (!nodesToExplore.empty()) {
+    const TreeNode* curNode = nodesToExplore.top();
+    nodesToExplore.pop();
+    
+    int curDepth = depthStack.top();
+    depthStack.pop();
+    
+    std::vector<bool> curMargin = curMarginStack.top();
+    curMarginStack.pop();
+    
+    std::vector<bool> trailingMargin = trailingMarginStack.top();
+    trailingMarginStack.pop();
+    
+    if (showDebugMessages) {
+      os << "Depth: " << curDepth;
+      std::cerr << " Data: ";
+      if (curNode) {
+        std::cerr << curNode->data << std::endl;
+      }
+       else {
+        std::cerr << "[null]" << std::endl;       
+       }
+    }
+    else {
+      /* Print the tree as vertical art.
+         Display two rows for each node: The first row adds vertical space
+         for clarity (while continuing the trailing stems), and the second
+         row displays the actual data item on a horizontal stem. */
+         
+      constexpr int LAST_ROW = 2;
+      for (int row = 1; row <= LAST_ROW; row++) {
+        // Iterate forward through the margin display flags to fill in the margin.
+        for (auto stemIt = curMargin.begin(); stemIt != curMargin.end(); stemIt++) {
+          bool showStem = *stemIt;
+          std::string stemSymbol = "|";
+          if (!showStem) {
+            stemSymbol = " ";
+          }
+          
+          bool isLastCol = false;
+          if (stemIt + 1 == curMargin.end()) {
+            isLastCol = true;
+          }
+          
+          if (isLastCol) {
+            if (LAST_ROW == row) {
+              os << stemSymbol << "_ "; // The stem before the data item should be "|_ " in effect.
+            }
+            else if (showStem) {
+              os << stemSymbol << std::endl;
+            }
+            else {
+              os << std::endl;
+            }
+          }
+          else {
+            os << stemSymbol << " ";
+          }
+          
+          // Bottom of loop for margin stems
+        }
+        
+        // Bottom of loop for multi-row display
+      }
+      
+      // At the end of the secong row, output the data.
+      // The root node data is displayed alone on the first line correctly.
+      if (curNode) {
+        os << curNode->data << std::endl;
+      }
+      else {
+        os << "[null]" << std::endl;
+      }
+    }
+    
+    // If the node has any children...
+    if (curNode && curNode->childrenPtrs.size() > 0) {
+      // iterate over childrenPtrs in reverse order.
+      // When we do it++, we do iterate in the reverse direction correctly.
+      for (auto it = curNode->childrenPtrs.rbegin(); it != curNode->childrenPtrs.rend(); it++) {
+        const TreeNode* childPtr = *it;
+        nodesToExplore.push(childPtr);
+        
+        depthStack.push(curDepth+1); // Record the depth.
+        
+        auto nextMargin = trailingMargin; // Prepare a working copy of the margin.
+        
+        // All nodes get an extra stem symbol next to their printout.
+        nextMargin.push_back(true);
+        curMarginStack.push(nextMargin);
+        
+        // But the trailing margin is an excepthion. Since it's displayed lowest it need to be blank.
+        auto nextTrailingMargin = trailingMargin;
+        if (curNode->childrenPtrs.rbegin() == it) {
+          // This is the rightmost child, leave a blank trailing.
+          nextTrailingMargin.push_back(false);
+        }
+        else {
+          // Other children leave a vertical stem symbol trailing in the margin.
+          nextTrailingMargin.push_back(true);
+        }
+        trailingMarginStack.push(nextTrailingMargin);
+      }
+    }
+  }
+  
+  return os;
+}
 
 ```
