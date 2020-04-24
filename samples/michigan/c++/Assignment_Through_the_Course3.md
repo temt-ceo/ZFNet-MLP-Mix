@@ -79,6 +79,9 @@ class GenericTree {
     std::ostream& Print(std::ostream& os) const; // Print the tree to the output stream(e.g. cout)
 };
 
+//
+// 以下のPrintメソッドが実際に coutで出力する情報を書き出している。
+//
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const GenericTree<T>& tree) {
   return tree.Print(os);
