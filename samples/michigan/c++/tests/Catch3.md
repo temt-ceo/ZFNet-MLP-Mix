@@ -1,36 +1,22 @@
 #### widely-used C++ testing framework Catch
 
-**week1_tests.cpp**<br>
+**week3_tests.cpp**<br>
 ```
 #include <cstdlib>
-#include <stdexcept>
 #include <sstream>
-#include <chrono>
-
-#include "../LinkedList.h"
-#include "../LinkedListExercises.h"
 
 #include "../uiuc/catch/catch.hpp"
 
-template<typename T >
-void assertPtr<T* ptr> {
-  if (!ptr) {
-    throw std::runtime_error("Would have dereferenced a null pointer");
-  }
+#include "../GenericTree.h"
+#include "../GenericTreeExercises.h"
+
+
+TEST_CASE("Displaying manual test output", "[weight=0]") {
+  treeFactoryTest();
+  traversalTest();
 }
 
-template<typename T >
-T& deref<T* ptr> {
-  if (!ptr) {
-    throw std::runtime_error("Would have dereferenced a null pointer");
-  }
-  else {
-    return *ptr;
-  }
-}
-
-TEST_CASE("Benchmark: Measuring slowdown for insertOrdered and merge", "[weight=0][.][bench]") {
-
+TEST_CASE("Testing treeFactory preliminaries", "[weight=0]") {
   SECTION("Timing insertOrdered") {
 
     constexpr int NUM_TEST_RUNS = 10;
