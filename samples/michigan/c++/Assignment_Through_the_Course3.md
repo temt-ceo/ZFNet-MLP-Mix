@@ -1,6 +1,96 @@
 
 #### Ordered Data Structures in C++ (Week3) submission task
 
+##### "N-Ary" tree
+・each Node can have many children unlike a binary tree.<br>
+**LinkedListExcercises.h**<br>
+```
+#pragma once // Prevent the header from being included more than once per cpp file.
+
+include <iostream>
+include <string>
+
+#include "LinkedList.h"
+
+template <typename T>
+void LinkedList<T>::insertOrdered(const T& newData) {
+  Node* newNode = new Node(newData);
+  if (!head_) {
+    head_ = newNode;
+    tail_ = newNode;
+  }
+  else {
+    Node* cur = head_;
+    Node* pNode = nullptr;
+    bool isInserted = false;
+
+    std::cout << cur->data << " " << newNode->data << std::endl;
+    if (newNode->data <= cur->data) {
+      cur->prev = newNode;
+      newNode->next = cur;
+      newNode->prev = nullptr;
+      head_ = newNode;
+      isInserted = true;
+    }
+
+    while (isInserted == false && cur->next) {
+      pNode = cur;
+      cur = cur->next;
+      if (newNode->data <= cur->data) {
+        pNode->next = newNode;
+        newNode->prev = pNode;
+        newNode->next = cur;
+        cur->prev = newNode;
+        isInserted = true;
+      }
+    }
+
+    if (isInserted == false) {
+      cur->next = newNode;
+      newNode->prev = cur;
+      newNode->next = nullptr;
+      tail_ = newNode;
+    }
+  }
+  size_++;
+}
+
+template <typename T>
+LinkedList<T> LinkedList<T>::merge(const LinkedList<T>& other) const {
+  LinkedList<T> left = *this;
+  LinkedList<T> right = other;
+  
+  LinkedList<T> merged;
+  
+  if (left.size() == 0) {
+    merged = right;
+  } else if (right.size() == 0) {
+    merged = left;
+  } else {
+    while (left.size() > 0 && right.size() > 0) {
+      if (left.front() < right.front()) {
+        merged.pushBack(left.front());
+        left.popFront();
+      } else {
+        merged.pushBack(right.front());
+        right.popFront();
+      }
+    }
+    while (left.size() > 0) {
+      merged.pushBack(left.front());
+      left.popFront();
+    }
+    while (right.size() > 0) {
+      merged.pushBack(right.front());
+      right.popFront();
+    }
+  }
+
+  return merged;
+}
+
+```
+
 **GenericTree.h**<br>
 ```
 #pragma once
