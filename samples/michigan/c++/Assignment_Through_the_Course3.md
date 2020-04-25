@@ -4,6 +4,58 @@
 ##### "N-Ary" tree
 ・each Node can have many children unlike a binary tree.<br>
 
+**LinkedListExcercises.h**<br>
+```
+#pragma once // Prevent the header from being included more than once per cpp file.
+
+include <iostream>
+include <string>
+
+#include "GenericTree.h"
+
+static void treeFactory(GenericTrr<int>& tree) {
+  tree.clear();
+  tree.createRoot(4);
+  auto rt = tree.getRootPtr();
+  auto fstChild = rt->addChild(8);
+  rt->addChild(15);
+  auto gsonFstChild = fstChild->addChild(16);
+  fstChild->addChild(23);
+  gsonFstChild->addChild(42);
+}
+
+template <typename T>
+std::vector<T> traverseLevels(GenericTree<T>& tree) {
+
+  using TreeNode = typename GenericTree<T>::TreeNode; // For the convinience, define a type alias for the appropriate TreeNode dependent type. Now we can refer to a pointer to a TreeNode.
+  
+  std::vector<T> results;
+  
+  auto rootNodePtr = tree.getRootPtr();
+  if (!rootNodePtr) return results;
+  
+  std::queue<const TreeNode*> nodesToExplore;
+  const TreeNode* rootNode = rootNodePtr;
+  nodesToExplore.push(rootNode);
+  results.push_back(rootNode->data);
+
+  while (!nodesToExplore.empty()) {
+    const TreeNode* cur = nodesToExplore.front();
+    nodesToExplore.pop();
+
+    for (auto it = cur->childrenPtrs.begin(); it != cur->childrenPtrs.end(); it++) {
+      const TreeNode* childPtr = *it;
+      if (!childPtr) continue;
+
+      nodesToExplore.push(childPtr);
+      results.push_back(childPtr->data);
+    }
+  }  
+  
+  return results;
+}
+```
+
 **GenericTree.h**<br>
 ```
 #pragma once
@@ -341,56 +393,4 @@ std::ostream& GenericTree<T>::Print(std::ostream& os) const {
   return os;
 }
 
-```
-
-**LinkedListExcercises.h**<br>
-```
-#pragma once // Prevent the header from being included more than once per cpp file.
-
-include <iostream>
-include <string>
-
-#include "GenericTree.h"
-
-static void treeFactory(GenericTrr<int>& tree) {
-  tree.clear();
-  tree.createRoot(4);
-  auto rt = tree.getRootPtr();
-  auto fstChild = rt->addChild(8);
-  rt->addChild(15);
-  auto gsonFstChild = fstChild->addChild(16);
-  fstChild->addChild(23);
-  gsonFstChild->addChild(42);
-}
-
-template <typename T>
-std::vector<T> traverseLevels(GenericTree<T>& tree) {
-
-  using TreeNode = typename GenericTree<T>::TreeNode; // For the convinience, define a type alias for the appropriate TreeNode dependent type. Now we can refer to a pointer to a TreeNode.
-  
-  std::vector<T> results;
-  
-  auto rootNodePtr = tree.getRootPtr();
-  if (!rootNodePtr) return results;
-  
-  std::queue<const TreeNode*> nodesToExplore;
-  const TreeNode* rootNode = rootNodePtr;
-  nodesToExplore.push(rootNode);
-  results.push_back(rootNode->data);
-
-  while (!nodesToExplore.empty()) {
-    const TreeNode* cur = nodesToExplore.front();
-    nodesToExplore.pop();
-
-    for (auto it = cur->childrenPtrs.begin(); it != cur->childrenPtrs.end(); it++) {
-      const TreeNode* childPtr = *it;
-      if (!childPtr) continue;
-
-      nodesToExplore.push(childPtr);
-      results.push_back(childPtr->data);
-    }
-  }  
-  
-  return results;
-}
 ```
