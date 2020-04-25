@@ -2,7 +2,7 @@
 ### Linear Structures
 
 
-#### Heap Sort
+#### Heap Sort(ArrayをBinary Tree構造のように扱える。Sort/Insert/RemoveがDictionaryのように扱える)
 1. Build Heap by O(n).<br>
 2. n x removeMin by O(log(n))<br>
 3. Swap Elements To Order(ASC/DESC)<br>
