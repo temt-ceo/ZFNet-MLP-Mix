@@ -1,5 +1,118 @@
 ## Ordered Data Structures in C++
 ### Linear Structures
+#### Heap Sort
+1. Build Heap O(n).<br>
+2. n x removeMin O(log(n))<br>
+3. Swap Elements To Order(ASC/DESC)<br>
+**Heap.h**<br>
+```
+#pragma once
+
+template <typename T>
+class Heap {
+  public:
+    Heap();
+    void insert(const T key);
+    T removeMin();
+  private:
+    unsigned size_;
+    unsigned capacity_;
+    T *item_;
+    
+    int _parent(unsigned index) const;
+    int _minChild(unsigned index) const;
+
+    void _heapifyUp(unsigned index);
+    void _heapifyDown();
+    void _heapifyDown(unsigned index);
+    void _growArray();
+
+    bool _isRoot(unsigned index) const;
+    bool _isLeaf(unsigned index) const;
+}
+
+#include "Heap.hpp"
+```
+**Heap.hpp**<br>
+```
+#include "Heap.h"
+#include <algorithm>
+#include <iostream>
+
+template <typename T>
+Heap<T>::Heap() {
+  size_ = 0;
+  capacity_ = 2;
+  item_ = new T[capacity_ + 1];;
+}
+
+template <typename T>
+void Heap<T>::insert(const T key) {
+  // Check to ensure there's space to insert an element
+  // ...if not, grow the array
+  if ( size_ == capacity_ ) { _growArray(); }
+
+  size_++;
+  item_[size_] = key;
+  
+  _heapifyUp(size_);
+  
+  std::cout << "After Heap<T>::insert(key = " << key << "): ";
+  for (unsigned i = 1; i <=size_; i++) {
+    std::cout << item_[i] << " ";
+  }
+  std::cout << std::endl;
+}
+
+template <class T>
+T Heap<T>::removeMin(){
+  T minValue = item_[1];
+  std::swap( item_[1], item_[size_--] ); // Swap first item(value) with last item(value).
+  
+  _heapifyDown();
+  
+  return minValue; // Return the minimum value
+}
+
+template <class T>
+void Heap<T>::_heapifyUp( unsigned index ) {
+  if ( !_isRoot(index) ) {
+    if ( item_[index] < item_[_parent(index)] ) {
+      std::swap( item_[index], item_[_parent(index)] );
+      _heapifyUp( _parent(index) );
+    }
+  }
+}
+
+template <class T>
+void Heap<T>::_heapifyDown() {
+  _heapifyDown(1);
+}
+
+template <class T>
+void Heap<T>::_heapifyDown(unsigned index) {
+  if ( !_isLeaf(index) ) {
+    T minChildIndex = _minChild(index);
+    if ( item_[index] > item_[minChildIndex] ) {
+      std::swap( item_[index], item_[minChildIndex] );
+      _heapifyDown( minChildIndex );
+    }
+  }
+}
+
+template <class T>
+void Heap<T>::_growArray() {
+  T* newItem = new T[(2 * capacity_) + 1];
+  for (unsigned i = 1; i <= capacity_; i++) { newItem[i] = item_[i]; }
+
+}
+
+    int _isRoot(unsigned index) const;
+    int _isLeaf(unsigned index) const;
+}
+
+```
+
 #### Arrays
 ・ Elements are all the same type.<br>
 ・ The size of the type of data is known.(指定のIndexまでのメモリ = Index x 固定のメモリ量)<br>
