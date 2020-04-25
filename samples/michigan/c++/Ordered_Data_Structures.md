@@ -3,9 +3,10 @@
 
 
 #### Heap Sort(ArrayをBinary Tree構造のように扱える。Sort/Insert/RemoveがDictionaryのように扱える)
-1. Build Heap by O(n).<br>
+1. Build Heap by O(n).(Create a complete tree of the items in any order, then call heapifyDown on every non-leaf node from the bottom of the tree up to the root.)<br>
 2. n x removeMin by O(log(n))<br>
 3. Swap Elements To Order(ASC/DESC)<br>
+(1.のO(n)はheight+1回のみ)
 
 **Heap.h**<br>
 ```
