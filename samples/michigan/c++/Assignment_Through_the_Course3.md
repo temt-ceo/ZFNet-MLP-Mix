@@ -24,6 +24,7 @@ static void treeFactory(GenericTrr<int>& tree) {
   gsonFstChild->addChild(42);
 }
 
+// rootからlevel(heightの高さ)に沿って左ノードからvectorに格納する(後のcomplete treeでも使用する)
 template <typename T>
 std::vector<T> traverseLevels(GenericTree<T>& tree) {
 
