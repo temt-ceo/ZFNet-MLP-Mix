@@ -128,7 +128,44 @@ class Node {
 
 void downHeap(Node *n) {
   // Implement downHeap() here.
+    if (!n) return;
+
+  bool hasLeft = false;
+  bool hasRight = false;
+  Node *nextNode;
+  nextNode = nullptr; // ここで初期化しないとnullptrにならない
+
+  if (n->left) {
+    hasLeft = true;
+  }
+  if (n->right) {
+    hasRight = true;
+  }
   
+  if (hasLeft && hasRight) {
+    // 左右同値の場合は左をswap
+    if (n->left->value <= n->right->value && n->left->value < n->value) {
+      std::swap(n->value, n->left->value);
+      nextNode = n->left;
+    } else if (n->right->value < n->left->value && n->right->value < n->value) {
+      std::swap(n->value, n->right->value);
+      nextNode = n->right;
+    }
+  } else if (hasLeft) {
+    if (n->left->value < n->value) {
+      std::swap(n->value, n->left->value);
+      nextNode = n->left;
+    }
+  } else if (hasRight) {
+    if (n->right->value < n->value) {
+      std::swap(n->value, n->right->value);
+      nextNode = n->right;
+    }
+  }
+  
+  if (nextNode) {
+    downHeap(nextNode);
+  }
 }
 
 void printTree(Node *n) {
@@ -149,4 +186,61 @@ void printTree(Node *n) {
 
   return 0;
 }
+```
+実行後
+```
+/* downHeap実装前 */
+##100 (X) Greater than child value 1
+#|
+#|_ 1
+#|..|
+#|..|_ [null]
+#|..|
+#|..|_ [null]
+#|
+#|_ 2
+#...|
+#...|_ 3
+#...|..|
+#...|..|_ [null]
+#...|..|
+#...|..|_ [null]
+#...|
+#...|_ 4
+#......|
+#......|_ [null]
+#......|
+#......|_ 5
+#.........|
+#.........|_ [null]
+#.........|
+#.........|_ [null]
+
+/* downHeap実装後 */
+##1
+#|
+#|_ 100
+#|..|
+#|..|_ [null]
+#|..|
+#|..|_ [null]
+#|
+#|_ 2
+#...|
+#...|_ 3
+#...|..|
+#...|..|_ [null]
+#...|..|
+#...|..|_ [null]
+#...|
+#...|_ 4
+#......|
+#......|_ [null]
+#......|
+#......|_ 5
+#.........|
+#.........|_ [null]
+#.........|
+#.........|_ [null]
+
 ```
