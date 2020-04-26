@@ -132,8 +132,7 @@ void downHeap(Node *n) {
 
   bool hasLeft = false;
   bool hasRight = false;
-  Node *nextNode;
-  nextNode = nullptr; // ここで初期化しないとnullptrにならない
+  Node *nextNode = nullptr; // ここで初期化しないとnullptr(0)にならない
 
   if (n->left) {
     hasLeft = true;
