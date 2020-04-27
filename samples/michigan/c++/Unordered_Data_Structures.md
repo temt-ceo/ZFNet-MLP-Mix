@@ -8,8 +8,14 @@
 2. an array: Stores the actual data.(this is going to be indexed in by hash function.)<br>
 3. collision handling strategy: Handle the collisions that occur when our hash function maps different values to the same point in the array.<br>
 
-・SUHA: The simple uniform hashing assumption.(値が同じにならない事。hash functionの要件③。要件①はO(1)である事。要件②は同じキーであれば毎回同じ値になる事。)<br>
-・３つのhash functionのテストには長い年月がかかるので、既存のhash functionがベストである。<br>
+・ SUHA: The simple uniform hashing assumption.(値が同じにならない事。hash functionの要件③。要件①はO(1)である事。要件②は同じキーであれば毎回同じ値になる事。)<br>
+・ ３つのhash functionの要件のテストには長い年月がかかるので、既存のhash functionを利用する事がベストである。<br>
+
+（最もシンプルなのはintegerに対するmod function(%)）<br>
+シンプルゆえにcollision（arrayの同じ値を指す事）が起こる。
+
+#### ReHashing
+Arrayがfullになった時に領域を倍に増やす、この時同じkeyをhash functionは指すのか（integerであればmod(割る値が10->20だと同じ値にはならない)）
 
 **Heap.h**<br>
 ```
