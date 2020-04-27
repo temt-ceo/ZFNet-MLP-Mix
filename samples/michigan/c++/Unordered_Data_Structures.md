@@ -4,10 +4,10 @@
 ・Decompose a real-world problem, such as cache memory, into the appropriate implementation of a hash table,<br>
 
 #### Hashing
-1. a hash function: Map our input space into an array index.<br>
+1. a hash function: Map our input space into an array index.その代わりO(1)だけで行うので著しく早い。<br>
 2. an array: Stores the actual data.(this is going to be indexed in by hash function.)<br>
 3. collision handling strategy: Handle the collisions that occur when our hash function maps different values to the same point in the array.<br>
-
+SUHA: The simple uniform hashing assumption.(値が同じにならない事。hash functionの要件③。要件①はO(1)である事。要件②は毎回同じ値になる事。)<br>
 **Heap.h**<br>
 ```
 #pragma once
