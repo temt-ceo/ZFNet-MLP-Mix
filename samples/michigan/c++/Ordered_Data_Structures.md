@@ -1,7 +1,6 @@
 ## Ordered Data Structures in C++
-### Linear Structures
 
-
+### Tree Structures
 #### Heap Sort(ArrayをBinary Tree構造のように扱える。Sort/Insert/RemoveがDictionaryのように扱える)
 1. Build Heap by O(n).(Create a complete tree of the items in any order, then call heapifyDown on every non-leaf node from the bottom of the tree up to the root.)<br>
 2. n x removeMin by O(log(n))<br>
@@ -147,6 +146,8 @@ int Heap<T>::_minChild( unsigned index ) const {
 }
 
 ```
+
+### Linear Structures
 
 #### Arrays
 ・ Elements are all the same type.<br>
