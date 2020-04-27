@@ -17,6 +17,10 @@
 #### ReHashing
 Arrayがfullになった時に領域を倍に増やす、この時同じkeyをhash functionは指すのか（integerであればmod(割る値が10->20だと同じ値にはならない)）
 
+#### unordered_map
+・ std::map ... O(log(n)) だけ時間がかかる
+・ std::unordered_map ... 上記の通り早い。
+
 **Heap.h**<br>
 ```
 #pragma once
