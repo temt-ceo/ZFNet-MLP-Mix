@@ -3,11 +3,10 @@
 ### Hash Tables
 ・Decompose a real-world problem, such as cache memory, into the appropriate implementation of a hash table,<br>
 
-#### Heap Sort(ArrayをBinary Tree構造のように扱える。Sort/Insert/RemoveがDictionaryのように扱える)
-1. Build Heap by O(n).(Create a complete tree of the items in any order, then call heapifyDown on every non-leaf node from the bottom of the tree up to the root.)<br>
-2. n x removeMin by O(log(n))<br>
-3. Swap Elements To Order(ASC/DESC)<br>
-(1.のO(n)はheight+1回のみ)
+#### Hashing
+1. a hash function: Map our input space into an array index.<br>
+2. an array: Stores the actual data.(this is going to be indexed in by hash function.)<br>
+3. collision handling strategy: Handle the collisions that occur when our hash function maps different values to the same point in the array.<br>
 
 **Heap.h**<br>
 ```
