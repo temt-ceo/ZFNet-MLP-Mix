@@ -1,7 +1,7 @@
 
 #### Unordered Data Structures in C++ (Week1) submission task
 
-##### Overview if std::unordered_map
+##### Overview of std::unordered_map
 ・The Standard Template Library in C++ offers a hash table implementation with std::unordered_map.
 It has this name because a hash table is a more specific implementation of the abstract data type
 generally called a “map,” which associates each unique lookup key with an assigned value. It is called
@@ -57,385 +57,174 @@ using StringIntPairVec = std::vector<std::StringIntPair>;
 
 #include "IntPair.h"
 
-static void treeFactory(GenericTrr<int>& tree) {
-  tree.clear();
-  tree.createRoot(4);
-  auto rt = tree.getRootPtr();
-  auto fstChild = rt->addChild(8);
-  rt->addChild(15);
-  auto gsonFstChild = fstChild->addChild(16);
-  fstChild->addChild(23);
-  gsonFstChild->addChild(42);
-}
+using LengthMemo = std::unordered_map<IntPair, int>;
+StringVec loadBookStrings(unsigned int min_word_length = 5);
+bool wordCountComputer(const StringIntPair & x, const StringIntPair & y);
+StringIntPairVec sortWordCounts(const StringIntMap & wordcount_map);
+StringIntMap makeWordCounts(const StringVec & words);
+int lookupWithFallback(const StringIntMap & wordcount_map, const std::string & key, int fallbackVal);
+StringIntPairVec getBottomWordCounts(const StringIntPairVec & sorted_wordcounts, unsigned int max_words = 20);
+StringIntPairVec getTopWordCounts(const StringIntPairVec & sorted_wordcounts, unsigned int max_words = 20);
+int longestPalindromeLength(const std::string & str, int leftLimit, int rightLimit, timeUnit startTime, double maxDuration);
+int memorizedLongestPalindromeLength(LengthMemo & memo, const std::string & str, int leftLimit, int rightLimit, timeUnit startTime, double maxDuration);
+std::string reconstuctPalindrome(const LengthMemo & memo, const std::string & str);
 
-// rootからlevel(heightの高さ)に沿って左ノードからvectorに格納する(後のcomplete treeでも使用する)
-template <typename T>
-std::vector<T> traverseLevels(GenericTree<T>& tree) {
-
-  using TreeNode = typename GenericTree<T>::TreeNode; // For the convinience, define a type alias for the appropriate TreeNode dependent type. Now we can refer to a pointer to a TreeNode.
-  
-  std::vector<T> results;
-  
-  auto rootNodePtr = tree.getRootPtr();
-  if (!rootNodePtr) return results;
-  
-  std::queue<const TreeNode*> nodesToExplore;
-  const TreeNode* rootNode = rootNodePtr;
-  nodesToExplore.push(rootNode);
-  results.push_back(rootNode->data);
-
-  while (!nodesToExplore.empty()) {
-    const TreeNode* cur = nodesToExplore.front();
-    nodesToExplore.pop();
-
-    for (auto it = cur->childrenPtrs.begin(); it != cur->childrenPtrs.end(); it++) {
-      const TreeNode* childPtr = *it;
-      if (!childPtr) continue;
-
-      nodesToExplore.push(childPtr);
-      results.push_back(childPtr->data);
-    }
-  }  
-  
-  return results;
+// The unit tests handles this.
+class TooSlowException : public std::runtime_error {
+  public:
+    using std::runtime_error;
 }
 ```
 
-**GenericTree.h**<br>
+**UnorderedMapCommon.cpp**<br>
 ```
 #pragma once
 
 #include <stdexcept> // for std::runtime_error
-#include <stack>
-#include <queue>
-#include <vector>
 #include <iostream>
-#include <ostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <cctype>
+#include <algorithm>
+#include <regex>
 
-template <typename T>
-class GenericTree {
-  public:
-    bool showDebugMessages;
-    
-    class TreeNode {
-      public:
-        TreeNode* parentPtr;
-        std::vector< TreeNode* > childrenPtrs;
-        T data; // The acctual node data.
-        TreeNode* addChild(const T& childData);
-        TreeNode() : parentPtr(nullptr) {} // Default constructor, Indicate that there is no parent.
-        TreeNode(const T& dataArg) : parentPtr(nullptr), data(dataArg) {}
-        TreeNode(const TreeNode& other) = delete; // Copy constructor, we will disable it.
-        TreeNode& operator=(const TreeNode& other) = delete;
-        ~TreeNode() {} // the members of the node class will have their own destructors and called automatically.        
-    };
-    
-  private:
-    TreeNode* rootNodePtr;
-    
-  public:
-    TreeNode* createRoot(const T& rootData);
-    TreeNode* getRootPtr() {
-      return rootNodePtr;
-    }
-    void deleteSubtree(TreeNode* targetRoot); // Deallocate the entire subtree.
-    void compress(); // If we used linked list for the children pointers, this wouldn't be necessary.
-    GenericTree() : showDebugMessages(false), rootNodePtr(nullptr) {}
-    GenericTree(const T& rootData) : GenericTree() { // Parameter constructor
-      createRoot(rootData);
-    }
-    GenericTree(const GenericTree& other) = delete; // Copy constructor
-    GenericTree& operator=(const GenericTree& other) = delete;
-    
-    void clear() {
-      deleteSubtree(rootNodePtr);
-      
-      if (rootNodePtr) {
-        throw std::runtime_error("clear() detected that deleteSubtree() had not reset rootNodePtr");
-      }
-    }
-    
-    ~GenericTree() {
-      clear();
-    }
-    
-    std::ostream& Print(std::ostream& os) const; // Print the tree to the output stream(e.g. cout)
-};
+#include "UnorderedMapCommon.h"
 
-//
-// 以下のPrintメソッドが実際に coutで出力する情報を書き出している。
-//
-template <typename T>
-std::ostream& operator<<(std::ostream& os, const GenericTree<T>& tree) {
-  return tree.Print(os);
-}
-
-// =================================================
-//    Implementation section
-// =================================================
-
-template <typename T>
-typename GenericTree<T>::TreeNode* GenericTree<T>::createRoot(const T& rootData) {
-  if (nullptr != rootNodePtr) {
-    constexpr char ERROR_MESSAGE[] = "Tried to createRoot when root already exists";
-    std::cerr << ERROR_MESSAGE << std::endl;
-    throw std::runtime_error(ERROR_MESSAGE);
-  }
-  rootNodePtr = new TreeNode(rootData);
-  return rootNodePtr;
-}
-
-template <typename T>
-typename GenericTree<T>::TreeNode* GenericTree<T>::TreeNode::addChild(const T& childData) {
-  TreeNode* newChildPtr = new TreeNode(childData);
-  newChildPtr->parentPtr = this;
-  childrenPtrs.push_back(newChildPtr);
-  return newChildPtr;
-}
-
-template <typename T>
-void GenericTree<T>::deleteSubtree(TreeNode* targetRoot) {
-  if (nullptr == targetRoot) {
-    return;
-  }
-  // Check that the specified node to delete is in the same tree.
-  {
-    TreeNode* walkBack = targetRoot;
-    while (walkBack->parentPtr) {
-      walkBack = walkBack->parentPtr;
-    }
-    if (walkBack != rootNodePtr) {
-      throw std::runtime_error("Tried to delete a node from a different tree");
-    }
+StringVec loadBookStrings(unsigned int min_word_length) {
+  static const std::string filenmae = "through_the_looking_glass.txt";
+  static const std::string start_text = "CHAPTER I";
+  static const std::string end_text = "End of the Project Gutenberg EBook";
+  constexpr bool DEBUGGING = false;
+  constexpr int DEBUGGING_MAX_WORDS = 30;
+  
+  std::ifstream instream(filename); // open the input file for reading with an ifstream(if=input file).
+  if (!instream) {
+    instream.close();
+    throw std::runtime_error("Could not load book file: " + filename);
   }
   
-  bool targetingWholeTreeRoot = (rootNodePtr == targetRoot);
-  if (targetRoot->parentPtr) {
-    bool targetWasFound = false;
-    for (auto& currentChildPtr : targetRoot->parentPtr->childrenPtrs) {
-      if (currentChildPtr == targetRoot) {
-        currentChildPtr = nullPtr;
-        targetWasFound = true;
+  StringVec bookstrings; // prepare a vector of strings.
+  
+  // line変数をローカルにする為{ }で囲む。(この処理自体はメイン処理では無いから。)
+  
+  {
+    std::string line;
+    while (std::getline(instream, line)) {
+      if (line.find(start_text) != std::string::npos) { // if not found at all, then this return the special value std::string::npos.
         break;
       }
     }
-
-    if (!targetWasFound) {
-      constexpr char ERROR_MESSAGE[] = "Target node to delete was not listed as a child of its parent";
-      std::cerr << ERROR_MESSAGE << std::endl;
-      throw std::runtime_error(ERROR_MESSAGE);
-    }
   }
   
-  // Now, we need to make sure all the descendents get deleted.
-  std::stack<TreeNode*> nodesToExplore;
-  std::stack<TreeNode*> nodesToDelete;
-  nodesToExplore.push(targetRoot);
-  
-  while (!nodesToExplore.empty()) {
-    TreeNode* curNode = nodesToExplore.top();
-    
-    nodesToExplore.pop();
-    
-    if (showDebugMessages) {
-      std::cerr << "Exploring node: ";
-      if (curNode) {
-        std::cerr << curNode->data << std::endl;
-      }
-      else {
-        std::cerr << "[null]" << std::endl;      
-      }
-    }
-  
-    if (!curNode) { // If nullptr...
-      continue;
+  std::string line;
+  bool stillReading = true;
+  while (stillReading && std::getline(instream, line)) {
+    if (line.find(end_text) != std::string::npos) {
+      stillReading = false;
+      break;
     }
 
-    nodesToDelete.push(curNode);
+    while (line.find("’") != std::string::npos) {
+      line = std::regex_replace(line, std::regex("’"), "'"); // Replace right single quatation with plain apostrophe.
+    }
 
-    for (auto childPtr : curNode->childrenPtrs) {
-      nodesToExplore.push(childPtr);
+    while (line.find("--") != std::string::npos) {
+      line = std::regex_replace(line, std::regex("--"), " "); // Replace double dash with a space.
     }
-  }
-  
-  while (!nodeToDelete.empty()) {
-    TreeNode * curNode = nodesToDelete.top();
-    nodesToDelete.pop();
-    
-    if (showDebugMessages) {
-      std::cerr << "Deleting node: ";
-      if (curNode) {
-        std::cerr << curNode->data << std::endl;
-      }
-      else {
-        std::cerr << "[null]" << std::endl;
-      }
-    }
-  
-    delete curNode; // Delete the current node pointer
-    curNode = nullptr;
-  }
-  
-  if (targetingWholeTreeRoot) { // If we deleted the root node of this class instance, then reset the root pointer.
-    rootNodePtr = nullptr;
-  }
-  
-  return;
-}
 
-template <typename T>
-void GenericTree<T>::compress() {
-  if (!rootNodePtr) return;
-  std::queue<TreeNode*> nodesToExplore;
-  nodesToRxplore.push(rootNodePtr);
-  while (!nodesToExplore.empty()) {
-    TreeNode* frontNode = nodesToExplore.front();
-    nodesToExplore.pop();
-    if (!frontNode) {
-      throw std::runtime_error("Error: Compression exploration queued a null pointer");
-    }
-    std::vector<TreeNode*> compressedChildrenPtrs;
-    for (auto childPtr : frontNode->childrenPtrs) {
-      if (childPtr) {
-        compressedChildrenPtrs.push_back(childPtr);
-        nodesToExplore.push(childPtr);
-      }
-    }
-    // the std::vector::swap() function lets us replace the node's actual children pointer
-    // vector with the new one, even though the compressed one is a local variable here. The
-    // standard template library swaps the internals of the two structures so that the old
-    // one expires here at local space, while the new one lives on with our node.
-    frontNode->chldrenPtrs.swap(compressedChildrenPtrs);
-  }
-
-}
-
-template <typename T>
-std::ostream& GenericTree<T>::Print(std::ostream& os) const {
-  const TreeNode* rootNodePtr = this->rootNodePtr;
-  if (nullptr == rootNodePtr) {
-    return os << "[empty tree]" << std::endl;
-  }
-  
-  std::stack<const TreeNode*> nodesToExplore;
-  nodesToExplore.push(rootNodePtr);
-  
-  std::stack<int> depthStack;
-  depthStack.push(0);
-  
-  std::stack<std::vector<bool>> curMarginStack;
-  curMarginStack.push( std::vector<bool>() ); // Each entry set to true means to display a vertical branch simbol; false meant to a blank space.
-  
-  std::stack<std::vector<bool>> trailingMarginStack;
-  trailingMarginStack.push( std::vector<bool>() );
-  
-  While (!nodesToExplore.empty()) {
-    const TreeNode* curNode = nodesToExplore.top();
-    nodesToExplore.pop();
-    
-    int curDepth = depthStack.top();
-    depthStack.pop();
-    
-    std::vector<bool> curMargin = curMarginStack.top();
-    curMarginStack.pop();
-    
-    std::vector<bool> trailingMargin = trailingMarginStack.top();
-    trailingMarginStack.pop();
-    
-    if (showDebugMessages) {
-      os << "Depth: " << curDepth;
-      std::cerr << " Data: ";
-      if (curNode) {
-        std::cerr << curNode->data << std::endl;
-      }
-       else {
-        std::cerr << "[null]" << std::endl;       
-       }
-    }
-    else {
-      /* Print the tree as vertical art.
-         Display two rows for each node: The first row adds vertical space
-         for clarity (while continuing the trailing stems), and the second
-         row displays the actual data item on a horizontal stem. */
-         
-      constexpr int LAST_ROW = 2;
-      for (int row = 1; row <= LAST_ROW; row++) {
-        // Iterate forward through the margin display flags to fill in the margin.
-        for (auto stemIt = curMargin.begin(); stemIt != curMargin.end(); stemIt++) {
-          bool showStem = *stemIt;
-          std::string stemSymbol = "|";
-          if (!showStem) {
-            stemSymbol = " ";
+    while (line.length() > 0) {
+      // Keep only letters and convert to lower case.
+      std::string trimmed_word = "";
+      int consumedChars = 0;
+      char prevChar = ' ';
+      for (char c : line) {
+        consumedChars++;
+        if (std::isalpha(c)) {
+          char thisChar = std::tolower(c);
+          // 以下はword's や word-wordは１つの単語としてカウントする。
+          if (prevChar == '\'') {
+            trimmed_word += "'";
           }
-          
-          bool isLastCol = false;
-          if (stemIt + 1 == curMargin.end()) {
-            isLastCol = true;
+          else if (prevChar == '-') {
+            trimmed_word += '-';
           }
-          
-          if (isLastCol) {
-            if (LAST_ROW == row) {
-              os << stemSymbol << "_ "; // The stem before the data item should be "|_ " in effect.
-            }
-            else if (showStem) {
-              os << stemSymbol << std::endl;
-            }
-            else {
-              os << std::endl;
-            }
+          trimmed_word += thisChar;
+          prevChar = thisChar;
+        }
+        // word's や word-wordの形式でなければ'と-は無視する
+        else if('\'' == c) {
+          if (std::isalpha(prevChar)) {
+            prevChar = '\'';
           }
           else {
-            os << stemSymbol << " ";
+            prevChar = ' ';
           }
-          
-          // Bottom of loop for margin stems
         }
-        
-        // Bottom of loop for multi-row display
+        else if('-' == c) {
+          if (std::isalpha(prevChar)) {
+            prevChar = '-';
+          }
+          else {
+            prevChar = ' ';
+          }
+        }
+        // 1つの単語が終了したら次の処理へ。
+        else break;
       }
       
-      // At the end of the secong row, output the data.
-      // The root node data is displayed alone on the first line correctly.
-      if (curNode) {
-        os << curNode->data << std::endl;
+      line = line.substr(consumedChars);
+      
+      if (trimmed_word.length() >= min_word_length) {
+        bookstrings.push_back(trimmed_word);
       }
-      else {
-        os << "[null]" << std::endl;
-      }
-    }
-    
-    // If the node has any children...
-    if (curNode && curNode->childrenPtrs.size() > 0) {
-      // iterate over childrenPtrs in reverse order.
-      // When we do it++, we do iterate in the reverse direction correctly.
-      for (auto it = curNode->childrenPtrs.rbegin(); it != curNode->childrenPtrs.rend(); it++) {
-        const TreeNode* childPtr = *it;
-        nodesToExplore.push(childPtr);
-        
-        depthStack.push(curDepth+1); // Record the depth.
-        
-        auto nextMargin = trailingMargin; // Prepare a working copy of the margin.
-        
-        // All nodes get an extra stem symbol next to their printout.
-        nextMargin.push_back(true);
-        curMarginStack.push(nextMargin);
-        
-        // But the trailing margin is an excepthion. Since it's displayed lowest it need to be blank.
-        auto nextTrailingMargin = trailingMargin;
-        if (curNode->childrenPtrs.rbegin() == it) {
-          // This is the rightmost child, leave a blank trailing.
-          nextTrailingMargin.push_back(false);
-        }
-        else {
-          // Other children leave a vertical stem symbol trailing in the margin.
-          nextTrailingMargin.push_back(true);
-        }
-        trailingMarginStack.push(nextTrailingMargin);
+      
+      if (DEBUGGING && bookstrings.size() >= DEBUGGING_MAX_WORDS) {
+        stillReading = false;
+        break;
       }
     }
   }
   
-  return os;
+  return bookstrings;
+}
+
+// For use with std::sort, it's VERY IMPORTANT to define a "<" and NOT "<=" otherwise std::sort may infinite loop.
+bool wordCountComparator(const StringIntPair & x, const StringIntPair & y) {
+  return x.second < y.second;
+}
+
+StringIntPairVec sortWordCounts(const StringIntMap & wordcount_map) {
+  StringIntPairVec wordcount_vec;
+  for (const StringIntPair & wc : wordcount_map) {
+    wordcount_vec.push_back(wc); // copy all the entries from a map to a vector to sort with our comparator.
+  }
+  std::sort(wordcount_vec.begin(), wordcount_vec.end(), wordCountComparator);
+  
+  return wordcount_vec;
+}
+
+StringIntPairVec getBottomWordCounts(const StringIntPairVec & sorted_wordcounts, unsigned int max_words) {
+  StringIntPairVec bottom_wordcounts;
+  for (const auto & wordcount_item : sorted_wordcounts) {
+    if (bottom_wordcounts.size() < max_words) {
+      bottom_wordcounts.push_back(wordcount_item);
+    }
+    else break;
+  }
+  return bottom_wordcounts;
+}
+
+StringIntPairVec getTopWordCounts(const StringIntPairVec & sorted_wordcounts, unsigned int max_words) {
+  StringIntPairVec top_wordcounts;
+  for (auto rit = sorted_wordcounts.rbegin(); rit != sorted_wordcounts.rend(); rit++) {
+    if (top_wordcounts.size() < max_words) {
+      const auto& wordcount_item = *rit;
+      top_wordcounts.push_back(wordcount_item);
+    }
+    else break;
+  }
+  return top_wordcounts;
 }
 
 ```
