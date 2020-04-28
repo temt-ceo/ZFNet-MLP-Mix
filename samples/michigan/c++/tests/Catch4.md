@@ -89,31 +89,60 @@ TEST_CASE("Testing lookupWithFallback: When the key exists", "[weight=1]") {
     const int bandersnatch_count_expected = 3;
     REQUIRE(bandersnatch_count == bandersnatch_count_expected);
   }
-}
   
-TEST_CASE("Testing traverseLevels", "[weight=2]") {
-  // This is the tree from exampleTree2() in main.cpp
-  std::string expected_traversal = "A B D J K C E I L F G M H ";
-  GenericTree<std::string> tree2("A");
-  auto A = tree2.getRootPtr();
-  A->addChild("B")->addChild("C");
-  auto D = A->addChild("D");
-  auto E = D->addChild("E");
-  E->addChild("F");
-  E->addChild("G")->addChild("H");
-  D->addChild("I");
-  A->addChild("J");
-  auto L = A->addChild("K")->addChild("L");
-  L->addChild("M");
-  std::vector<std::string> tree2_results = traverseLevels(tree2);
-  // std::cout << "Your traverseLevels output:" << std::endl;
-  std::stringstream outstream;
-  for (auto result : tree2_results) {
-    outstream << result << " ";
-  }
-  suto student_traversal = outstream.str();
-  SECTION("Should do correct traversal on tree from exampleTree2()") {
-    REQUIRE(expected_traversal == student_traversal);
+  SECTION("Map should not be changed by lookup") {
+    auto wordcount_map_backup = wordcount_map;
+    const int bandersnatch_count = lookupWithFallback(wordcount_map, "bandersnatch", 0);
+    REQUIRE(wordcount_map == wordcount_map_backup);
   }
 }
+
+TEST_CASE("Testing lookupWithFallback: When the key doesN't exist", "[weight=1]") {
+
+  StringIntMap wordcount_map;
+  
+  SECTION("Should return the fallback value when key not found") {
+    const int not_found_result = lookupWithFallback(wordcount_map, "cheshire", -7);
+    const int not_found_result_expected = -7;
+    REQUIRE(not_found_result == not_found_result_expected);
+  }
+  
+  SECTION("Map should not be changed by lookup") {
+    auto wordcount_map_backup = wordcount_map;
+    const int cheshire_count = lookupWithFallback(wordcount_map, "cheshire", 0);
+    REQUIRE(wordcount_map == wordcount_map_backup);
+  }
+}
+
+// Tests: memoizedLongestPalindromeLength
+
+TEST_CASE("Testing memoizedLongestPalindromeLength: Should return correct length", "[weight=1]") {
+
+  SECTION("Should return correct length") {
+    const std::string str_small = "abbbcdeeeefgABCBAz"
+    const double max_duration = 10000.0; // 10 seconds
+    const auto start_time = getTimeNow();
+    const auto str = str_small;
+    const int pal_result = memoizedLongestPalindromeLength(memo, str, 0, str.length()-1, start_time, max_duration);
+    const int pal_result_expected = 5;
+    const bool returned_correct_length = (pal_result == 5);
+    REQUIRE(pal_result == pal_result_expected);
+  }
+}
+
+TEST_CASE("Testing memoizedLongestPalindromeLength: Memoization table should be complete", "[weight=1]") {
+
+  SECTION("Should be able to reconstruct correct palindrome from memoization table") {
+    LengthMemo memo;
+    const std::string str_small = "abbbcdeeeefgABCBAz"
+    const double max_duration = 10000.0; // 10 seconds
+    const auto start_time = getTimeNow();
+    const auto str = str_small;
+    const int pal_result = memoizedLongestPalindromeLength(memo, str, 0, str.length()-1, start_time, max_duration);
+    const std::string reconstructed_palindrome = reconstructPalindrome(memo, str);
+    const std::string reconstructed_palindrome_expected = "ABCBA";
+    REQUIRE(reconstructed_palindrome == reconstructed_palindrome_expected);
+  }
+}
+
 ```
