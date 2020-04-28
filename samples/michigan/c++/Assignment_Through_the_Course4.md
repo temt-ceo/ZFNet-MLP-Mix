@@ -18,8 +18,60 @@ int lookupWithFallback(const StringIntMap & wordcount_map, const std::string & k
 }
 
 /* memoize: 実行速度を上げる為に処理の重い実行結果をキャッシュする事 */
-int memoized
+int memoizedLongestPalindromeLength(LengthMemo & memo, const std::string & str, int leftLimit, intRightLimit, timeUnit startTime, double maxDuration) {
+  if (leftLimit < 0 && leftLimit <= rightLimit) {
+    throw std::runtime_error("leftLimit negative, but it's not the base case");
+  }
+  if (rightLimit < 0 && leftLimit <= rightLimit) {
+    throw std::runtime_error("rightLimit negative, but it's not the base case");
+  }
+  
+  const auto currentTime = getTimeNow();
+  const auto timeRlapsed = getMilliDuration(startTime, currentTime);
+  
+  if (memo.count(pairKey)) {
+    // ===============================================================
+    // EXERCISE 3 - PART A - YOUR CODE HERE!
+    return -1337;
+    // ===============================================================
+  }
+  
+  if (leftLimit > rightLimit) {
+    memo[pairKey] = 0;
+    return 0;
+  }
+  
+  if (leftLimit == rightLimit && str.at(leftLimit) == str.at(rightLimit)) {
+    memo[pairKey] = 1;
+    return 1;
+  }
+  
+  if (str.at(leftLimit) == str.at(rightLimit)) {
+    int newLeft = leftLimit+1;
+    int newRight = rightLimit-1;
+    int middleSubproblemResult = memoizedLongestPalindromeLength(memo, str, newLeft, newRight, startTime, maxDuration);
+    
+    int middleMaxLength = newRight-newLeft+1;
+    if (middleMaxLength < 0) middleMaxLength = 0;
+    
+    if (middleSubproblemResult == middleMaxLength) {
+      int result = 2+middleSubproblemResult;
+      
+      memo[pairKey] = result;
+      return result;
+    }
+  }
 
+  int leftSubproblemResult = memoizedLongestPalindromeLength(memo, str, leftLimit, rightLimit-1, startTime, maxDuration);
+  int rightSubproblemResult = memoizedLongestPalindromeLength(memo, str, leftLimit+1, rightLimit, startTime, maxDuration);
+  int greaterResult = std::max(leftSubproblemResult, rightSubproblemResult);
+  
+  // ===============================================================
+  // EXERCISE 3 - PART A - YOUR CODE HERE!
+  return -1337;
+
+  // ===============================================================
+}
 ```
 
 ##### Overview of std::unordered_map
