@@ -1,6 +1,27 @@
 
 #### Unordered Data Structures in C++ (Week1) submission task
 
+**UnorderedMapExcercises.cpp**<br>
+```
+#include <iostream>
+
+#include "UnorderedMapCommon.h"
+
+StringIntMap makeWordCounts(const StringVec & words) {
+  StringIntMap wordcount_map;
+  
+  return wordcount_map;
+}
+
+int lookupWithFallback(const StringIntMap & wordcount_map, const std::string & key, int fallbackVal) {
+  return -1337;
+}
+
+/* memoize: 実行速度を上げる為に処理の重い実行結果をキャッシュする事 */
+int memoized
+
+```
+
 ##### Overview of std::unordered_map
 ・The Standard Template Library in C++ offers a hash table implementation with std::unordered_map.
 It has this name because a hash table is a more specific implementation of the abstract data type
@@ -225,6 +246,91 @@ StringIntPairVec getTopWordCounts(const StringIntPairVec & sorted_wordcounts, un
     else break;
   }
   return top_wordcounts;
+}
+
+int longestPalindromeLength(const std::string & str, int leftLimit, int rightLimit, timeUnit startTime, double maxDuration) {
+  if (leftLimit > rightLimit) {
+    return 0; // This could happen during recursive steps below.
+  }
+  
+  if (leftLimit < 0) {
+    throw std::runtime_error("leftLimit negative");
+  }
+  
+  if (rightLimit < 0) {
+    throw std::runtime_error("rightLimit negative, but it's not the base case"); // This could happen in the base case but it must be handled above already.
+  }
+  
+  const auto currentTime = getTimeNow();
+  const auto timeElapsed = getMilliDuration(startTime, currentTime);
+  if (timeElapsed > maxDuration) {
+    throw TooSlowException("taking too long");
+  }
+  
+  if (leftLimit == rightLimit && str.at(leftLimit) == str.at(rightLimit)) {
+    return 1;
+  }
+  
+  if (str.at(leftLimit) == str.at(rightLimit)) { // If the first and last character match,
+    int newLeft = leftLimit+1;   //move left limit to the right
+    int newRight = rightLimit-1; //move right limit to the left
+    int middleSubproblemResult = longestPalindromeLength(str, newLeft, newRight, startTime, maxDuration);
+    int middleMaxLength = newRight-newLedt+1;
+    
+    if (middleMaxLength < 0) middleMaxLength = 0;
+    
+    if (middleSubproblemResult == middleMaxLength) {
+      return 2+middleSubproblemResult;
+    }
+    // Otherwise don't return from function yet. We continue executing the code below
+  }
+  int leftSubproblemResult = longestPalingromeLength(str, leftLimit, rightLimit-1, startTime, maxDuration);
+  int rightSubproblemResult = longestPalingromeLength(str, leftLimit+1, rightLimit, startTime, maxDuration);
+  return std::max(leftSubproblemResult, rightSubproblemResult);
+}
+
+std::string reconstructPalindrome(const LengthMemo & memo, const std::string & str) {
+  if (!str.length()) return "";
+  int left = 0;
+  int right = str.length()-1;
+  
+  LengthMemo edit_memo = memo;
+  
+  const int BEST_LEN = edit memo[std::make_pair(left, right)];
+  
+  bool loop_again = true;
+  while (loop_again) {
+    loop_again = false;
+    
+    int test_left, test_right;
+    
+    test_left = left+1;
+    test_right = right;
+    if (test_left <= test_right) {
+      int test_len = edit_memo[std::make_pair(test_left, test_right)];
+      if (test_len == BEST_LEN) {
+        left = test_left;
+        loop_again = true;
+      }
+    }
+    
+    test_left = left;
+    test_right = right-1;
+    if (test_left <= test_right) {
+      int test_len = edit_memo[std::make_pair(test_left, test_right)];
+      if (test_len == BEST_LEN) {
+        right = test_right;
+        loop_again = true;
+      }
+    }
+    
+    if (left <= right) {
+      return str.substr(left, right-left+1);
+    }
+    else {
+      return "";
+    }
+  }
 }
 
 ```
