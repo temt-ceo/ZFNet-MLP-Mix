@@ -1,5 +1,5 @@
 #### Unordered Data Structures in C++ (Week1) study memo
-AAA。
+The main() procedure below will create 500 random values and call insert() on each one of them to insert them into the table. At the end, this procedure will report the length of the longest cluster encountered when inserting a value (as reported by your insert() function) and then print out the contents of the hash table so you can see how clusters form. Since the original hashed position will be the three least significant digits of the value stored there, it will be easy to see which values had to be relocated by linear probing, and how much probing was needed.
 
 ```
 #include <iostream>
