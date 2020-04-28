@@ -1,23 +1,61 @@
 
 #### Unordered Data Structures in C++ (Week1) submission task
 
-##### Unordered Map
-・AAA.<br>
+##### Overview if std::unordered_map
+・The Standard Template Library in C++ offers a hash table implementation with std::unordered_map.
+It has this name because a hash table is a more specific implementation of the abstract data type
+generally called a “map,” which associates each unique lookup key with an assigned value. It is called
+“unordered” in C++ to distinguish it from another map implementation, std::map. We will focus on
+std::unordered_map below, but let’s briefly summarize how it’s different from std::map.
 
+  The implementation of std::map uses some kind of balanced tree (the specifics may vary from system
+to system). It maintains keys in a sorted order as a result, which is desirable sometimes, such as when
+you want to iterate over the keys in the same order repeatedly. It offers O(log n) lookup times. In order
+for classes to be compatible as key types, they need to have an equality operation defined, as well as a
+“less than” operation defined for sorting.<br>
+<br>
+  By contrast, std::unordered_map is implemented as a hash table, and the keys are not arranged in
+any predictable order, but instead are placed in hashing buckets as described in the lectures on hash
+tables. It offers very fast O(1) lookup times on average (that is, constant-time). For a class type to be
+compatible as a key, it must have an equality operation defined, and it also must have a hashing function
+defined. We’ll talk more about that later in this document.<br>
+<br>
+  Although lookups on std::unordered_map are very efficient, after inserting many items, the table
+will be automatically “re-hashed” and resized, and that can periodically lead to temporary slowdown. In
+the future, if that is an issue you can do additional work to specify optimal sizes beforehand, but we will
+trust in the system defaults to balance the load factor and maintain the table organization.<br>
+<br>
+  We may refer to objects of type std::unordered_map simply as “maps” sometimes for shorthand, so
+in the future, please take note about what kind of map is being used. For this assignment, we will only
+use std::unordered_map.<br>
+<br>
 **UnorderedMapCommon.h**<br>
 ```
 #pragma once
 
 include <string>
+include <vector>
+include <utility> // for std::pair
+include <unordered_map> // for std::unordered_map
+include <chrono> // for std::chrono::high_resolution_clock
 
+// timer code to help catch mistakes(infinite loop)
+using timeUnit = std::chrono::time_point<std::chrono::high_resolution_clock>;
+static inline timeUnit getTimeNow() noexcept {
+  return std::chrono::high_resolution_clock::now();
+}
+template <typename T>
+static double getMilliDuration(T start_time, T stop_time) {
+  std::chrono::duration<double, std::milli> dur_ms = stop_time - start_time;
+  return dur_ms.count();
+}
 
+using StringVec = std::vector<std::string>;
+using StringIntPair = std::pair<std::string, int>;
+using StringIntMap = std::unordered_map<std::string, int>;
+using StringIntPairVec = std::vector<std::StringIntPair>;
 
-
-
-
-include <iostream>
-
-#include "GenericTree.h"
+#include "IntPair.h"
 
 static void treeFactory(GenericTrr<int>& tree) {
   tree.clear();
