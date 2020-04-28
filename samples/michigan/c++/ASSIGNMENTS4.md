@@ -9,7 +9,24 @@ The main() procedure below will create 500 random values and call insert() on ea
 #include <functional>
 
 int insert(int value, std::vector<int> &table) {
-
+  int counter = 0;
+  int index = value % 1000;
+  if( table[index] == -1) {
+    table[index] = value;
+  }
+  else {
+    while (table[index] == -1) {
+      counter++;
+      index++;
+      if (index > 999) {
+        index = 0;
+      }
+      if( table[index] == -1) {
+        table[index] = value;
+      }
+    }
+  }
+  return counter;
 }
 
 int main() {
