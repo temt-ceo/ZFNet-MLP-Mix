@@ -159,6 +159,20 @@ int main() {
     std::cout << "Calculated load factor: " << load_factor << std::endl << std::endl;
   }
 
+  /* Checking lookupWithFallback */
+  std::cout << "====== Checking lookupWithFallback without dependencies ======" << std::endl << std::endl;
+  {
+    StringIntMap wordcount_map;
+    wordcount_map["bandersnatch"] = 3;
+    auto wordcount_map_backup = wordcount_map;
+
+    int bandersnatch_count = lookupWithFallback(wordcount_map, "bandersnatch", 0);
+    std::cout << "Looking up \"bandersnatch\" with fallback of 0. Result (expecting 3): " << bandersnatch_count << std::endl;
+    
+    if (bandersnatch_count != 3) errorReaction("Should have found \"bandersnatch\" with a count of 3.");
+    if (wordcount_map_backup != wordcount_map) errorReaction("The lookup operation changed wordcount_map somehow.");
+  }
+
   return 0;
 }
 ```
