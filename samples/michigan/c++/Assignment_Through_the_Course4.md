@@ -102,6 +102,67 @@ trust in the system defaults to balance the load factor and maintain the table o
 in the future, please take note about what kind of map is being used. For this assignment, we will only
 use std::unordered_map.<br>
 <br>
+**main.cpp**<br>
+```
+#include <iostream>
+#include <string>
+
+#include "UnorderedMapCommon.h"
+
+void errorReaction(std::string msg) {
+  std::cout << std::endl << "WARNING: " << msg << std::endl << std::endl;
+}
+
+/*
+注. 各クラスはhファイルで以下のように宣言されている。
+using StringVec = std::vector<std::string>;
+using StringIntPair = std::pair<std::string, int>;
+using StringIntMap = std::unordered_map<std::string, int>;
+using StringIntPairVec = std::vector<StringIntPair>;
+*/
+int main() {
+  
+  constexpr int MIN_WORD_LENGTH = 5; //constexpr : const expression の変数は書き換える事ができなくなる
+  StringVec boolstrings = loadBookStrings(MIN_WORD_LENGTH);
+  
+  std::cout << "Total strings loaded: " << bookstrings.size() << std::endl;
+  
+  /* Testing makeWordCounts */
+  std::cout << "====== Testing makeWordCounts ======" << std::endl << std::endl;
+  StringIntMap wordcount_map = makeWordCounts(bookstrings); // <- unordered_mapを生成します。
+  std::cout << "Unique string occurrences: " << wordcount_map.size() << std::endl;
+  
+  StringIntPairVec sorted_wordcounts = sortWordCounts(wordcount_map);
+  std::cout << "Sorted size: " << sorted_wordcounts.size() << std::endl << std::endl;
+  
+  StringIntPairVec top_wordcounts = getTopWordCounts(sorted_wordcounts, 20);
+  std::cout << "20 most frequent words: " << std::endl;
+  {
+    int i = 1;
+    for (const StringIntPair & wordcount_item : top_wordcounts) {
+      auto word = wordcount_item.first;
+      auto count  = wordcount_item.second;
+      std::cout << i << ": " << word << " - " << " times" << std::endl;
+      i++;
+    }
+  }
+  std::cout << std::endl;
+  
+  // 生成されたstd::unordered_mapのプロパティを確認する
+  if (wordcount_map.bucket_count() < 1) {
+    errorReaction("No buckets in wordcount_map");
+  }
+  else {
+    std::cout << "Report load factor: " << wordcount_map.load_factor() << std::endl;
+    
+    double load_factor = (double)wordcount_map.size() / wordcount_map.bucket_count();
+    std::cout << "Calculated load factor: " << load_factor << std::endl << std::endl;
+  }
+
+  return 0;
+}
+```
+
 **UnorderedMapCommon.h**<br>
 ```
 #pragma once
