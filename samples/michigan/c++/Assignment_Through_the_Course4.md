@@ -36,7 +36,7 @@ int lookupWithFallback(const StringIntMap & wordcount_map, const std::string & k
   tge strangely-named .count() function, which does not actually count beyond 1; it can only tell you if 
   the key is in the map or not.
   */
-  if ( wordcount_map.at(key) && wordcount_ma.at(key) >= 1 )
+  if ( wordcount_map.count(key) && wordcount_ma.at(key) >= 1 )
     return wordcount_map.at(key);
   else
     return fallbackVal;
@@ -114,12 +114,14 @@ int memoizedLongestPalindromeLength(LengthMemo & memo, const std::string & str, 
 
   int leftSubproblemResult = memoizedLongestPalindromeLength(memo, str, leftLimit, rightLimit-1, startTime, maxDuration);
   int rightSubproblemResult = memoizedLongestPalindromeLength(memo, str, leftLimit+1, rightLimit, startTime, maxDuration);
+  
+  // Return whichever result was greater. We can also store this result for memoization purpose.
   int greaterResult = std::max(leftSubproblemResult, rightSubproblemResult);
   
   // ===============================================================
-  // EXERCISE 3 - PART A - YOUR CODE HERE!
-  return -1337;
-
+  // EXERCISE 3 - PART B - YOUR CODE HERE!
+  memo[pairKey] = greaterResult;
+  return greaterResult;
   // ===============================================================
 }
 ```
@@ -223,6 +225,102 @@ int main() {
     if (wordcount_map_backup != wordcount_map) errorReaction("The lookup operation changed wordcount_map somehow.");
   }
 
+
+  // overwritten by the brute force run below
+  double slow_time = 9000.0;
+  int intended_pal_result = 0;
+  bool have_intended_result = false;
+
+  // Small example: Brute force is pretty fast, but memoization gives a noticeable speedup.
+  const std::string str_small = "abbbcdeeeefgABCBAz";
+  // Medium example: Brute force takes several seconds. Memoization is very fast.
+  const std::string str_medium = "abbbcdeeeefgABCBAabcdefgh";
+  // Large example: Brute force will probably time out. Memoization is still very fast.
+  const std::string str_large = "abbbcdeeeefgABCBAabcdefghijkl";
+  // This should be the longest palindrome hidden in each example.
+  const std::string correct_palindrome_substring = "ABCBA";
+
+  // Which string to use for testing
+  const std::string str = str_small;
+
+  // Larger examples may take an extremely long time for brute force.
+  // A correct memoized algorithm can handle them all very quickly, though.
+  // For large problem sizes, the memoized version can be thousands of times faster.
+
+  {
+    std::cout << "======= Finding the longest palindrome substring (brute force) =======" << std::endl << std::endl;
+    std::cout << "Note: This may take a few seconds. The duration scales up very quickly\n as the problem size increases." << std::endl << std::endl;
+    std::cout << "String: \"" << str << "\"" << std::endl;
+    auto start_time = getTimeNow();
+    auto stop_time = start_time;
+    double max_duration = 10000.0; // 10 seconds
+    int pal_result = 99999;
+    try {
+      pal_result = longestPalindromeLength(str, 0, str.length()-1, start_time, max_duration);
+      stop_time = getTimeNow();
+      intended_pal_result = pal_result;
+      have_intended_result = true;
+      std::cout << "Length of longest palindrome substring: " << pal_result << std::endl;
+    }
+    catch (TooSlowException& e) {
+      stop_time = getTimeNow();
+      std::cout << "(Timeout!) Brute force is taking too long on this example. Giving up." << std::endl;
+    }
+    slow_time = getMilliDuration(start_time, stop_time);
+    std::cout << "Calculation time (ms): " << slow_time << std::endl;
+    std::cout << std::endl;
+  }
+
+  // overwritten by the memoized test run
+  double memoized_time = 9000.0;
+
+  {
+    std::cout << "======= Finding the longest palindrome substring (memoized) =======" << std::endl << std::endl;
+    std::cout << "Note: If you haven't finished correctly implementing this function yet," << std::endl
+      << " the provided starter code may take even longer than brute force and time out." << std::endl
+      << " That could also happen if you have a bug or infinite recursion." << std::endl << std::endl;
+    std::cout << "String: \"" << str << "\"" << std::endl;
+    
+    // Creating the memoization std::unordered_map
+    LengthMemo memo;
+
+    int pal_result = 99999;
+    auto start_time = getTimeNow();
+    bool timed_out = false;
+    double max_duration = slow_time;
+    try {
+      pal_result = memoizedLongestPalindromeLength(memo, str, 0, str.length()-1, start_time, max_duration);
+    }
+    catch (TooSlowException& e) {
+      timed_out = true;
+    }
+    auto stop_time = getTimeNow();
+    memoized_time = getMilliDuration(start_time, stop_time);
+    if (timed_out) {
+      std::cout << "(Timeout!) Elapsed time (ms): " << memoized_time << std::endl;
+      errorReaction("Terminated memoized algorithm due to timeout.");
+    }
+    else {
+      std::cout << "Length of longest palindrome substring: " << pal_result << std::endl;
+      if (have_intended_result) {
+        if (pal_result != intended_pal_result) errorReaction("Your memoized palindrome function returned the wrong result.");
+        else std::cout << " (Correct!)" << std::endl;
+      }
+      std::cout << "Calculation time (ms): " << memoized_time << std::endl;
+      double speedup = slow_time/memoized_time;
+      std::cout << "Speedup over brute force: " << speedup << " times faster" << std::endl;
+      if (speedup < 2.0) errorReaction("Should have been at least 2 times faster.\n (A correct memoized solution will probably even be MUCH faster than that.)");
+      else std::cout << " (Good!)" << std::endl;
+      
+      std::string found_palindrome = reconstructPalindrome(memo, str);
+      std::cout << "Palindrome found (based on memoization): \"" << found_palindrome << "\"" << std::endl;
+      if (found_palindrome != correct_palindrome_substring) errorReaction("The substring found is incorrect, so the memoization table\n is inaccurate or incomplete.");
+      else std::cout << " (Correct!)" << std::endl;
+    }
+
+    std::cout << std::endl;
+  }
+  
   return 0;
 }
 ```
