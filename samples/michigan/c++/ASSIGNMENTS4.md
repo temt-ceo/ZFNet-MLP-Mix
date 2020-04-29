@@ -1,7 +1,7 @@
-#### Unordered Data Structures in C++ (Week1) study memo
+### Unordered Data Structures in C++ (Week1) study memo
 The main() procedure below will create 500 random values and call insert() on each one of them to insert them into the table. At the end, this procedure will report the length of the longest cluster encountered when inserting a value (as reported by your insert() function) and then print out the contents of the hash table so you can see how clusters form. Since the original hashed position will be the three least significant digits of the value stored there, it will be easy to see which values had to be relocated by linear probing, and how much probing was needed.<br>
 <br>
-hash functionを自作する。(arrayが埋まっている場合は１つ次を探索)
+#### c++のhash functionを自作する。(arrayが埋まっている場合は１つ次を探索)
 ```
 #include <iostream>
 #include <iomanip>
@@ -59,7 +59,7 @@ int main() {
   for (j = 0; j < 1000; j += 10) {
     std::cout << std::setw(3) << j < ":";
     for (i = 0l i < 10; i++) {
-      if (table[j+i] == -1) // <-カッコがなくてもいいらしい
+      if (table[j+i] == -1) // <-カッコがなくても大丈夫
         std::cout << "      "; // 6ますの空白
       else
         srd::cout << std::setw(6) << table[j+i];
