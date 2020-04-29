@@ -10,11 +10,36 @@
 StringIntMap makeWordCounts(const StringVec & words) {
   StringIntMap wordcount_map;
   
+  // StringVec = std::vector<std::string>;
+  // StringIntMap = std::unordered_map<std::string, int>;
+  for (std::string str : words) {
+    if ( wordcount_map[str] )
+      wordcount_map[str]++;
+    else
+      wordcount_map[str] = 1;      
+  }
+  
   return wordcount_map;
 }
 
 int lookupWithFallback(const StringIntMap & wordcount_map, const std::string & key, int fallbackVal) {
-  return -1337;
+
+  /*
+  1. Given the input parameters shown, you need to figure out if the key exists in the wordcount_map or not.
+  2. If the key exists, return the mapped value.
+  3. If the key does not exists, then return the provided fallback value.
+  People commonly use the [] operator with maps to conveniently do both assignments and lookups, but the []
+  operator will insert a new key with a default value when the key is not found. Sometimes that is not desirable.
+  (Also, if the map is marked "const", you will not be able to use the [] operator on it, because the map is read-only.)
+  Instead, there is also the .at() function which can look up a key or throw an exception if not found; or there is the
+  .find() function which can search for a key and return an iterator signifying the result. There is also
+  tge strangely-named .count() function, which does not actually count beyond 1; it can only tell you if 
+  the key is in the map or not.
+  */
+  if ( wordcount_map.at(key) && wordcount_ma.at(key) >= 1 )
+    return wordcount_map.at(key);
+  else
+    return fallbackVal;
 }
 
 /* memoize: 実行速度を上げる為に処理の重い実行結果をキャッシュする事 */
