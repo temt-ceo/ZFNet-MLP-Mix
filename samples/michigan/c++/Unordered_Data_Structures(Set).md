@@ -7,8 +7,8 @@
 1. Maintain a collection S = {S0, S1, ... Sk} <br>
 2. Each set has a representative member.(先頭のメンバがidであり一意でないといけない)<br>
 3. API: void makeSet(const T & t); <br>
-        void union(const T & k1, const T & k2); <br>
-        T & find(const T & k); <br>
+　　 　　void union(const T & k1, const T & k2); <br>
+　　 　　T & find(const T & k); <br>
 
 **Heap.h**<br>
 ```
