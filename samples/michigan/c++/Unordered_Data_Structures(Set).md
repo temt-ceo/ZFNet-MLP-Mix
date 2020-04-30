@@ -3,10 +3,12 @@
 ・ A series of sets which are disjoint from one another.<br>
 ・ But every single element within a set is considered to be equivalent(同等/同量のもの) within that set.<br>
 
-#### Hashing
-1. a hash function: Map our input space into an array index.その代わりO(1)だけで行うので著しく早い。<br>
-2. an array: Stores the actual data.(this is going to be indexed in by hash function.)<br>
-3. collision handling strategy: Handle the collisions that occur when our hash function maps different values to the same 
+#### Disjoint Sets ADT(abstruct data type)
+1. Maintain a collection S = {S0, S1, ... Sk} <br>
+2. Each set has a representative member.(先頭のメンバがidであり一意でないといけない)<br>
+3. API: void makeSet(const T & t); <br>
+        void union(const T & k1, const T & k2); <br>
+        T & find(const T & k); <br>
 
 **Heap.h**<br>
 ```
