@@ -17,3 +17,6 @@ int DisjointSets::find() {
   else { return _find( s[i] ); }
 }
 ```
+
+UpTreeの場合、配列内のunionが効率化される(-1（ideal UpTree）のところをunion先のideal UpTreeにするだけなので)<br>
+O(h) ( <= O(n) )。理想はO(1) ideal UpTreeに他が全て紐付けられている状態。<br>
