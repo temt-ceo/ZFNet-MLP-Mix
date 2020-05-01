@@ -1,14 +1,23 @@
 
-## Disjoint Sets ("union-find" data structure)
-・ A series of sets which are disjoint from one another.<br>
-・ But every single element within a set is considered to be equivalent(同等/同量のもの) within that set.<br>
+## Graph
 
-#### Disjoint Sets ADT(abstruct data type)
-1. Maintain a collection S = {S0, S1, ... Sk} <br>
-2. Each set has a representative member.(先頭のメンバがidであり一意でないといけない)<br>
-3. API: void makeSet(const T & t); <br>
-　　 void union(const T & k1, const T & k2); <br>
-　　 T & find(const T & k); <br>
+#### Graph ADT(abstruct data type)
+```
+Data:
+- Vertices
+- Edges
+- Some data structure maintaining the structure between vertices and edges
+Functions:
+- insertVertex(K key);
+- insertEdge(Vertex v1, Vertex v2, K key);
+- removeVertex(Vertex v);
+- removeEdge(Vertex v1, Vertex v2);
+- incidentEdges(Vertex v1, Vertex v2);
+- areAdjacent(Vertex v1, Vertex v2);
+- origin(Edge e);
+- destination(Edge e);
+
+```
 
 **UpTree**<br>
 ```
