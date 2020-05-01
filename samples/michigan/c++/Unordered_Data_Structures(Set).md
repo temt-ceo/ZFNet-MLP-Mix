@@ -10,32 +10,10 @@
 　　 void union(const T & k1, const T & k2); <br>
 　　 T & find(const T & k); <br>
 
-**Heap.h**<br>
+**UpTree**<br>
 ```
-#pragma once
-
-template <typename T>
-class Heap {
-  public:
-    Heap();
-    void insert(const T key);
-    T removeMin();
-  private:
-    unsigned size_;
-    unsigned capacity_;
-    T *item_;
-    
-    int _parent(unsigned index) const;
-    int _minChild(unsigned index) const;
-
-    void _heapifyUp(unsigned index);
-    void _heapifyDown();
-    void _heapifyDown(unsigned index);
-    void _growArray();
-
-    bool _isRoot(unsigned index) const;
-    bool _isLeaf(unsigned index) const;
+int DisjointSets::find() {
+  if (s[i] < 0) { return i; }
+  else { return _find( s[i] ); }
 }
-
-#include "Heap.hpp"
 ```
