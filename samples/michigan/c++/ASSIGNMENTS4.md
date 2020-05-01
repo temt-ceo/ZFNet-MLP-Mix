@@ -72,8 +72,43 @@ int main() {
 ```
 
 #### Unordered Data Structures in C++ (Week2) study memo
---AAA。
+findメソッドにpath compressionの機能を実装する。
 
 ```
+#include <iostream>
 
+class DisjointSets {
+  public:
+    int s[256];
+    
+    DisjointSets() { for (int i = 0; i < 256; i++) s[i] = -1; }
+    int find(int i);
+}
+
+int SisjointSets::find(int i) {
+  if ( s[i] < 0 ) {
+    return i;
+  } else {
+    int ret_value = find(s[i]);
+    s[i] = ret_value;
+    return ret_value;
+  }
+}
+
+int main() {
+  DisjointSets d;
+  
+  d.s[1] = 3;
+  d.s[3] = 5;
+  d.s[5] = 7;
+  d.s[7] = -1;
+  
+  std::cout << "d.find(3) = " << d.find(3) << std::endl; // => 7(実装前から同じ)
+  std::cout << "d.s(1) = " << d.s(1) << std::endl; // 3のまま
+  std::cout << "d.s(3) = " << d.s(3) << std::endl; // 5->7
+  std::cout << "d.s(5) = " << d.s(5) << std::endl; // 7->7
+  std::cout << "d.s(7) = " << d.s(7) << std::endl; // -1
+
+  return 0;
+}
 ```
