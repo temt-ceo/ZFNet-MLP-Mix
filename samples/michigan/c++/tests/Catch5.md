@@ -76,11 +76,35 @@ TEST_CASE("Testing removePoint:", "[weight=1][ex1]") {
   const GridGraph backupGraph = graph;
   
   SECTION("Checking that point (2,2) was removed") {
-    REQUIRE(numEdges != 14);
+  
+    graph.removePoint(IntPair(2,2));
+    
+    REQUIRE(!graph.hasPoint(IntPair(2,2)));
+    
+    // looping over key-value pairs in the adjacency map
+    for(const auto & kv : graph.adjacencyMap) {
+      // the key type is a point(int pair)
+      IntPair k = kv.first;
+      REQUIRE(k != IntPair(2,2));
+      if (k == IntPair(2,2)) {
+        throw std::runtime_error("Found (2,2) key in the adjacencyMap");
+      }
+      else {
+        // the value type is a set of neighboring points that are adjacent to this point in the graph
+        const GridGraph::NeighborSet & adjacencies = kv.second;
+        for (const IntPair & neighbor : adjacencies) {
+          REQUIRE(neighbor != IntPair(2,2));
+          if (neighbor == IntPair(2,2)) {
+            throw std::runtime_error("Found (2,2) listed as an adjacent point somewhere");
+          }
+        }
+      }
+    }
   }
 
-  SECTION("Should count 7 edges") {
-    REQUIRE(numEdges == 7);
+  SECTION("Checking that no other contents were added") {
+    graph.removePoint(IntPair(2,2));
+    REQUIRE(graph == edgelessGraph);
   }
 }
 
