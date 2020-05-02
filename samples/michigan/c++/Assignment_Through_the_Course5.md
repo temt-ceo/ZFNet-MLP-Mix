@@ -12,6 +12,18 @@
 ・ Unlike the unordered map type, the keys for an unordered set do not have associated values.<br>
 
 #### std::set
+・ (ordered type) based on a binary tree implementation instead of **hashing**. Uses < and == operators to arrange items.<br>
+・ appropriate when we need to maintain data in order.<br>
+
+#### std::vector
+・ This is also possible use as a general purpose ordered set.<br>
+・ Other "set" data structures like the disjoint-sets have specific use cases, there are no STL classes.<br>
+
+#### Initialization with type inference
+・ In C++11 and newer, there are compiler features that can infer the correct types automatically.<br>
+
+#### Graph search algorithms overview
+・ breadth-first search(BFS): find the shortest paths from one vertex to other vetices in the graph.<br>
 
 
 
