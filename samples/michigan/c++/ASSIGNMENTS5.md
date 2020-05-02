@@ -1,9 +1,9 @@
 ### Unordered Data Structures in C++ (Week3) study memo
-Disjoint Sets<br>
+Disjoint Setsを使いGraphのProblemを解く<br>
 <br>
 #### undirected graph(list of edges)を使いconnected要素をカウントし、各々がcircleを構成しているか判別する。
 ```
-/* [問題]:
+/* Problem:
 Suppose you are given a undirected graph specified as a list of edges. In this challenge problem, we'll use a 
 simplified disjoint sets data structure to count how many "connected components" the graph has, and whether
 each one contains a cycle or not.
@@ -45,12 +45,95 @@ detect cycles during the union procedure and we can count the number of componen
 operations are completed.
 The starter code main() also contains an example graph with expected output. When you're ready to submit,
 we'll run your code through some randomized unit tests for grading. */
-#include <iostream>
-#include <iomanip>
-#include <vector>
-#include <algorithm>
-#include <functional>
 
+#include <iostream>
+
+class DisjointSets {
+  public:
+    static constexpr int MAX_NODES = 256;
+    int leader[MAX_NODES];
+    bool has cycle[MAX_NODES];
+    int num_components;
+
+    DisjointSets() {
+      for (int i = 0; i < MAX_NODES; i++) leader[i] = -1;
+      for (int i = 0; i < MAX_NODES; i++) has_cycle[i] = false;
+      num_components = 0;
+    }
+    
+    int find_leader(int i) {
+      if (leader[i] < 0) return i;
+      else return find_leader(leader[i]);
+    }
+    
+    bool query_cycle(int i) {
+      int root_i = find_leader(i);
+      return has_cycle[root_i];
+    }
+    
+    void dsunion(int i, int j);
+    void count_comps(int n);
+};
+
+// dsunion performs disjoint set union.
+// Assuming it is only called once per pair of vertics i and j,
+// it can detect when a set is including an edge that completes aa cycle.
+// Modify the implementation of dsunion below to properly adjust the
+// has_cycle array so that query_cycle(root_j) accurately reports whether
+// the connected component of root_j contains a cycle.
+void DisjointSets::dsunion(int i, int j) {
+  bool i_had_cycle = query_cycle(i);
+  bool j_had_cycle = query_cycle(j);
+  int root_i = find_leader(i);
+  int root_j = find_leader(j);
+  
+  if (root_i != root_j) {
+    leader[root_i] = root_j;
+    root_i = root_j;
+  }
+  else {
+
+  }
+
+}
+
+// count_comps should count how many connected components there are in the graph.
+// The input n is the number of vertices in the graph.(numbering is 0 through n-1)
+void DisjointSets::count_comps(int n) {
+  
+}
+
+int main() {
+  constexpr int NUM_EDGES = 9;
+  constexpr int NUM_VERTS = 8;
+  
+  int edges[NUM_EDGES][2] = {{0,1},{1,2},{3,4},{4,5},{5,6},{6,7},{7,3},{3,5},{4,6}};
+  
+  DisjointSets d;
+  
+  // Below should maintain information about whether leaders are part of connected components that contain cycles.
+  for (int i = 0; i < NUM_EDGES; i++)
+    d.dsunion(edges[i][0], edges[i][1]);
+    
+  // Below should count the number of components.
+  d.count_comps(NUM_VERTS);
+
+  std::cout << "For edge list: ";
+  for (int i = 0; i < NUM_EDGES; i++) {
+    std::cout << "(" << edges[i][0] << "," << edges[i][1] << ")"
+         << ((i < NUM_EDGES-1) ? "," : "\n")
+  }
+  
+  std::cout << "You counted num_components: " << d.num_components << std::endl; // This should be 2
+  std::cout << "Cycle reported for these vertices (if any):" << std::endl;
+  for (int i=0; i<NUM_VERTS; i++) {
+    if (d.query_cycle(i))
+      std::cout << i << " "; // this set of edges should be 3 4 5 6 7.
+  }
+  std::cout << std::endl;
+  
+  return 0;
+}
 ```
 
 #### Unordered Data Structures in C++ (Week4) study memo
