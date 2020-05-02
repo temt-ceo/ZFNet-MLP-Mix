@@ -23,6 +23,8 @@
 ・ In C++11 and newer, there are compiler features that can infer the correct types automatically.<br>
 
 #### Graph search algorithms overview
+・ Not ordered<br>
+・ No obvious start<br>
 ・ breadth-first search(BFS): find the shortest paths from one vertex to other vetices in the graph.<br>
 
 
