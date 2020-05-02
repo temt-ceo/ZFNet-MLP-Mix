@@ -1,5 +1,6 @@
 ### Unordered Data Structures in C++ (Week3) study memo
 Disjoint Setsを使いGraphのProblemを解く<br>
+すごい誘導問題なので、コメントは必要箇所のみ記載<br>
 <br>
 #### undirected graph(list of edges)を使いconnected要素をカウントし、各々がcircleを構成しているか判別する。
 ```
@@ -92,7 +93,14 @@ void DisjointSets::dsunion(int i, int j) {
     root_i = root_j;
   }
   else {
-
+    // find_readerはleaderが-1の時、key(nodeのorigin)を返す
+    // {0,1}は最初-1なのでleaderに[0]=1がセットされる
+    // {1,2}は最初-1なのでleaderに[1]=2がセットされる
+    // {3,4}は最初-1なのでleaderに[3]=4がセットされる
+    //   :
+    // {7,3}は[7]は-1だが[3]=>4,[4]=>5,[5]=>6,[6]=>7,[7]=>-1となり[3]のleaderが7という事になる。7を起点にcycleが完成。
+    has_cycle[root_i] = true;
+    has_cycle[root_j] = true;
   }
 
 }
@@ -100,7 +108,10 @@ void DisjointSets::dsunion(int i, int j) {
 // count_comps should count how many connected components there are in the graph.
 // The input n is the number of vertices in the graph.(numbering is 0 through n-1)
 void DisjointSets::count_comps(int n) {
-  
+  // leaderはkeyがorigin,valueがdestination
+  for (int i=0; i<n; i++) {
+    if (leader[i] < 0) num_components++;
+  }
 }
 
 int main() {
@@ -113,7 +124,7 @@ int main() {
   
   // Below should maintain information about whether leaders are part of connected components that contain cycles.
   for (int i = 0; i < NUM_EDGES; i++)
-    d.dsunion(edges[i][0], edges[i][1]);
+    d.dsunion(edges[i][0], edges[i][1]); // Edge List, Vertex List(0 to n-1)は既にあるのでをプロパティをセットすればok.(Edge List: setの左側がorigin,右側がdestination)
     
   // Below should count the number of components.
   d.count_comps(NUM_VERTS);
