@@ -441,4 +441,113 @@ TEST_CASE("Testing puzzleBFS when there is a solution:", "[weight=1][ex3]") {
   }
 }
 
+// Test: puzzleBFS with a harder puzzle
+
+TEST_CASE("Testing puzzleBFS on a harder puzzle:", "[weight=1][ex3]") {
+  
+  const PuzzleState puzzle_start({9,2,6,1,3,5,4,7,8});
+  const PuzzleState puzzle_goal({1,2,3,4,5,6,7,8,9});
+  const int CORRECT_STEPS = 10;
+
+  std::list<PuzzleState> path = puzzleBFS(puzzle_start, puzzle_goal);
+
+  SECTION("Path should not be empty") {
+    REQUIRE(!path.empty());
+  }
+
+  SECTION("Path should have ended at the goal") {
+    REQUIRE(!path.empty());
+    REQUIRE(path.back() == puzzle_goal);
+  }
+
+  SECTION("Path should have begun at the sart") {
+    REQUIRE(!path.empty());
+    REQUIRE(path.front() == puzzle_start);
+  }
+
+  SECTION("Solution can only use valid puzzle moves") {
+    REQUIRE(!path.empty());
+    REQUIRE(path.front() == puzzle_start);
+    REQUIRE(path.back() == puzzle_goal);
+    
+    int num_steps = 0;
+    
+    auto working_path = path;
+    auto path_start = working_path.front();
+    working_path.pop_front();
+    auto state1 = path_start;
+    
+    while (!working_path.empty()) {
+      auto state2 = working_path.front();
+      working_path.pop_front();
+      
+      REQUIRE(state1.isAdjacent(state2));
+      
+      num_steps++;
+      state1 = state2;
+    }
+  }
+
+  SECTION("Should find the shortest solution") {
+    REQUIRE(!path.empty());
+    REQUIRE(path.front() == puzzle_start);
+    REQUIRE(path.back() == puzzle_goal);
+    
+    int num_steps = 0;
+    
+    auto working_path = path;
+    auto path_start = working_path.front();
+    working_path.pop_front();
+    auto state1 = path_start;
+    
+    while (!working_path.empty()) {
+      auto state2 = working_path.front();
+      working_path.pop_front();
+      
+      REQUIRE(state1.isAdjacent(state2));
+      
+      num_steps++;
+      state1 = state2;
+    }
+
+    REQUIRE(num_steps == CORRECT_STEPS);
+  }
+}
+
+// Test: puzzleBFS with a random puzzle
+
+TEST_CASE("Testing puzzleBFS on a random puzzle:", "[weight=1][ex3]") {
+  
+  const PuzzleState puzzle_goal({1,2,3,4,5,6,7,8,9});
+  const int MAX_STEPS = 10;
+  const PuzzleState puzzle_start = PuzzleState::randomizePuzzle(puzzle_goal, MAX_STEPS);
+
+  std::list<PuzzleState> path = puzzleBFS(puzzle_start, puzzle_goal);
+
+  SECTION("Should find the shortest solution") {
+    REQUIRE(!path.empty());
+    REQUIRE(path.front() == puzzle_start);
+    REQUIRE(path.back() == puzzle_goal);
+    
+    int num_steps = 0;
+    
+    auto working_path = path;
+    auto path_start = working_path.front();
+    working_path.pop_front();
+    auto state1 = path_start;
+    
+    while (!working_path.empty()) {
+      auto state2 = working_path.front();
+      working_path.pop_front();
+      
+      REQUIRE(state1.isAdjacent(state2));
+      
+      num_steps++;
+      state1 = state2;
+    }
+
+    REQUIRE(num_steps <= MAX_STEPS);
+  }
+}
+
 ```
