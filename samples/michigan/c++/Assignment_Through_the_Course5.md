@@ -402,6 +402,28 @@ static inline std::ostream & operator<<(std::ostream & os, const GridGraph & gra
 
 **GridGraph.cpp**<br>
 ```
+#include "GridGraph.h"
+
+bool GridGraph::allowPlotting = true; // Initialization of static variables.
+bool GridGraph::allowVerboseTextDescription = true;
+
+std::ostream & GridGraph::plot(std::ostream & os) const {
+  if (!GridGraph::allowPlotting) return os;
+  
+  if (adjacencyMap.empty()) {
+    return os << "Empty graph plot" << std::endl;
+  }
+  
+  int minRow = 0;
+  int minCol = 0;
+  int maxRow = 0;
+  int maxCol = 0;
+  if (adjacencyMap.size() > 0) {
+    auto firstPointKey = adjacencyMap.begin()->first; // (*iterator).first
+    maxRow = minRow = firstPointKey.first;
+    
+  }
+}
 
 ```
 
