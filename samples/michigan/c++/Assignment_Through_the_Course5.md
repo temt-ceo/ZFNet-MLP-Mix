@@ -421,7 +421,43 @@ std::ostream & GridGraph::plot(std::ostream & os) const {
   if (adjacencyMap.size() > 0) {
     auto firstPointKey = adjacencyMap.begin()->first; // (*iterator).first
     maxRow = minRow = firstPointKey.first;
-    
+    maxCol = minCol = firstPointKey.second;
+    for (const auto & kv : adjancencyMap) {
+      const auto & pointKey = kv.first;
+      auto pointRow = pointKey.first;
+      auto pointRow = pointKey.second;
+      minRow = std::min(minRow, pointRow);
+      minCol = std::min(minCol, pointCol);
+      maxRow = std::max(maxRow, pointRow);
+      maxCol = std::max(maxCol, pointCol);
+    }
+  }
+  
+  for (int row = minRow; row <= maxRow; row++) {
+    std::stringstream understream;
+    for (int col = minCol; col <= maxCol; col++) {
+      IntPair pos = {row, col};
+      if (hasPoint(pos)) {
+        os << pos;
+      }
+      else {
+        os << "       ";
+      }
+      IntPair posRight = {row, col+1};
+      if (hasEdge(pos, posRight)) {
+        os << "----";
+      }
+      else if (col < maxCol) {
+        os << "    ";
+      }
+      if (row < maxRow) {
+        IntPair posDown = {row+1, col};
+      }
+      if (hasEdge(pos, posDown)) {
+        understream << "   |   ";
+      }
+      
+    }
   }
 }
 
