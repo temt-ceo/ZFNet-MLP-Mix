@@ -277,7 +277,168 @@ TEST_CASE("Testing graphBFS when a path can be found:", "[weight=1][ex2]") {
     REQUIRE(path.front() == maze_start);
     REQUIRE(path.back() == maze_goal);
     
+    // Make a working copy of the path that we can take apart
+    GridGraph newGraph
+    auto working_path = path;
+    auto path_start = working_path.front();
+    working_path.pop_front();
+    newGraph.insertPoint(path_start);
+    // Walk through subsequent pairs and add edges
+    int num_steps = 0;
+    auto p1 = path_start;
+    while (!working_path.empty()) {
+      auto p2 = working_path.front();
+      working_path.pop_front();
+      newGraph.insertEdge(p1,p2);
+      
+      REQUIRE(graph.hasEdge(p1,p2));
+      
+      num_steps++;
+      p1 = p2;
+    }
+  }
+  
+  SECTION("Path should be the shortest solution possible") {
+    REQUIRE(!path.empty());
+    REQUIRE(path.front() == maze_start);
+    REQUIRE(path.back() == maze_goal);
     
+    GridGraph newGraph;
+    auto working_path = path;
+    auto path_start = working_path.front();
+    working_path.pop_front();
+    newGraph.insertPoint(path_start);
+    int num_steps = 0;
+    auto p1 = path_start;
+    while (!working_path.empty()) {
+      auto p2 = working_path.front();
+      working_path.pop_front();
+      newGraph.insertEdge(p1,p2);
+      
+      REQUIRE(graph.hasEdge(p1,p2));
+      
+      num_steps++;
+      p1 = p2;      
+    }
+    
+    REQUIRE(num_steps == 19);
   }
 }
+
+// Test: puzzleBFS when the goal is unreachable (puzzle can't be solved)
+
+TEST_CASE("Testing puzzleBFS when the goal is unreachable (puzzle can't be solved):", "[weight=1][ex3][timeout=60000]") {
+
+  const PuzzleState puzzle_start({1,2,3,4,5,6,7,8,9});
+  const PuzzleState puzzle_goal({1,2,3,4,5,6,7,8,9});
+  std::cout << std::endl << "Now testing puzzleBFS when the goal is unreachable." << std::endl
+     << "This may take several seconds and display a warning (which is ok)." << std::endl << std::endl;
+
+  std::list<PuzzleState> path = puzzleBFS(puzzle_start, puzzle_goal);
+
+  SECTION("Path should be empty") {
+    REQUIRE(path.empty());
+  }
+}
+
+// Test: puzzleBFS when start == goal
+
+TEST_CASE("Testing puzzleBFS when start==goal:", "[weight=1][ex3]") {
+  
+  const PuzzleState puzzle_start({1,2,3,4,5,6,7,8,9});
+  const PuzzleState puzzle_goal = puzzle_start;
+
+  std::list<PuzzleState> path = puzzleBFS(puzzle_start, puzzle_goal);
+
+  SECTION("Test configuration sanity check") {
+    REQUIRE(puzzle_start == puzzle_goal);
+  }
+
+  SECTION("Should not return empty path when start==goal") {
+    REQUIRE(!path.empty());
+  }
+
+  SECTION("Should return path containing only the start") {
+    REQUIRE(puzzle_start == puzzle_goal);
+    REQUIRE(path.front() == puzzle_start);
+    REQUIRE(path.back() == puzzle_goal);
+  }
+  SECTION("Should return path of size 1") {
+    REQUIRE(path.size() == 1);
+  }
+}
+
+// Test: puzzleBFS with a simple puzzle
+
+TEST_CASE("Testing puzzleBFS when there is a solution:", "[weight=1][ex3]") {
+  
+  const PuzzleState puzzle_start({1,2,3,4,5,6,7,8,9});
+  const PuzzleState puzzle_goal({1,2,3,4,5,6,7,8,9});
+  const int CORRECT_STEPS = 3;
+
+  std::list<PuzzleState> path = puzzleBFS(puzzle_start, puzzle_goal);
+
+  SECTION("Path should not be empty") {
+    REQUIRE(!path.empty());
+  }
+
+  SECTION("Path should have ended at the goal") {
+    REQUIRE(!path.empty());
+    REQUIRE(path.back() == puzzle_goal);
+  }
+
+  SECTION("Path should have begun at the start") {
+    REQUIRE(!path.empty());
+    REQUIRE(path.front() == puzzle_start);
+  }
+
+  SECTION("Solution can only use valid puzzle moves") {
+    REQUIRE(!path.empty());
+    REQUIRE(path.front() == puzzle_start);
+    REQUIRE(path.back() == puzzle_goal);
+    
+    int num_steps = 0;
+    
+    auto working_path = path;
+    auto path_start = working_path.front();
+    working_path.pop_front();
+    auto state1 = path_start;
+    
+    while (!working_path.empty()) {
+      auto state2 = working_path.front();
+      working_path.pop_front();
+      
+      REQUIRE(state1.isAdjacent(state2));
+      
+      num_steps++;
+      state1 = state2
+    }
+  }
+  
+  SECTION("Should find the shortest solution") {
+    REQUIRE(!path.empty());
+    REQUIRE(path.front() == puzzle_start);
+    REQUIRE(path.back() == puzzle_goal);
+    
+    int num_steps = 0;
+    
+    auto working_path = path;
+    auto path_start = working_path.front();
+    working_path.pop_front();
+    auto state1 = path_start;
+    
+    while (!working_path.empty()) {
+      auto state2 = working_path.front();
+      working_path.pop_front();
+      
+      REQUIRE(state1.isAdjacent(state2));
+      
+      num_steps++;
+      state1 = state2
+    }
+
+    REQUIRE(num_steps == CORRECT_STEPS);
+  }
+}
+
 ```
