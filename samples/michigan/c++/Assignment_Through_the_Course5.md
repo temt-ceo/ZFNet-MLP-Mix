@@ -156,19 +156,151 @@ void demoRunner() {
 }
 
 void removeEdgeTester() {
-  {
-  
+  GridGraph graph1;
+  graph1.insertEdge(IntPair(2,2), IntPair(1,2));
+  graph1.insertEdge(IntPair(2,2), IntPair(2,1));
+  graph1.plot(std::cout);
+  std::cout << std::endl;
+  graph1.printDetails(std::cout);
+  std::cout << std::endl;
+
+  GridGraph graph2 = graph1;
+  graph2.removeEdge(IntPair(2,2), IntPair(2,1));
+  graph1.plot(std::cout);
+  std::cout << std::endl;
+  graph1.printDetails(std::cout);
+  std::cout << std::endl;
+
+  GridGraph expectedGraph;
+  expectedGraph.insertEdge(IntPair(2,2), IntPair(1,2))
+  expectedGraph.insertPoint(IntPair(2,1));
+  if (graph2 != expectedGraph) {
+    throw std::runtime_error("The code did not remove the edge correctly.");
   }
 }
 
+void removePointTester() {
+  GridGraph edgelessGraph; // Edge: Vertexを結ぶ線
+  edgelessGraph.insertPoint(IntPair(1,2));
+  edgelessGraph.insertPoint(IntPair(2,1));
+
+  GridGraph graph;
+  graph.insertEdge(IntPair(2,2), IntPair(1,2));
+  graph.insertEdge(IntPair(2,2), IntPair(2,1));
+  graph.removePoint(IntPair(2,2));
+  if (graph.hasPoint(IntPair(2,2))) {
+    errorReaction("The point (2,2) is still present.");
+  }
+
+  for (const auto & kv : graph.adjacencyMap) {
+    IntPair k = kv.first;
+    if (k == IntPair(2,2)) {
+      errorReaction("Found (2,2) listed as an adjacent point somewhere.");
+    }
+  }
+  if (graph != edgelessGraph) {
+    errorReaction("The point removal should only remove the point and all the adjacency records that refer to it.");
+  }
+
+  GridGraph backupGraph = graph;
+
+  graph.removePoint(IntPair(7,7));
+  if (graph == backupGraph) {
+    std::cout << "Good, the graph was unchanged by this operation." << std::endl << std::endl;
+  }
+}
+
+void countEdgeTester() {
+  GridGraph graph;
+  graph1.insertEdge(IntPair(0,0), IntPair(0,1));
+  graph1.insertEdge(IntPair(0,2), IntPair(0,1));
+  graph1.insertEdge(IntPair(0,1), IntPair(1,1));
+  graph1.insertEdge(IntPair(2,1), IntPair(1,1));
+  graph1.insertEdge(IntPair(2,1), IntPair(3,1));
+  graph1.insertEdge(IntPair(3,0), IntPair(3,1));
+  graph1.insertEdge(IntPair(3,2), IntPair(3,1));
+  graph1.plot(std::cout);
+  std::cout << std::endl;
+  graph1.printDetails(std::cout);
+  std::cout << std::endl;
+
+  int numEdges = graph.countEdges();
+  
+  if (numEdges != 7) {
+    errorReaction("This isn't the correct number of edges.");
+  }
+}
+
+void graphBFS_Tester() {
+  GridGraph graph;
+  
+  std::unordered_set<IntPair> exclusionSet = {{6,0}, {0,5}};
+  
+  for (int row=0; row<=5; row++) {
+    for (int col=0; col<=5; col++) {
+      auto p1 = IntPair(row, col);
+      auto p2 = IntPair(row+1, col);
+      if (exclusionSet.count(p1) || exclusionSet.count(p2)) continue;
+      graph.insertEdge(p1,p2);
+    }    
+  }
+
+  for (int row=0; row<=6; row++) {
+    for (int col=0; col<=4; col++) {
+      auto p1 = IntPair(row, col);
+      auto p2 = IntPair(row, col+1);
+      if (exclusionSet.count(p1) || exclusionSet.count(p2)) continue;
+      graph.insertEdge(p1,p2);
+    }    
+  }
+  ... /* 省略(./tests/Catch5.md 参照。) */
+}
+
+... /* 省略(./tests/Catch5.md 参照。) */
+
+void errorReaction(std::string msg) {
+  std::cout << std::endl << "WARNING: " << msg << << std::endl << std::endl;
+}
+std::string makeHeader1(std::string msg) {
+  ...
+}
+std::string makeHeader2(std::string msg) {
+  ...
+}
 ```
 
-**UnorderedMapCommon.h**<br>
+**GraphSearchCommon.h**<br>
+```
+#pragma once
+
+#include <string>
+#include <vector>
+#include <list>
+#include <queue>
+#include <Utility>    // std::pair
+#include <unordered_map>
+#include <cstdlib>    // rand
+#include <ctime>    // time
+
+#include "IntPair2.h"
+#include "GridGraph.h"
+#include "PuzzleState.h"
+
+std::list<IntPair> graphBFS(const IntPair & start, const IntPair & goal, const GridGraph & graph);
+std::list<IntPair> puzzleBFS(const PuzzleState & start, const PuzzleState & goal);
+```
+
+**GraphSearchExcercises.cpp**<br>
 ```
 
 ```
 
-**UnorderedMapCommon.cpp**<br>
+**GridGraph.h**<br>
+```
+
+```
+
+**aa.h**<br>
 ```
 
 ```
