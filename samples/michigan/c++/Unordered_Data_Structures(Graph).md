@@ -65,8 +65,9 @@ areAdjacent: ×<br>
 ・ queueを使用して探索時に１度だけノードを通るようにする<br>
 ・ Adjacency Edgesの内容を重複が無いようにqueueに順に（queueの先頭から見て、）Vertexを全て含める<br>
 ・ DFS: 最短距離ではないが、stackの利点を生かせる。cross edgeを見つけ他にtraverseする所がなければ、順に来た道を戻って他を探す。（全探索する）<br>
-・ DFS: spaning tree searchだがrunning timeはBFSと変わらない(O(n+m))<br>
-
+・ DFS: spaning tree search(Internet等)だがrunning timeはBFSと変わらない(O(n+m))<br>
+・ disjoint setは同じsetにある時はunionしてはならない。（既に同じsetだから）。繰り返すと最終的に１つのsetになる(minimmum spaning tree search(Kruskal's Algorithm))<br>
+  (最終的に全体の最小探索路が求まる)
 ```
 ////////////////
 // Graph Search ADT (traverse through the graph): Graph Data Structureを探索する
