@@ -64,8 +64,14 @@ areAdjacent: ×<br>
 ・ breadth-first search(BFS): find the shortest paths from one vertex to other vetices in the graph.<br>
 ・ queueを使用して探索時に１度だけノードを通るようにする<br>
 ・ Adjacency Edgesの内容を重複が無いようにqueueに順に（queueの先頭から見て、）Vertexを全て含める<br>
+・ DFS: 最短距離ではないが、stackの利点を生かせる。cross edgeを見つけ他にtraverseする所がなければ、順に来た道を戻って他を探す。（全探索する）<br>
+・ DFS: spaning tree searchだがrunning timeはBFSと変わらない(O(n+m))<br>
+
 ```
-// Graph Search ADT (traverse through the graph)
+////////////////
+// Graph Search ADT (traverse through the graph): Graph Data Structureを探索する
+//     (BFS Algorithm)
+////////////////
 BFS(G):
   Input: Graph, G
   Output: A labeling of the edges on G as discovery and cross edges.
@@ -76,24 +82,57 @@ BFS(G):
     setLabel(e, UNEXPLORED)
   foreach (Vertex v : G.vertices()):
     if getLabel(v) == UNEXPLORED:
-      BFS(G, v)
+      BFS(G, v) // 別コンポーネント(接点が無い) -> component++; を次行に追加する。
 
 BFS(G, v):
   Queue q
   setLabel(v, VISITED)
   q.enqueue(v)
   
-  while !q.empty:
+  while !q.empty: //======> O(n) : n=Vertex数
     v = q.dequeue()
-    foreach (Vertex w : G.adjacent(v)):
+    foreach (Vertex w : G.adjacent(v)): //======> O(2m)  or Σ:O(deg) : m=Edge数
       if getLabel(w) == UNEXPLORED:
         setLabel(v, w, DISCOVERY)
         setLabel(w, VISITED)
         q.enqueue(w)
       elseif getLabel(v, w) == UNEXPLORED:
-        setLabel(v, w, CROSS)
-        
+        setLabel(v, w, CROSS) // cross edge: detect a cycle -> cycle=true; を次行に追加する。
+  // 全体でO(n+m)のrunning time.
 
+////////////////
+// Graph Search ADT (traverse through the graph): Graph Data Structureを探索する
+//     (DFS Algorithm)
+////////////////
+DFS(G):
+  Input: Graph, G
+  Output: A labeling of the edges on G as discovery and back edges. // cross->backになっただけ
+  
+  foreach (Vertex v : G.vertices()):
+    setLabel(v, UNEXPLORED)
+  foreach (Edge e : G.edges()):
+    setLabel(e, UNEXPLORED)
+  foreach (Vertex v : G.vertices()):
+    if getLabel(v) == UNEXPLORED:
+      DFS(G, v) // 別コンポーネント(接点が無い) -> component++; を次行に追加する。
+
+DFS(G, v):
+  setLabel(v, VISITED)
+  
+    foreach (Vertex w : G.adjacent(v)): //======> O(2m)  or Σ:O(deg)
+      if getLabel(w) == UNEXPLORED:
+        setLabel(v, w, DISCOVERY)
+        DFS(G, w)
+      elseif getLabel(v, w) == UNEXPLORED:
+        setLabel(v, w, BACK) // CROSS->BACKになっただけ
+  // Labeling:
+  //   Vertex: 2n=> O(n)
+  //   Edge:   2m=> O(m)
+  // Queries:
+  //   Vertex: n=> O(n)
+  //   Edge:   Σ(deg(v))=> 2m => O(m)
+
+  // 全体でO(n+m)のrunning time.(BFSと同じ)
 ```
 
 #### std::unordered_set
