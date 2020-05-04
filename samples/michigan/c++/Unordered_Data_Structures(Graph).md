@@ -58,10 +58,43 @@ incidentEdges: ◎<br>
 areAdjacent: ×<br>
 
 #### Graph search algorithms overview
-・ Not ordered<br>
-・ No obvious start<br>
+**⚪︎traverse through the graph**<br>
+・ Not ordered（<=> tree: ordered ）<br>
+・ No obvious start（<=> tree: obvious start ）<br>
 ・ breadth-first search(BFS): find the shortest paths from one vertex to other vetices in the graph.<br>
+・ queueを使用して探索時に１度だけノードを通るようにする<br>
+・ Adjacency Edgesの内容を重複が無いようにqueueに順に（queueの先頭から見て、）Vertexを全て含める<br>
+```
+// Graph Search ADT (traverse through the graph)
+BFS(G):
+  Input: Graph, G
+  Output: A labeling of the edges on G as discovery and cross edges.
+  
+  foreach (Vertex v : G.vertices()):
+    setLabel(v, UNEXPLORED)
+  foreach (Edge e : G.edges()):
+    setLabel(e, UNEXPLORED)
+  foreach (Vertex v : G.vertices()):
+    if getLabel(v) == UNEXPLORED:
+      BFS(G, v)
 
+BFS(G, v):
+  Queue q
+  setLabel(v, VISITED)
+  q.enqueue(v)
+  
+  while !q.empty:
+    v = q.dequeue()
+    foreach (Vertex w : G.adjacent(v)):
+      if getLabel(w) == UNEXPLORED:
+        setLabel(v, w, DISCOVERY)
+        setLabel(w, VISITED)
+        q.enqueue(w)
+      elseif getLabel(v, w) == UNEXPLORED:
+        setLabel(v, w, CROSS)
+        
+
+```
 
 #### std::unordered_set
 ・ (requirement:)no duplicates; inserting the same item twice has no effect.<br>
