@@ -58,16 +58,63 @@ incidentEdges: ◎<br>
 areAdjacent: ×<br>
 
 #### Graph search algorithms overview
-**⚪︎traverse through the graph**<br>
-・ Not ordered（<=> tree: ordered ）<br>
+
+#### std::unordered_set
+・ (requirement:)no duplicates; inserting the same item twice has no effect.<br>
+・ In C++, the unordered set uses **hashing** internally, so the key type must support == operator as well as std::hash.<br>
+・ Unlike the unordered map type, the keys for an unordered set do not have associated values.<br>
+
+#### std::set
+・ (ordered type) based on a binary tree implementation instead of **hashing**. Uses < and == operators to arrange items.<br>
+・ appropriate when we need to maintain data in order.<br>
+
+#### std::vector
+・ This is also possible use as a general purpose ordered set.<br>
+・ Other "set" data structures like the disjoint-sets have specific use cases, there are no STL classes.<br>
+
+#### Initialization with type inference
+・ In C++11 and newer, there are compiler features that can infer the correct types automatically.<br>
+
+**⚪︎traverse through the graph(spanning-tree)**<br>
+・ Not ordered(Directedはある)（<=> tree: ordered ）<br>
 ・ No obvious start（<=> tree: obvious start ）<br>
 ・ breadth-first search(BFS): find the shortest paths from one vertex to other vetices in the graph.<br>
 ・ queueを使用して探索時に１度だけノードを通るようにする<br>
 ・ Adjacency Edgesの内容を重複が無いようにqueueに順に（queueの先頭から見て、）Vertexを全て含める<br>
-・ DFS: 最短距離ではないが、stackの利点を生かせる。cross edgeを見つけ他にtraverseする所がなければ、順に来た道を戻って他を探す。（全探索する）<br>
-・ DFS: spaning tree search(Internet等)だがrunning timeはBFSと変わらない(O(n+m))<br>
-・ disjoint setは同じsetにある時はunionしてはならない。（既に同じsetだから）。繰り返すと最終的に１つのsetになる(minimmum spaning tree search(Kruskal's Algorithm))<br>
-  (最終的に全体の最小探索路が求まる)
+
+#### BFS
+・ Breadth-first search<br>
+・ 1番目のVertexから見て全てのVertexをqueueに入れ、queueから処理を進める。<br>
+・ 全Vertexの先頭のVertexからの距離がわかる。（Adjacent Edgesとd(distance)とp(predecessor)を格納する事で）<br>
+・ Undirectd（双方向が可能）では最も早い：O(m+n)。<br>
+・ Cross Edgeが存在するという事はこれまでのdistance以下で来れる。（距離がより大きくはならない。）。<br>
+
+#### DFS
+・ Depth-first search<br>
+・ stackの利点を生かせる。cross edgeを見つけ他にtraverseする所がなければ、順に来た道を戻って他を探す。（全探索する）<br>
+・ running timeはBFSと変わらない(O(n+m))<br>
+・ <br>
+
+#### Kruskal's Algorithm
+・ Undirected, weightedでminimum spanning tree(MST)を求める。<br>
+・ weight(距離など)を考慮する<br>
+・ MinHeap(weightの小さいものからHeapに詰め込む)<br>
+・ Disjoint setとしてMinHeapの中身を取り出し、両端のVertexが同じsetかチェックする。<br>
+・ weightの小さいものから徐々にset（Edge）をunionしていく(Weightの大きいEdgeはspanning-treeに入らない。)<br>
+・ running time: O(m・lg(m))  <= Edge数 x log(Edge数)<br>
+
+#### Prim's Algorithm
+・ Undirected, weightedでminimum spanning tree(MST)を求める。<br>
+・ 先頭のVertexからweightの小さいEdgeをset unionしていく(あとはBFSと似ている)<br>
+・ <br>
+
+#### Dijkstra's Algorithm
+・ Undirected, weightedでminimum spanning tree(MST)を求める。<br>
+・ <br>
+・ <br>
+・ <br>
+
+
 ```
 ////////////////
 // Graph Search ADT (traverse through the graph): Graph Data Structureを探索する
@@ -83,7 +130,7 @@ BFS(G):
     setLabel(e, UNEXPLORED)
   foreach (Vertex v : G.vertices()):
     if getLabel(v) == UNEXPLORED:
-      BFS(G, v) // 別コンポーネント(接点が無い) -> component++; を次行に追加する。
+      BFS(G, v) // -> component++; を次行に追加する。
 
 BFS(G, v):
   Queue q
@@ -115,7 +162,7 @@ DFS(G):
     setLabel(e, UNEXPLORED)
   foreach (Vertex v : G.vertices()):
     if getLabel(v) == UNEXPLORED:
-      DFS(G, v) // 別コンポーネント(接点が無い) -> component++; を次行に追加する。
+      DFS(G, v) // -> component++; を次行に追加する。
 
 DFS(G, v):
   setLabel(v, VISITED)
@@ -127,28 +174,58 @@ DFS(G, v):
       elseif getLabel(v, w) == UNEXPLORED:
         setLabel(v, w, BACK) // CROSS->BACKになっただけ
   // Labeling:
-  //   Vertex: 2n=> O(n)
-  //   Edge:   2m=> O(m)
+  //   Vertex: 2 x n=> O(n)
+  //   Edge:   2 x m=> O(m)
   // Queries:
   //   Vertex: n=> O(n)
   //   Edge:   Σ(deg(v))=> 2m => O(m)
 
   // 全体でO(n+m)のrunning time.(BFSと同じ)
+
+////////////////
+// Minimum Spanning Tree ADT
+//     (Kruskal's Algorithm)
+////////////////
+KruskalMST(G):
+  DisjointSets forest
+  foreach (Vertex v : G.vertices()):
+    forest.makeSet(v)
+  
+  priorityQueue Q // min edge weight
+  foreach (Edge e : G.edges()):
+    Q.insert(e)
+  
+  Graph T 0 (V, {})
+
+  while |T.edges()| < n-1:
+    Edge (u,v) = Q.removeMin()
+    if forest.find(u) != forest.find(v):
+      T.addEdge(u, v)
+      forest.union( forest.find(u), forest.find(v))
+  
+  return T
+
+
+////////////////
+// Minimum Spanning Tree ADT
+//     (Dijkstra's Algorithm)
+////////////////
+DijkstraMST(G):
+  DisjointSets forest
+  foreach (Vertex v : G.vertices()):
+    forest.makeSet(v)
+  
+  priorityQueue Q // min edge weight
+  foreach (Edge e : G.edges()):
+    Q.insert(e)
+  
+  Graph T 0 (V, {})
+
+  while |T.edges()| < n-1:
+    Edge (u,v) = Q.removeMin()
+    if forest.find(u) != forest.find(v):
+      T.addEdge(u, v)
+      forest.union( forest.find(u), forest.find(v))
+  
+  return T
 ```
-
-#### std::unordered_set
-・ (requirement:)no duplicates; inserting the same item twice has no effect.<br>
-・ In C++, the unordered set uses **hashing** internally, so the key type must support == operator as well as std::hash.<br>
-・ Unlike the unordered map type, the keys for an unordered set do not have associated values.<br>
-
-#### std::set
-・ (ordered type) based on a binary tree implementation instead of **hashing**. Uses < and == operators to arrange items.<br>
-・ appropriate when we need to maintain data in order.<br>
-
-#### std::vector
-・ This is also possible use as a general purpose ordered set.<br>
-・ Other "set" data structures like the disjoint-sets have specific use cases, there are no STL classes.<br>
-
-#### Initialization with type inference
-・ In C++11 and newer, there are compiler features that can infer the correct types automatically.<br>
-
