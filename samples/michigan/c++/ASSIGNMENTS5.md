@@ -148,10 +148,89 @@ int main() {
 ```
 
 #### Unordered Data Structures in C++ (Week4) study memo
-BB
+The code below implements a bfs() method that implements breadth first traversal that also measures the distance from vertex to the vertex as the source of the traversal.<br>
+This algorithm uses disjoint sets to keep track of two sets.
 
 ```
 #include <iostream>
+#include <string>
 
+class DisjointSets {
+  public:
+    int s[256];
+    int distance[256];
+    
+    DisjointSets() {
+      for (int i = 0; i< 256; i++) s[i] = distance[i] = -1;
+    }
+    
+    int find(int i) { return s[i] < 0 ? i : find(s[i]); }
+    
+    void dsunion(int i, int j) {
+      int root_i = find(i);
+      int root_j = find(j);
+      std::cout << "$$root_i: " << root_i << "  root_j: " << root_j << "  s[i]:" << s[i] << "  s[j]:" << s[j] << std::endl;
+      if (root_i != root_j) {
+        s[root_i] = root_j;
+      }
+    }
+    
+    void bfs(int i, int n, int m, int edges[][2]);
+}
 
+/* Implementing the breadth first traversal */
+void bfs(int i, int n, int m, int edges[][2]) { // i: source vertex
+  distance[i] = 0;
+  
+  for (int d = 1; d < m; d++) {      // d: distance
+    int f = -1;                      // f: index of the first vertex
+    int rooti = find(i);             // 最初は"3" s[3] == -1 だから。 
+    for (int j = 0; j < m; j++) {    // loop through all the edges
+      int root0 = find(edges[j][0]); // the names of the sets that the edge's two vertices belong to
+      int root1 = find(edges[j][1]);
+      
+      std::cout << "rooti: " << rooti << "  root0: " << root0 << "  root1: " << root1 << "  edges[j][0]:" << edges[j][0] << "  edges[j][1]:" << edges[j][1] << "  i:" << i << std::endl;
+      if ( root0 == rooti && root0 != root1 ) {                      // <= This line is the excercise.
+        if (f == -1)
+          f = edges[j][1];         // (ヒットしたらヒットしたvertexのsetを作る)
+        else
+          dsunion(f, edges[j][1]); // （２つ以上ヒットした時はそこにunionする)
+        distance[edges[j][1]] = d;
+      } else if ( root1 == rooti && root0 != root1 ) {               // <= This line is the excercise.
+        if (f == -1)
+          f = edges[j][0];
+        else
+          dsunion(f, edges[j][0]);
+        distance[edges[j][0]] = d;          
+      }
+    }
+    
+    if (f == -1)    // run out of vertices(全部見つくした) , jのloopでヒットしたらヒットしたvertexのsetが作られるので（２つ以上ヒットした時はそこにunionされる）。
+      break;
+    else
+      dsunion(f, i);
+  }
+}
+
+int main() {
+  ind edges[8][2] = {{0,1},{1,2},{2,3},{3,4},{4,5},{5,6},{6,7},{7,3}};
+  
+  DisjointSet d;
+  
+  d.bfs(3,8,8,edges);
+  
+  for (int i = 0; i < 8; i++)
+    std::cout << "Distance to vertex " << i << " is " << d.distance[i] << std::endl;
+  /* output should be:
+    Distance to vertex 0 is 3
+    Distance to vertex 1 is 2
+    Distance to vertex 2 is 1
+    Distance to vertex 3 is 0
+    Distance to vertex 4 is 1
+    Distance to vertex 5 is 2
+    Distance to vertex 6 is 2
+    Distance to vertex 7 is 1
+  */
+  return 0;
+}
 ```
