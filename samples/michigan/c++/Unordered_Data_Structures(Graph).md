@@ -55,8 +55,6 @@ remove: ◎<br>
 incidentEdges: ◎<br>
 areAdjacent: ×<br>
 
-#### Graph search algorithms overview
-
 #### std::unordered_set
 ・ (requirement:)no duplicates; inserting the same item twice has no effect.<br>
 ・ In C++, the unordered set uses **hashing** internally, so the key type must support == operator as well as std::hash.<br>
@@ -73,6 +71,7 @@ areAdjacent: ×<br>
 #### Initialization with type inference
 ・ In C++11 and newer, there are compiler features that can infer the correct types automatically.<br>
 
+## Graph search algorithms overview
 **⚪︎traverse through the graph(spanning-tree)**<br>
 ・ Not ordered(Directedはある)（<=> tree: ordered ）<br>
 ・ No obvious start（<=> tree: obvious start ）<br>
