@@ -82,20 +82,19 @@ areAdjacent: ×<br>
 ・ queueを使用して探索時に１度だけノードを通るようにする<br>
 ・ Adjacency Edgesの内容を重複が無いようにqueueに順に（queueの先頭から見て、）Vertexを全て含める<br>
 
-#### BFS
+### BFS
 ・ Breadth-first search<br>
 ・ 1番目のVertexから見て全てのVertexをqueueに入れ、queueから処理を進める。<br>
 ・ 全Vertexの先頭のVertexからの距離がわかる。（Adjacent Edgesとd(distance)とp(predecessor)を格納する事で）<br>
 ・ Undirectd（双方向が可能）では最も早い：O(m+n)。<br>
 ・ Cross Edgeが存在するという事はこれまでのdistance以下で来れる。（距離がより大きくはならない。）。<br>
 
-#### DFS
+### DFS
 ・ Depth-first search<br>
 ・ stackの利点を生かせる。cross edgeを見つけ他にtraverseする所がなければ、順に来た道を戻って他を探す。（全探索する）<br>
 ・ running timeはBFSと変わらない(O(n+m))<br>
-・ <br>
 
-#### Kruskal's Algorithm
+### Kruskal's Algorithm
 ・ Undirected, weightedでminimum spanning tree(MST)を求める。<br>
 ・ weight(距離など)を考慮する<br>
 ・ MinHeap(weightの小さいものからHeapに詰め込む)<br>
@@ -103,16 +102,22 @@ areAdjacent: ×<br>
 ・ weightの小さいものから徐々にset（Edge）をunionしていく(Weightの大きいEdgeはspanning-treeに入らない。)<br>
 ・ running time: O(m・lg(m))  <= Edge数 x log(Edge数)<br>
 
-#### Prim's Algorithm
+### Prim's Algorithm
 ・ Undirected, weightedでminimum spanning tree(MST)を求める。<br>
 ・ 先頭のVertexからweightの小さいEdgeをset unionしていく(あとはBFSと似ている)<br>
-・ <br>
+・ running time(Sparse Graph): O(m・lg(m))  <= Edge数 x log(Edge数)<br>
+・ running time(Dense Graph): O(nの2乗・lg(n))<br>
 
-#### Dijkstra's Algorithm
-・ Undirected, weightedでminimum spanning tree(MST)を求める。<br>
-・ <br>
-・ <br>
-・ <br>
+### Dijkstra's Algorithm
+・ DirectedまたはUndirected, weightedでShortest Path on the Graphを求める。<br>
+・ Primとの違いは先頭から全てのedgeを経由してコストを求める（加算していく）。（GraphがDirectedで有効なことも違い）<br>
+・ CiscoのSwitchと同じ計算法<br>
+・ SSSP(先頭のVertexからの最短距離を求めるしかできない)<br>
+・ running time: O(m + lg(n)) // The best running time in any Shortest Path Algorithm.<br>
+
+#### どの局面で利用するのが一番適しているか(速度の観点で)(Landmark Path Problem)
+・ weightがない場合: BFS<br>
+・ Landmarkがあり、weightがない場合: BFS(X => 先頭からとLandmarkからの２回試みる, ⭕️ => Landmarkから１回だけでok.)<br>
 
 
 ```
@@ -207,25 +212,26 @@ KruskalMST(G):
 
 
 ////////////////
-// Minimum Spanning Tree ADT
+// Shortest Path Algorithm ADT
 //     (Dijkstra's Algorithm)
 ////////////////
-DijkstraMST(G):
-  DisjointSets forest
+DijkstraSSSP(G, s): // (Single Source Short Path)
   foreach (Vertex v : G.vertices()):
-    forest.makeSet(v)
+    d[v] = +inf // この辺りはPrimと似ている(Prim: vertexを進めるたびに距離がわかるとセットし直していく)
+    p[v] = NULL
+  d[s] = 0
   
-  priorityQueue Q // min edge weight
-  foreach (Edge e : G.edges()):
-    Q.insert(e)
-  
-  Graph T 0 (V, {})
+  PriorityQueue Q // min distance, defined by d[v]
+  Q.buildHeap(G.vertices())
+  Graph T  // "labeled set"
 
-  while |T.edges()| < n-1:
-    Edge (u,v) = Q.removeMin()
-    if forest.find(u) != forest.find(v):
-      T.addEdge(u, v)
-      forest.union( forest.find(u), forest.find(v))
+  repeat in times:
+    Vertex u = Q.removeMin()
+    T.add(u)
+    foreach (Vertex v : neighbors of u not in T):
+      if cost(u, v) + d[u] < d[v]:
+        d[v] = cost(u, v) + d[u]
+        p[v] = m
   
   return T
 ```
