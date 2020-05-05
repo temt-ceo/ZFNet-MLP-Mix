@@ -29,6 +29,105 @@
 
 
 
+**GraphSearchCommon.h**<br>
+```
+#pragma once
+
+#include <string>
+#include <vector>
+#include <list>
+#include <queue>
+#include <Utility>    // std::pair
+#include <unordered_map>
+#include <cstdlib>    // rand
+#include <ctime>    // time
+
+#include "IntPair2.h"
+#include "GridGraph.h"
+#include "PuzzleState.h"
+
+std::list<IntPair> graphBFS(const IntPair & start, const IntPair & goal, const GridGraph & graph);
+std::list<IntPair> puzzleBFS(const PuzzleState & start, const PuzzleState & goal);
+```
+
+**GraphSearchExcercises.cpp**<br>
+```
+#include "GraphSearchCommon.h"
+int GridGraph::countEdges() const {
+  int numEdges = 0;
+  
+  // EXCERCISE code here.
+
+  return numEdges;
+}
+
+void GridGraph::removePoint(const IntPair & p1) {
+  if (!hasPoint(p1)) return;
+  
+  const GridGraph::NeighborSet originalNeighbors = adjacencyMap.at(p1);
+  
+  // EXCERCISE code here.
+}
+
+std::list<IntPair> graphBFS(const IntPair & start, const IntPair & goal, const GridGraph & graph) {
+  constexpr int maxDist = 100;
+  std::queue<IntPair> exploreQ;
+  std::unordered_map<IntPair, IntPair> pred;
+  std::unordered_map<IntPair, int> dist;
+  std::unordered_set<IntPair> visitedSet;
+  std::unordered_set<IntPair> dequeueSet;
+  
+  if (!graph.hasPoint(start)) throw std::runtime_error("Starting point doesn't exist in graph");
+  if (!graph.hasPoint(goal)) throw std::runtime_error("Goal point doesn't exist in graph");
+  
+  pred[start] = start;
+  dist[start] = start;
+  
+  visitedSet.insert(start);
+  exploreQ.push(start);
+  
+  bool foundGoal = (start == goal);
+  bool tooManySteps = false;
+  
+  while (!exploreQ.empty() && !foundGoal && !tooManySteps) {
+    
+    auto curPoint = exploreQ.front();
+    exploreQ.pop();
+    bool curPointWasPreviouslyDequeued = dequeuedSet.count(curPoint);
+    if (curPointWasPreviouslyDequeued) {
+      std::cout << "graphBFS ERROR" << std::endl << std::endl;
+      return std::list<IntPair>();
+    }
+    else {
+      dequeuedSet.insert(curPoint);
+    }
+    
+    // EXCERCISE code here.
+    
+  }
+  
+  if (tooManySteps) {
+    std::cout << "graphBFS warning: Could not reach goal within the maximum allowed steps." << std::endl << std::endl;
+      return std::list<IntPair>();
+  }
+  
+  if (!foundGoal) {
+    std::cout << "graphBFS warning: Could not reach goal.(This may be expected if no path exists.)" << std::endl << std::endl;
+      return std::list<IntPair>();
+  }
+  
+  std::list<IntPair> path;
+  auto cur = goal;
+  path.push_front(cur);
+  while (pred.count(cur) && pred[cur] != cur) {
+    path.push_front(pred[cur]);
+    cur = pred[cur];
+  }
+  
+  return path;
+}
+```
+
 **main.cpp**<br>
 ```
 #include <iostream>
@@ -266,105 +365,6 @@ std::string makeHeader1(std::string msg) {
 }
 std::string makeHeader2(std::string msg) {
   ...
-}
-```
-
-**GraphSearchCommon.h**<br>
-```
-#pragma once
-
-#include <string>
-#include <vector>
-#include <list>
-#include <queue>
-#include <Utility>    // std::pair
-#include <unordered_map>
-#include <cstdlib>    // rand
-#include <ctime>    // time
-
-#include "IntPair2.h"
-#include "GridGraph.h"
-#include "PuzzleState.h"
-
-std::list<IntPair> graphBFS(const IntPair & start, const IntPair & goal, const GridGraph & graph);
-std::list<IntPair> puzzleBFS(const PuzzleState & start, const PuzzleState & goal);
-```
-
-**GraphSearchExcercises.cpp**<br>
-```
-#include "GraphSearchCommon.h"
-int GridGraph::countEdges() const {
-  int numEdges = 0;
-  
-  // EXCERCISE code here.
-
-  return numEdges;
-}
-
-void GridGraph::removePoint(const IntPair & p1) {
-  if (!hasPoint(p1)) return;
-  
-  const GridGraph::NeighborSet originalNeighbors = adjacencyMap.at(p1);
-  
-  // EXCERCISE code here.
-}
-
-std::list<IntPair> graphBFS(const IntPair & start, const IntPair & goal, const GridGraph & graph) {
-  constexpr int maxDist = 100;
-  std::queue<IntPair> exploreQ;
-  std::unordered_map<IntPair, IntPair> pred;
-  std::unordered_map<IntPair, int> dist;
-  std::unordered_set<IntPair> visitedSet;
-  std::unordered_set<IntPair> dequeueSet;
-  
-  if (!graph.hasPoint(start)) throw std::runtime_error("Starting point doesn't exist in graph");
-  if (!graph.hasPoint(goal)) throw std::runtime_error("Goal point doesn't exist in graph");
-  
-  pred[start] = start;
-  dist[start] = start;
-  
-  visitedSet.insert(start);
-  exploreQ.push(start);
-  
-  bool foundGoal = (start == goal);
-  bool tooManySteps = false;
-  
-  while (!exploreQ.empty() && !foundGoal && !tooManySteps) {
-    
-    auto curPoint = exploreQ.front();
-    exploreQ.pop();
-    bool curPointWasPreviouslyDequeued = dequeuedSet.count(curPoint);
-    if (curPointWasPreviouslyDequeued) {
-      std::cout << "graphBFS ERROR" << std::endl << std::endl;
-      return std::list<IntPair>();
-    }
-    else {
-      dequeuedSet.insert(curPoint);
-    }
-    
-    // EXCERCISE code here.
-    
-  }
-  
-  if (tooManySteps) {
-    std::cout << "graphBFS warning: Could not reach goal within the maximum allowed steps." << std::endl << std::endl;
-      return std::list<IntPair>();
-  }
-  
-  if (!foundGoal) {
-    std::cout << "graphBFS warning: Could not reach goal.(This may be expected if no path exists.)" << std::endl << std::endl;
-      return std::list<IntPair>();
-  }
-  
-  std::list<IntPair> path;
-  auto cur = goal;
-  path.push_front(cur);
-  while (pred.count(cur) && pred[cur] != cur) {
-    path.push_front(pred[cur]);
-    cur = pred[cur];
-  }
-  
-  return path;
 }
 ```
 
