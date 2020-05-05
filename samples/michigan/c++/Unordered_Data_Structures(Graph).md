@@ -25,7 +25,7 @@ degree of the node: the count of how many incident edges that it has. 何個inci
 simple graph: a graph with no self loops. ( Max edges = n(n-1)/2 = ~O(n^2) )
 ```
 
-Edge List<br>
+### Edge List
 - The Edge List performs worse in general than the Adjacency Matrix and the Adjacency List representations,<br>
 but it is much simpler and easier to implement.<br>
 It also takes less space than the alternatives, and can insert vertices and edges in constant time. <br>
@@ -39,8 +39,7 @@ remove: △<br>
 incidentEdges: △<br>
 areAdjacent: ×<br>
 
-Adjacency Matrix<br>
-- <br>
+### Adjacency Matrix
 
 space: ×<br>
 insert: △<br>
@@ -48,8 +47,7 @@ remove: △<br>
 incidentEdges: △<br>
 areAdjacent: ◎<br>
 
-Adjacency List<br>
-- <br>
+### Adjacency List
 
 space: ◎（ただしコードが複雑）<br>
 insert: ◎<br>
