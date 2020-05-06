@@ -372,7 +372,7 @@ TEST_CASE("Testing puzzleBFS when start==goal:", "[weight=1][ex3]") {
 
 TEST_CASE("Testing puzzleBFS when there is a solution:", "[weight=1][ex3]") {
   
-  const PuzzleState puzzle_start({1,2,3,4,5,6,7,8,9});
+  const PuzzleState puzzle_start({1,2,3,4,6,9,7,5,8});
   const PuzzleState puzzle_goal({1,2,3,4,5,6,7,8,9});
   const int CORRECT_STEPS = 3;
 
