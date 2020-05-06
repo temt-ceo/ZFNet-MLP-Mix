@@ -213,19 +213,20 @@ void GridGraph::removePoint(const IntPair & p1) {
 }
 
 // Excercise 2(implement BFS)
+// finding the shortest path from a start point to a goal point.
 std::list<IntPair> graphBFS(const IntPair & start, const IntPair & goal, const GridGraph & graph) {
   constexpr int maxDist = 100;
-  std::queue<IntPair> exploreQ;
-  std::unordered_map<IntPair, IntPair> pred;
-  std::unordered_map<IntPair, int> dist;
-  std::unordered_set<IntPair> visitedSet;
-  std::unordered_set<IntPair> dequeueSet;
+  std::queue<IntPair> exploreQ;           // BFSで使うキュー
+  std::unordered_map<IntPair, IntPair> pred;// 先駆者vertexを格納=> discovery edgeを格納（最短経路を求めるときに使用）
+  std::unordered_map<IntPair, int> dist;  // 各Vertexの最初のPointからの距離を格納（無限ループを防ぐ）
+  std::unordered_set<IntPair> visitedSet; // ラベル"visited"の代わりにsetに詰め込む(std::unordered_setの方が自前でadjacenciesを持つより楽(labelの初期化も必要ない)だから)
+  std::unordered_set<IntPair> dequeueSet; // （無くても良い。無限ループを防ぐデバッグ用）
   
   if (!graph.hasPoint(start)) throw std::runtime_error("Starting point doesn't exist in graph");
   if (!graph.hasPoint(goal)) throw std::runtime_error("Goal point doesn't exist in graph");
   
   pred[start] = start;
-  dist[start] = start;
+  dist[start] = 0;
   
   visitedSet.insert(start);
   exploreQ.push(start);
@@ -237,6 +238,7 @@ std::list<IntPair> graphBFS(const IntPair & start, const IntPair & goal, const G
     
     auto curPoint = exploreQ.front();
     exploreQ.pop();
+    
     bool curPointWasPreviouslyDequeued = dequeuedSet.count(curPoint);
     if (curPointWasPreviouslyDequeued) {
       std::cout << "graphBFS ERROR" << std::endl << std::endl;
@@ -247,7 +249,32 @@ std::list<IntPair> graphBFS(const IntPair & start, const IntPair & goal, const G
     }
     
     // EXCERCISE code here.
-    
+    GridGraph::NeighborSet neighbors = graph.adjacencyMap.at(curPoint); // Change this...
+      
+    for (auto neighbor : neighbors) {
+      bool neighborWasAlreadyVisited = (visitedSet.find(neighbor) != visitedSet.end()); // Change this...
+      
+      if (!neighborWasAlreadyVisited) {
+      
+        pred[neighbor] = curPoint;   // Record that the curPoint is the predecessor of the neighbor point
+
+        
+        visitedSet.insert(neighbor);  // Add neighbor to the visited set.
+
+        
+        exploreQ.push(neighbor);     // Push neighbor into the exploration queue.
+
+        dist[neighbor] = dist[curPoint] + 1;
+        if (dist[neighbor] > maxDist) {
+          tooManySteps = true;
+          break;
+        }
+        if (neighbor == goal) {
+          foundGoal = true;
+          break;
+        }        
+      } // ebd of handling the discovered neighbor 
+    }
   }
   
   if (tooManySteps) {
@@ -305,11 +332,20 @@ std::list<PuzzleState> puzzleBFS(const PuzzleState & start, const PuzzleState & 
     }
     
     // EXCERCISE code here.
-    
+    auto neighbors = curState.getAdjacentStates(); // Change this! This line is totally wrong.
+    // auto it = neighbors.begin();
+    // neighbors.insert(it, start);             //while (!exploreQ.empty() && !foundGoal && !tooManySteps) {となっているので不要だった
+
     for (auto neighbor : neighbors) {
-      bool neighborWasAlreadyVisited = false;
+      //std::cout << "neighbor:" << neighbor << "            ,goal:" << goal << std::endl;
+      // Check whether the neighbor has already been visited.
+      bool neighborWasAlreadyVisited = (visitedSet.find(neighbor) != visitedSet.end()); // Change this...
       
       if (!neighborWasAlreadyVisited) {
+        pred[neighbor] = curState;
+        visitedSet.insert(neighbor);
+        exploreQ.push(neighbor);
+
         dist[neighbor] = dist[curState] + 1;
         if (dist[neighbor] > maxDist) {
           tooManySteps = true;
