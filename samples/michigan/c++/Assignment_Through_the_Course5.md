@@ -69,6 +69,111 @@ std::list<IntPair> graphBFS(const IntPair & start, const IntPair & goal, const G
 std::list<IntPair> puzzleBFS(const PuzzleState & start, const PuzzleState & goal);
 ```
 
+**GridGraph.h**<br>
+```
+#pragma once
+#include <iostream>
+#include <stdexcept>
+#include <unordered_map>
+#include <unordered_set>
+#include <algorithm> // std::sort
+#include <vector>
+#include <string>
+#include <sstream>
+
+#include "IntPair2.h"
+
+class GridGraph {
+  using NeighborSet = sed::unordered_set<IntPair>;
+  
+  std::unordered_map<IntPair, GridGraph::NeighborSet> adjacentMap;
+  
+  static bool allowPlotting;
+  static bool allowVerboseTextDescription;
+  
+  bool checkUnitDistance(const IntPair & p1, const IntPair & p2) const {
+    int dist_x = p1.first - p2.first;
+    int dist_y = p1.second - p2.second;
+    int dist2 = dist_x*dist_x + dist_y*dist_y;
+    return (dist2 == 1);
+  }
+  
+  void insertPoint(const IntPair & p) {
+    // Just by referencing to given key, it is inserted if not already present.
+    adjacencyMap[p];
+  }
+  
+  void insertEdge(const IntPair & p1, const IntPair & p2) {
+    if (!checkUnitDistance(p1,p2)) {
+      std::cerr < "Error: Can't add edge from " << -1 << " to " << p2 << std::endl;
+      throw std::runtime_error("Requested an invalid edge insertion");
+    }
+    
+    adjacencyMap[p1].insert(p2);
+    adjacencyMap[p2].insert(p1);
+  }
+  
+  void removeEdge(const IntPair & p1, const IntPair & p2) {
+    if (hasEdge(p1,p2)) {
+      adjacencyMap[p1].erase(p2);
+      adjacencyMap[p2].erase(p1);
+    }
+  }
+  
+  void removePoint(const IntPair & p1); // defigned in GraphSearchExcercises.cpp
+  
+  bool hasPoint(const IntPair & p) const {
+    return adjacencyMap.count(p);
+  }
+  
+  bool hasEdge(const IntPair & p1, const IntPair & p2) const {
+    int directions = 0;
+    if (adjacencyMap.count(p1) && adjacencyMap.at(p1).count(p2)) {
+      directions++; // edgeの１方向が存在した。
+    }
+    if (adjacencyMap.count(p2) && adjacencyMap.at(p2).count(p1)) {
+      directions++; // 往復のedgeも存在した
+    }
+    if (directions == 0) {
+      return false;
+    }
+    else if (directions == 2) {
+      return true;
+    }
+    else {
+      throw std::runtime_error("hasEdge: edge found, but only in one direction");
+    }
+  }
+  
+  int countVertices() const {
+    return adjacencyMap.size();
+  }
+  
+  int countEdges() const; // excercise
+  
+  bool operator==(const GridGraph & other) const {
+    return (adjacencyMap == other.adjacencyMap);
+  }
+  
+  bool operator!=(const GridGraph & other) const {
+    return !(*this == other); // check for inequality by delegating to the implementation of operator==.
+  }
+  
+  std::ostream & plot(std::ostream & os) const;
+  std::ostream & printDetails(std::ostream & os) const;
+}
+
+// Adds "<<" support
+static inline std::ostream & operator<<(std::ostream & os, const GridGraph & graph) {
+  if (GridGraph::allowPlotting) {
+    return graph.plot(os);
+  }
+  else {
+    return graph.printDetails(os);
+  }
+}
+```
+
 **GraphSearchExcercises.cpp**<br>
 ```
 #include "GraphSearchCommon.h"
@@ -384,111 +489,6 @@ std::string makeHeader1(std::string msg) {
 }
 std::string makeHeader2(std::string msg) {
   ...
-}
-```
-
-**GridGraph.h**<br>
-```
-#pragma once
-#include <iostream>
-#include <stdexcept>
-#include <unordered_map>
-#include <unordered_set>
-#include <algorithm> // std::sort
-#include <vector>
-#include <string>
-#include <sstream>
-
-#include "IntPair2.h"
-
-class GridGraph {
-  using NeighborSet = sed::unordered_set<IntPair>;
-  
-  std::unordered_map<IntPair, GridGraph::NeighborSet> adjacentMap;
-  
-  static bool allowPlotting;
-  static bool allowVerboseTextDescription;
-  
-  bool checkUnitDistance(const IntPair & p1, const IntPair & p2) const {
-    int dist_x = p1.first - p2.first;
-    int dist_y = p1.second - p2.second;
-    int dist2 = dist_x*dist_x + dist_y*dist_y;
-    return (dist2 == 1);
-  }
-  
-  void insertPoint(const IntPair & p) {
-    // Just by referencing to given key, it is inserted if not already present.
-    adjacencyMap[p];
-  }
-  
-  void insertEdge(const IntPair & p1, const IntPair & p2) {
-    if (!checkUnitDistance(p1,p2)) {
-      std::cerr < "Error: Can't add edge from " << -1 << " to " << p2 << std::endl;
-      throw std::runtime_error("Requested an invalid edge insertion");
-    }
-    
-    adjacencyMap[p1].insert(p2);
-    adjacencyMap[p2].insert(p1);
-  }
-  
-  void removeEdge(const IntPair & p1, const IntPair & p2) {
-    if (hasEdge(p1,p2)) {
-      adjacencyMap[p1].erase(p2);
-      adjacencyMap[p2].erase(p1);
-    }
-  }
-  
-  void removePoint(const IntPair & p1); // defigned in GraphSearchExcercises.cpp
-  
-  bool hasPoint(const IntPair & p) const {
-    return adjacencyMap.count(p);
-  }
-  
-  bool hasEdge(const IntPair & p1, const IntPair & p2) const {
-    int directions = 0;
-    if (adjacencyMap.count(p1) && adjacencyMap.at(p1).count(p2)) {
-      directions++; // edgeの１方向が存在した。
-    }
-    if (adjacencyMap.count(p2) && adjacencyMap.at(p2).count(p1)) {
-      directions++; // 往復のedgeも存在した
-    }
-    if (directions == 0) {
-      return false;
-    }
-    else if (directions == 2) {
-      return true;
-    }
-    else {
-      throw std::runtime_error("hasEdge: edge found, but only in one direction");
-    }
-  }
-  
-  int countVertices() const {
-    return adjacencyMap.size();
-  }
-  
-  int countEdges() const; // excercise
-  
-  bool operator==(const GridGraph & other) const {
-    return (adjacencyMap == other.adjacencyMap);
-  }
-  
-  bool operator!=(const GridGraph & other) const {
-    return !(*this == other); // check for inequality by delegating to the implementation of operator==.
-  }
-  
-  std::ostream & plot(std::ostream & os) const;
-  std::ostream & printDetails(std::ostream & os) const;
-}
-
-// Adds "<<" support
-static inline std::ostream & operator<<(std::ostream & os, const GridGraph & graph) {
-  if (GridGraph::allowPlotting) {
-    return graph.plot(os);
-  }
-  else {
-    return graph.printDetails(os);
-  }
 }
 ```
 
