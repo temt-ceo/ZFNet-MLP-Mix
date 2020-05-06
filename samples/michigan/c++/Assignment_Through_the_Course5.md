@@ -181,6 +181,19 @@ int GridGraph::countEdges() const {
   int numEdges = 0;
   
   // EXCERCISE code here.
+  // adjacencyMapはunordered_mapで出来ている
+  // neighborSetはunordered_setで出来ている
+  //  using NeighborSet = std::unordered_set<IntPair>;
+  //  std::unordered_map<IntPair, GridGraph::NeighborSet> adjacencyMap;
+  // 求めるべきedgeの数：GridGraph::NeighborSetはadjacencyMapのvalue
+  for (const auto & kv : adjacencyMap) {
+    // (vertical,horizontal)のpointをstd::pairで維持し、紐付きのあるpoint(edge)をunprdered_setで管理している
+    const auto & thePoint = kv.first;
+    const auto & edgeSet = kv.second;
+    int edgeCnt = edgeSet.size();
+    numEdges += edgeCnt;
+  }
+  numEdges = numEdges / 2; // undirectedのため行きと帰りの双方がadjacencyに保存されている。edgeは合わせて１つなので2で割る
 
   return numEdges;
 }
