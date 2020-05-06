@@ -329,7 +329,7 @@ TEST_CASE("Testing graphBFS when a path can be found:", "[weight=1][ex2]") {
 
 TEST_CASE("Testing puzzleBFS when the goal is unreachable (puzzle can't be solved):", "[weight=1][ex3][timeout=60000]") {
 
-  const PuzzleState puzzle_start({1,2,3,4,5,6,7,8,9});
+  const PuzzleState puzzle_start({1,3,2,4,5,6,7,8,9});
   const PuzzleState puzzle_goal({1,2,3,4,5,6,7,8,9});
   std::cout << std::endl << "Now testing puzzleBFS when the goal is unreachable." << std::endl
      << "This may take several seconds and display a warning (which is ok)." << std::endl << std::endl;
