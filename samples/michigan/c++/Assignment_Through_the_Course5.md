@@ -28,6 +28,25 @@
 ・ breadth-first search(BFS): find the shortest paths from one vertex to other vetices in the graph.<br>
 
 
+**テストユーティリティのためにバージョンを確認**<br>
+```
+g++ --version
+> Configured with: --prefix=/Library/Developer/CommandLineTools/usr --with-gxx-include-dir=/usr/include/c++/4.2.1
+> Apple LLVM version 8.0.0 (clang-800.0.42.1)
+> Target: x86_64-apple-darwin15.6.0
+> Thread model: posix
+> InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+
+make --version
+> GNU Make 3.81
+> Copyright (C) 2006  Free Software Foundation, Inc.
+> This is free software; see the source for copying conditions.
+> There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+> PARTICULAR PURPOSE.
+> 
+> This program built for i386-apple-darwin11.3.0
+
+```
 
 **GraphSearchCommon.h**<br>
 ```
