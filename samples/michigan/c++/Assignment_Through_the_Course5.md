@@ -536,3 +536,5 @@ std::ostream & GridGraph::plot(std::ostream & os) const {
 
 ```
 
+#### Our IntPair type, defined in IntPair2.h, is based on std::pair<int,int>.
+(We add a few things like std::hash support.) <br>
