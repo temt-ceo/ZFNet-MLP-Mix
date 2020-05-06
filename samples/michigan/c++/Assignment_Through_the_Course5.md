@@ -177,6 +177,8 @@ static inline std::ostream & operator<<(std::ostream & os, const GridGraph & gra
 **GraphSearchExcercises.cpp**<br>
 ```
 #include "GraphSearchCommon.h"
+
+// Excercise 1(countEdges & removePoint)
 int GridGraph::countEdges() const {
   int numEdges = 0;
   
@@ -204,8 +206,13 @@ void GridGraph::removePoint(const IntPair & p1) {
   const GridGraph::NeighborSet originalNeighbors = adjacencyMap.at(p1);
   
   // EXCERCISE code here.
+  for (auto & neighborPoint : originalNeighbors) {
+    removeEdge(p1, neighborPoint);
+  }
+  adjacencyMap.erase(p1);
 }
 
+// Excercise 2(implement BFS)
 std::list<IntPair> graphBFS(const IntPair & start, const IntPair & goal, const GridGraph & graph) {
   constexpr int maxDist = 100;
   std::queue<IntPair> exploreQ;
@@ -254,6 +261,82 @@ std::list<IntPair> graphBFS(const IntPair & start, const IntPair & goal, const G
   }
   
   std::list<IntPair> path;
+  auto cur = goal;
+  path.push_front(cur);
+  while (pred.count(cur) && pred[cur] != cur) {
+    path.push_front(pred[cur]);
+    cur = pred[cur];
+  }
+  
+  return path;
+}
+
+// Excercise 3(solving the pazzle)
+std::list<PuzzleState> puzzleBFS(const PuzzleState & start, const PuzzleState & goal) {
+  constexpr int maxDist = 35;
+  
+  std::queue<PuzzleState> exploreQ;
+  std::unordered_map<PuzzleState, PuzzleState> pred;
+  std::unordered_map<PuzzleState, int> dist;
+  std::unordered_set<PuzzleState> visitedSet;
+  std::unordered_set<PuzzleState> dequeuedSet;
+
+  pred[start] = start;
+  dist[start] = 0;
+  visitedSet.insert(start);
+  exploreQ.push(start);
+  
+  bool foundGoal = (start == goal);
+  bool tooManySteps = false;
+  
+  while (!exploreQ.empty() && !foundGoal && !tooManySteps) {
+    auto curState = exploreQ.front();
+    exploreQ.pop();
+    
+    bool curPointWasPreviouslyDequeued = dequeuedSet.count(curState); // 既にadjacent調査済みpointか
+    if (!curPointWasPreviouslyDequeued) {
+      std::cout << "puzzleBFS ERROR: Dequeued a vertex that had already been dequeued before." << std::endl
+        << " If you're using visitedSet correctly, then no vertex should ever be added" << std::endl
+        << " to the explore queue more than once." << std::endl << std::endl;
+      return std::list<PuzzleState>(); // return an empty path now.
+    }
+    else {
+      dequeuedSet.insert(curState);
+    }
+    
+    // EXCERCISE code here.
+    
+    for (auto neighbor : neighbors) {
+      bool neighborWasAlreadyVisited = false;
+      
+      if (!neighborWasAlreadyVisited) {
+        dist[neighbor] = dist[curState] + 1;
+        if (dist[neighbor] > maxDist) {
+          tooManySteps = true;
+          break;
+        }
+        if (neighbor == goal) {
+          foundGoal = true;
+          break;
+        }
+      } // ebd of handling the discovered neighbor
+      
+    } // end of for loop
+    
+  } // end of while loop
+  
+  if (tooManySteps) {
+    std::cout << "pazzleBFS warning: Could not reach goal within the maximum allowed steps." << std::endl << std::endl;
+      return std::list<IntPair>();
+  }
+  
+  if (!foundGoal) {
+    std::cout << "pazzleBFS warning: Could not reach goal.(This may be expected if no path exists.)" << std::endl << std::endl;
+      return std::list<IntPair>();
+  }
+  
+  // 最短経路を(リンクド)リストで返す
+  std::list<PuzzleState> path;
   auto cur = goal;
   path.push_front(cur);
   while (pred.count(cur) && pred[cur] != cur) {
