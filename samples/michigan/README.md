@@ -8,9 +8,11 @@
 **Document Similarity and Topic Modeling**<br>
 [TextMiningAssignment4](TextMiningAssignment4.ipynb)<br>
 
+### Applied Data Science Recap
 **【recap(総まとめ)】Community Model <最も関連のあるノードを見つける>**<br>
 [AppliedSocialNetworkAnalysisAssignment4](AppliedSocialNetworkAnalysisAssignment4.ipynb)<br>
 
+## Text Mining Hands-on
 ### Perform Sentiment Analysis with scikit-learn
 **Importing the Data**<br>
 ```
