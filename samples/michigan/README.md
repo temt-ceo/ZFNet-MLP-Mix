@@ -113,7 +113,24 @@ print(tfidf.fit_transform(count.fit_transform(docs)).toarray())
 # Cleaning and pre-processing text data is a vital process in data analysis and especially in natural language processing.
 # Skip the data set of reviews of irrelevant characters including HTML tags, punctuation and emojis using regular expression.
 
+# 不必要なwordがないか観察する
+df.loc[0, 'review'][-50:] #=> 'is seven.<br /><br />Title (Brazil): Not Available' 最後の５０文字
 
+import re
+def preprocessor(text):
+  text = re.sub('<[^>]*>', '', text) # htmlタグ
+  emotions = re.findall('(?::|;|=)(?:-)?(?:\)|\(|D|P)', text) :-) スマイル, :\, :-(sad face, :Dを検知
+  text = re.sub('[\W]+', ' ', text.lower()) +\
+      ' '.join(emotions).replace('-', '') # Non-Wordを除去した後、スマイルなどの顔文字を文章の最後に移動。 スマイルを:)に統一。
+  return text
+
+preprocessor(df.loc[0, 'review'][-50:])
+# => 'is seven title brazil not available'
+
+preprocessor('</a>This :) is a :( test :-)!')
+# => 'this is a test :) :( :)'
+
+df['review'] = df['review'].apply(preprocessor)
 ```
 **Tokenization of Documents**<br>
 ```
