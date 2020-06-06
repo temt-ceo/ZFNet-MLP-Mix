@@ -16,12 +16,14 @@
 ### Perform Sentiment Analysis with scikit-learn
 **Importing the Data**<br>
 ```
+# (dataの説明を行う)
 # Explanation of the data set and the problem oerview
 # import essential modules and helper functions from NumPy, Mathplotlib and scikit-learn
 
 ```
 **Transforming Documents into Feature Vectors**<br>
 ```
+# (テキストをsparse feature vectorsに変換する)
 # Information retrieval
 # Represent text data using the bag-of-words model
 # Construct the vocabulary of the bag-of-words model
@@ -30,7 +32,8 @@
 ```
 **Term Frequency-Inverse Document Frequency**<br>
 ```
-# Observe words that crop up across our corpus of documents.(非常に頻出のワードを観察する) 
+# (非常に頻出のワードを観察する) 
+# Observe words that crop up across our corpus of documents.
 # These words can lead to bad performance because they don't contain useful information.
 # Implement a useful statistical technique, Term frequency-inverse document frequency(tf-idf).
 # (The tf-idf is the product of the term frequency and the inverse document frequency)
@@ -39,6 +42,7 @@
 ```
 **Calculate TF-IDF of the Term 'Is'**<br>
 ```
+# (tf-idf値を求める)
 # Manually calculate the tf-idf.
 # Apply scikit-learn's TfIdfTransformer to convert text into a vector of tf-idf values.
 # Apply the L2-normalization to it.
@@ -46,6 +50,7 @@
 ```
 **Data Preparation**<br>
 ```
+# (Cleaningをする)
 # Cleaning and pre-processing text data is a vital process in data analysis and especially in natural language processing.
 # Skip the data set of reviews of irrelevant characters including HTML tags, punctuation and emojis using regular expression.
 
@@ -53,31 +58,32 @@
 ```
 **Tokenization of Documents**<br>
 ```
+# (k-meansのcluster数を変えたらどのようにimageが変わるかを可視化する)
 # Repurpose the data preprocessing and k-means clustering logic from previous tasks.
 # Operate k-means image compression.
 # Visualize how the image changes as the number of clusters fed to the k-means algorithm is varid.
-# (k-meansのcluster数を変えたらどのようにimageが変わるかを可視化する)
 
 ```
 **Documents Classification Using Logistic Regression**<br>
 ```
-#
-#
-#
+# (データを分割し、grid searchを行う)
+# Split the data into training and test sets of equal size.
+# Create a pipeline to build a logistic regression model
+# Emply cross-validated grid-search to estimate the best parameters and model.
 
 ```
 **Load Saved Model from Disk**<br>
 ```
-#
-#
-#
+# (GridSearchは時間がかかるのでpre-trainしたmodelを読み込む)
+# Although the time it takes to train logistic regression model is very little,
+# estimating the best parameters for our model using GridSearchCV can take hours for some data amount.
 
 ```
 **Model Accuracy**<br>
 ```
-#
-#
-#
+# (テストdatasetを使い感情の予測)
+# Take a look at the best parameter settings, cross-validation score and how well
+# out model classifiers the sentiments of reviews from the test set.
 
 ```
 
