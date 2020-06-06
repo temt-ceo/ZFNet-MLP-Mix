@@ -20,6 +20,24 @@
 # Explanation of the data set and the problem oerview
 # import essential modules and helper functions from NumPy, Mathplotlib and scikit-learn
 
+"""
+データの内容: Movieのrating(スター数, コメント)がpositiveとnegativeが25000件ずつ。
+           スター数が7以上をpositive(label=1)、スター数が4以下をnegative(label=0)とする。
+           train/testは50/50に分割する
+Features: bag of 1-grams with TF-IDF values:
+  Extremely sparse feature matrix (close to 97% are zeros)
+Model: Logistic regression
+  p(y=1|x) = σ(w(T)x)
+  can handle sparse data
+  Fast to train
+"""
+# Loading the dataset
+import pandas as pd
+df = pd.read_csv('data/movie_data.csv')
+df.head(10) # reviewカラム(コメント), sentiment(0or1)の２つのカラムのdfが表示される(indexは0開始のinteger)
+
+# review全文を見る
+df['review'][0]
 ```
 **Transforming Documents into Feature Vectors**<br>
 ```
@@ -62,6 +80,7 @@
 # Repurpose the data preprocessing and k-means clustering logic from previous tasks.
 # Operate k-means image compression.
 # Visualize how the image changes as the number of clusters fed to the k-means algorithm is varid.
+
 
 ```
 **Documents Classification Using Logistic Regression**<br>
