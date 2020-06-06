@@ -134,10 +134,33 @@ df['review'] = df['review'].apply(preprocessor)
 ```
 **Tokenization of Documents**<br>
 ```
-# (k-meansのcluster数を変えたらどのようにimageが変わるかを可視化する)
+# (1.どうやってトーカナイズするか, 2.k-meansのcluster数を変えたらどのようにimageが変わるかを可視化する)
 # Repurpose the data preprocessing and k-means clustering logic from previous tasks.
 # Operate k-means image compression.
 # Visualize how the image changes as the number of clusters fed to the k-means algorithm is varid.
+
+from nltk.stem.porter import PorterStemmer
+porter = PorterStemmer()
+
+# 文章を半角スペースで区切りwordのリスト化をし、Stemming(ベースの単語に統一)を行う
+def tokenizer(text):
+    return text.split()
+
+def tokenizer_porter(text):
+    return [ porter.stem(word) for word in text.split() ]
+
+tokenizer('runners like running and thus they run')        #=> ['runners', 'like', 'running', 'and', 'thus', 'they', 'run']
+tokenizer_porter('runners like running and thus they run') #=> ['runner', 'like', 'run', 'and', 'thu', 'they', 'run']
+
+# stop-wordを実装してtheやandなどの単語を除く
+import nltk
+nltk.download('stopwords')
+
+from nltk.corpus import stopwords
+stop = stopwords.words('english') # 英語以外もある..
+[w for w in tokenizer_porter('a running like running and runs a lot')[-10:] if w not in stop]
+
+#=> ['run', 'like', 'run', 'run', 'lot'] andやaはstop wordなので除去される。
 
 
 ```
