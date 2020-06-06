@@ -80,20 +80,32 @@ print(bag.toarray())
 **Term Frequency-Inverse Document Frequency**<br>
 ```
 # (非常に頻出のワードを観察する) 
-# Observe words that crop up across our corpus of documents.
-# These words can lead to bad performance because they don't contain useful information.
-# Implement a useful statistical technique, Term frequency-inverse document frequency(tf-idf).
-# (The tf-idf is the product of the term frequency and the inverse document frequency)
-# Using this method, downweight these class of words in the feature vector representation.
-
-```
-**Calculate TF-IDF of the Term 'Is'**<br>
-```
-# (tf-idf値を求める)
-# Manually calculate the tf-idf.
+# Observe words that crop up across our corpus of documents.　These words can lead to bad performance because they don't contain useful information.
 # Apply scikit-learn's TfIdfTransformer to convert text into a vector of tf-idf values.
+# Using this method, downweight these class of words in the feature vector representation.
+# (downweight:頻出するものは重要度が下がるのでweightも下がる。tf-idfの理論(inverse document frequency)に沿ったもの)
 # Apply the L2-normalization to it.
 
+"""
+    式:    df(出現回数)が多いほど idf()の値は下がる↓　tf(term frequency)と掛け合わせてtf-idfを求める。
+        tf-idf(t, d) = tf(t,d) × idf(t,d)    where nd is the total number of documents and
+        idf(t,d) = log(nd / (1 + df(d,t)))   df(d,t) is the number of documents d that contain the term t.
+        1 + は0でないことを保証する為。log()はdfが多いほどpenalizeする為。（どの文章にも良く出るtheなんかはidfが極めて小さくなる。）
+"""
+from sklearn.feature_extraction.text import TfidfTransformer
+
+# Normalizationは(出力のunit sizeに合わせて)l2にする(vector elementsをsquareしたものをsumしたものが１と等しくなるように。)
+# smooth_idfは1,2回しか出ないwordによって0割されるのを防ぐ
+tfidf = TfidfTransformer(use_idf=True, norm='l2', smooth_idf=True)
+
+# tf-idfをプリントアウト
+np.set_printoptions(precision=2) # npの少数の出力精度を２桁までにする(だからnpを使っているのかな)
+#print(tfidf.fit_transform(bag))
+print(tfidf.fit_transform(count.fit_transform(docs)).toarray())
+
+# => [[0. 0.43 0. 0.56 0.56 0. 0.43 0. 0.]     特定の文章にだけ出る単語の方がweightが大きくなっている。 
+#     [0. 0.43 0. 0. 0. 0.56 0.43 0. 0.56]     最後の文章でis(1)は3回出現するがand(0)(2回出現)の方が大きいので"is"は重要でないと計算から求められた。
+#     [0.5 0.45 0.5 0.19 0.19 0.19 0.3 0.25 0.19]]
 ```
 **Data Preparation**<br>
 ```
