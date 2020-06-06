@@ -58,8 +58,24 @@ following three sentences into sparse feature vectors.
  2. The weather is sweet
  3. The sun is shining, the weather is sweet, and one and one is two.
 """
+import numpy as np
+from sklearn.feature_extraction.text import CountVectorizer
 
+count = CountVectorizer()
+docs = np.array(['The sun is shining',
+                'The weather is sweet',
+                'The sun is shining, the weather is sweet, and one and one is two.'])
+# bag of words modelにtransform
+bag = count.fit_transform(docs) # これだけの文章でも数秒はかかる
 
+print(count.vocabulary_) # => {'the': 6, 'sun': 4, 'is': 1, 'shining': 3, 'weather': 8, 'sweet': 5, 'and': 0, 'one': 2, 'two': 7}
+
+# feature vectorsをプリントアウト
+print(bag.toarray())
+
+# => [[0 1 0 1 1 0 1 0 0]     the(6)はどの文にも出るので上から1 1 2となっている。 
+#     [0 1 0 0 0 1 1 0 1]     and(0)は最後の文にだけ２回登場するので上から0 0 2となっている。
+#     [2 3 2 1 1 1 2 1 1]]
 ```
 **Term Frequency-Inverse Document Frequency**<br>
 ```
