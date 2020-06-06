@@ -22,14 +22,15 @@
 
 """
 データの内容: Movieのrating(スター数, コメント)がpositiveとnegativeが25000件ずつ。
+           データの出所: http://ai.stanford.edu/~amaas/data/sentiment
            スター数が7以上をpositive(label=1)、スター数が4以下をnegative(label=0)とする。
            train/testは50/50に分割する
-Features: bag of 1-grams with TF-IDF values:
-  Extremely sparse feature matrix (close to 97% are zeros)
+Features: bag of 1-grams(uni-grams) with TF-IDF values:
+  Extremely sparse feature matrix (close to 97% are zeros)　<=feature数が膨大で疎なデータな為matrixはほとんど0で構成される
 Model: Logistic regression
   p(y=1|x) = σ(w(T)x)
-  can handle sparse data
-  Fast to train
+  can handle sparse data <= feature数が膨大であっても疎なデータに対応できる(0or1を求めるのに適する)
+  Fast to train          <= 早い (基本的に悪いレビューの中にある単語はそのfeature自体が0に傾かせるようなweightになる)
 """
 # Loading the dataset
 import pandas as pd
@@ -46,6 +47,18 @@ df['review'][0]
 # Represent text data using the bag-of-words model
 # Construct the vocabulary of the bag-of-words model
 # Transform the sentences into sparse feature vectors
+
+"""
+             Bag of words/Bag of N-grams model
+       Transforming documents into feature vectors
+Below, we will call the fir_transform method on CountVectorizer.
+This will construct the vocabulary of the bag-of-words model and transform the
+following three sentences into sparse feature vectors.
+ 1. The sun is shining
+ 2. The weather is sweet
+ 3. The sun is shining, the weather is sweet, and one and one is two.
+"""
+
 
 ```
 **Term Frequency-Inverse Document Frequency**<br>
