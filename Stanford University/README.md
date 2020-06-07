@@ -31,6 +31,9 @@ and some light calculus. Beyond those concepts, the course will be self-containe
   Some of the problem sets ask you to work with network analysis programs and to analyze
 data. You can find links to the data and instructions for the netwoek analysis programs
 embedded in the problem sets, and also posted separately under the Resources tab.
+  
+  Much of the material for the course is covered with added detail and references in a text:
+  Matthew O. Jackson "Social and Economic Networks", Princeton University Press
 ```
 ## Final Exam.
 ```
@@ -41,9 +44,47 @@ embedded in the problem sets, and also posted separately under the Resources tab
 Week1: Introduction, Empirical(経験に基づいた) Background and Definitions
   Examples of Social Networks and their Impact, Definitions, Measures and Properties:
   Degrees, Diameters, Small Worlds, Weak and Strong Ties, Degree Distributions
-  Book Readings: Chapters 1, 2 of 'Social and Economic Networks, Princeton University Press'
+  
+  Book Readings: Chapters 1, 2
 
 Week2: Background, Definitions, and Measures Continued
-  Homo
-```
+  Homophily, Dynamics, Centrality Measures: Degree, Betweenness, Closeness, Eigenvector,
+  and Katz-Bonacich. Erdos and Renyi Random Networks: Thresholds and Phase Transactions,
+  
+  Book Readings: Chapters 2 and 3
 
+Week3: Random Networks
+  Poisson Random Networks, Exponential Random Graph Models, Growing Random Networks,
+  Preferential Attachment and Power Laws, Hybrid models of Network Formation.
+  
+  Book Readings: Chapters 4, 5.
+
+Week4: Strategic Network Formation
+  Game Theoretic Modeling of Network Formation, The Connections Model, The Conflict
+  between Incentives and Efficiency, Dynamics, Directed Networks, Hybrid Models of
+  Choice and Chance.
+  
+  Book Readings: Chapters 6 and 11.
+
+Week5: Diffusion on Networks
+  Empirical Background, The Bass Model, Random Network Models of Contagion(感染), The
+  SIS model, Fitting a Simulated Model to Data.
+  
+  Book Readings: Chapters 7.
+
+Week6: Learning on Networks
+  Bayesian Learning on Networks, The DeGroot Model of Learning in a Network, Convergence
+  of Beliefs, The Wisdom of Crowds, How Influence depends on Network Position..
+  
+  Book Readings: Chapters 8.
+
+Week7: Games on Networks - Peer Effects
+  Network Games, Peer Influences: Strategic Complements and Substitutes, the Relation
+  between Network Structure and Behavior, A Linear Quadratic Game, Repeated Interactions
+  and Network Structures.
+  
+  Book Readings: Chapters 9.
+
+Week8: Final Exam.
+```
+プリンストン大学Press の Matthew O. Jackson著 "Social and Economic Networks" という本が助けになります。
