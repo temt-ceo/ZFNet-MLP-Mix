@@ -29,8 +29,9 @@ Features: bag of 1-grams(uni-grams) with TF-IDF values:
   Extremely sparse feature matrix (close to 97% are zeros)　<=feature数が膨大で疎なデータな為matrixはほとんど0で構成される
 Model: Logistic regression
   p(y=1|x) = σ(w(T)x)
-  can handle sparse data <= feature数が膨大であっても疎なデータに対応できる(0or1を求めるのに適する)
+  can handle sparse data <= feature数が膨大な疎なデータに対応できる
   Fast to train          <= 早い (基本的に悪いレビューの中にある単語はそのfeature自体が0に傾かせるようなweightになる)
+  (疎なデータとは、nonzero(0以外)のelementが非常に少ないことをいう。LogisticRegressionはこういったデータ形式に強い。)
 """
 # Loading the dataset
 import pandas as pd
@@ -199,7 +200,6 @@ import pickle
 # それらのチューニングを自動で行いたいのでcross-validationのライブラリを使う
 from sklearn.linear_model import LogisticRegressionCV
 
-# GridSearchでtrain。LogisticRegression自体は高速だが、GridSearchは時間がかかるので直後にModelをDiscに保存する
 clf = LogisticRegressionCV(cv=5,                # K-Foldsのkの数
                            scoring='accuracy',　# Measurement
                            random_state=0,
@@ -208,6 +208,7 @@ clf = LogisticRegressionCV(cv=5,                # K-Foldsのkの数
                            max_iter=300).fit(X_train, y_train)
                            # default:100(100だとCVでは不十分かもしれない(データが多いほど増やした方がいい))
                            
+# LogisticRegression自体は高速だが、GridSearchでは時間がかかるので直後にModelをDiscに保存する
 saved_model = open('saved_model.sav', 'wb') # bite単位で書き込む
 pickle.dump(clf, saved_model)
 saved_model.close()
