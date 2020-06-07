@@ -14,7 +14,7 @@
 
 ## Text Mining Hands-on (Perform Sentiment Analysis with scikit-learn)
 
-**1.Importing the Data**<br>
+**1. Importing the Data**<br>
 ```
 # (dataの説明を行う)
 # Explanation of the data set and the problem oerview
@@ -40,7 +40,7 @@ df.head(10) # reviewカラム(コメント), sentiment(0or1)の２つのカラ�
 # review全文を見る
 df['review'][0]
 ```
-**2.Transforming Documents into Feature Vectors**<br>
+**2. Transforming Documents into Feature Vectors**<br>
 ```
 # (テキストをsparse feature vectorsに変換する)
 # Information retrieval
@@ -77,7 +77,7 @@ print(bag.toarray())
 #     [0 1 0 0 0 1 1 0 1]     and(0)は最後の文にだけ２回登場するので上から0 0 2となっている。
 #     [2 3 2 1 1 1 2 1 1]]
 ```
-**3.Term Frequency-Inverse Document Frequency**<br>
+**3. Term Frequency-Inverse Document Frequency**<br>
 ```
 # (非常に頻出のワードを観察する) 
 # Observe words that crop up across our corpus of documents.　These words can lead to bad performance because they don't contain useful information.
@@ -107,7 +107,7 @@ print(tfidf.fit_transform(count.fit_transform(docs)).toarray())
 #     [0. 0.43 0. 0. 0. 0.56 0.43 0. 0.56]     最後の文章でis(1)は3回出現するがand(0)(2回出現)の方が大きいので"is"は重要でないと計算から求められた。
 #     [0.5 0.45 0.5 0.19 0.19 0.19 0.3 0.25 0.19]]
 ```
-**4.Data Preparation**<br>
+**4. Data Preparation**<br>
 ```
 # (Cleaningをする)
 # Cleaning and pre-processing text data is a vital process in data analysis and especially in natural language processing.
@@ -132,7 +132,7 @@ preprocessor('</a>This :) is a :( test :-)!')
 
 df['review'] = df['review'].apply(preprocessor)
 ```
-**5.Tokenization of Documents**<br>
+**5. Tokenization of Documents**<br>
 ```
 # (トーカナイズ)
 # Repurpose the data preprocessing and k-means clustering logic from previous tasks.
@@ -162,38 +162,48 @@ stop = stopwords.words('english') # 英語以外もある..
 
 #=> ['run', 'like', 'run', 'run', 'lot'] andやaはstop wordなので除去される。
 ```
-**6.Transform Text Data into Vectors**<br>
+**6. Transform Text Data into Vectors**<br>
 ```
 # (dfのTF-IDF Vectors化)
 from sklearn.feature_extraction.text import TfidfVectorizer
-
-tfidf = TfidfVectorizer(strip_accents=None,
-                        lowercase=False,
-                        preprocessor=None,
+# initialize
+tfidf = TfidfVectorizer(strip_accents=None, # preprocessorをすでに下処理している為無効にする
+                        lowercase=False,    # preprocessorをすでに下処理している為無効にする
+                        preprocessor=None,  # preprocessorをすでに下処理している為無効にする
                         tokenizer=tokenizer_porter,
                         use_idf=True,
                         norm='l2',
-                        smooth_idf=True)
+                        smooth_idf=True) # 0割防止
 y = df.sentiment.values
 X = tfidf.fit_transform(df.review)
 ```
 
-**7.Documents Classification Using Logistic Regression**<br>
+**7. Documents Classification Using Logistic Regression**<br>
 ```
 # (データを分割し、grid searchを行う)
 # Split the data into training and test sets of equal size.
 # Create a pipeline to build a logistic regression model
 # Emply cross-validated grid-search to estimate the best parameters and model.
-
-```
-**8.Load Saved Model from Disk**<br>
-```
-# (GridSearchは時間がかかるのでpre-trainしたmodelを読み込む)
 # Although the time it takes to train logistic regression model is very little,
 # estimating the best parameters for our model using GridSearchCV can take hours for some data amount.
 
+import pickle
+# 公式->Cross-validation estimators are named EstimatorCV and tend to be roughly equivalent to GridSearchCV(Estimator(), ...).
+from sklearn.linear_model import LogisticRegressionCV
+
+# GridSearchでtrain。LogisticRegression自体は高速だが、GridSearchは時間がかかるので直後にModelを保存する
+
+clf = LogisticRegressionCV(cv=5,
+                           scoring='accuracy',
+                           random_state=0,
+                           n_jobs=-1,
+                           verbose=3,
+                           max_iter=300).fit(X_train, y_train) # default:100(100だと不十分かもしれない)
+saved_model = open('saved_model.sav', 'wb')
+pickle.dump(clf, saved_model)
+saved_model.close()
 ```
-**9.Model Accuracy**<br>
+**8. Load Saved Model from Disk / Model Accuracy**<br>
 ```
 # (テストdatasetを使い感情の予測)
 # Take a look at the best parameter settings, cross-validation score and how well
