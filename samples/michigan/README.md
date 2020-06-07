@@ -12,7 +12,7 @@
 **【recap(総まとめ)】Community Model <最も関連のあるノードを見つける>**<br>
 [AppliedSocialNetworkAnalysisAssignment4](AppliedSocialNetworkAnalysisAssignment4.ipynb)<br>
 
-## Text Mining Hands-on (Perform Sentiment Analysis with scikit-learn)
+## Hands-on Text Mining (Perform Sentiment Analysis with scikit-learn)
 
 **1. Importing the Data**<br>
 ```
@@ -199,7 +199,7 @@ import pickle
 # それらのチューニングを自動で行いたいのでcross-validationのライブラリを使う
 from sklearn.linear_model import LogisticRegressionCV
 
-# GridSearchでtrain。LogisticRegression自体は高速だが、GridSearchは時間がかかるので直後にModelを保存する
+# GridSearchでtrain。LogisticRegression自体は高速だが、GridSearchは時間がかかるので直後にModelをDiscに保存する
 clf = LogisticRegressionCV(cv=5,                # K-Foldsのkの数
                            scoring='accuracy',　# Measurement
                            random_state=0,
@@ -213,14 +213,21 @@ pickle.dump(clf, saved_model)
 saved_model.close()
 
 # => [Parallel(n_jobs=-1)]: Usingbackend LokyBackend with 2 concurrent workers.
-#    [Parallel(n_jobs=-1)]: Done 5 out of 5 | elapsed: 2.6min finished   <= 2.6分かかっている。
+#    [Parallel(n_jobs=-1)]: Done 5 out of 5 | elapsed: 2.6min finished   <= 2.6分かかっている。(30Mほどのサイズのファイルが出来上がる)
 ```
 **8. Load Saved Model from Disk / Model Accuracy**<br>
 ```
-# (テストdatasetを使い感情の予測)
+# (テストdatasetを使い,感情の予測)
 # Take a look at the best parameter settings, cross-validation score and how well
 # out model classifiers the sentiments of reviews from the test set.
 
+# Discから保存されたModelを読み込む
+filename = 'saved_model.sav'
+saved_clf = pickle.load(open(filename, 'rb'))
+
+# score(予測精度)を確認する
+saved_clf.score(X_test, y_test)
+# => 0.89604 # 感情予測としてはとても良い(ほぼ90%なのでとても良いと言える)精度が出ている。
 ```
 
 
