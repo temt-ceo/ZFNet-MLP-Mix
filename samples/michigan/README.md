@@ -12,9 +12,9 @@
 **【recap(総まとめ)】Community Model <最も関連のあるノードを見つける>**<br>
 [AppliedSocialNetworkAnalysisAssignment4](AppliedSocialNetworkAnalysisAssignment4.ipynb)<br>
 
-## Text Mining Hands-on
-### Perform Sentiment Analysis with scikit-learn
-**Importing the Data**<br>
+## Text Mining Hands-on (Perform Sentiment Analysis with scikit-learn)
+
+**1.Importing the Data**<br>
 ```
 # (dataの説明を行う)
 # Explanation of the data set and the problem oerview
@@ -40,7 +40,7 @@ df.head(10) # reviewカラム(コメント), sentiment(0or1)の２つのカラ�
 # review全文を見る
 df['review'][0]
 ```
-**Transforming Documents into Feature Vectors**<br>
+**2.Transforming Documents into Feature Vectors**<br>
 ```
 # (テキストをsparse feature vectorsに変換する)
 # Information retrieval
@@ -77,7 +77,7 @@ print(bag.toarray())
 #     [0 1 0 0 0 1 1 0 1]     and(0)は最後の文にだけ２回登場するので上から0 0 2となっている。
 #     [2 3 2 1 1 1 2 1 1]]
 ```
-**Term Frequency-Inverse Document Frequency**<br>
+**3.Term Frequency-Inverse Document Frequency**<br>
 ```
 # (非常に頻出のワードを観察する) 
 # Observe words that crop up across our corpus of documents.　These words can lead to bad performance because they don't contain useful information.
@@ -107,7 +107,7 @@ print(tfidf.fit_transform(count.fit_transform(docs)).toarray())
 #     [0. 0.43 0. 0. 0. 0.56 0.43 0. 0.56]     最後の文章でis(1)は3回出現するがand(0)(2回出現)の方が大きいので"is"は重要でないと計算から求められた。
 #     [0.5 0.45 0.5 0.19 0.19 0.19 0.3 0.25 0.19]]
 ```
-**Data Preparation**<br>
+**4.Data Preparation**<br>
 ```
 # (Cleaningをする)
 # Cleaning and pre-processing text data is a vital process in data analysis and especially in natural language processing.
@@ -132,9 +132,9 @@ preprocessor('</a>This :) is a :( test :-)!')
 
 df['review'] = df['review'].apply(preprocessor)
 ```
-**Tokenization of Documents**<br>
+**5.Tokenization of Documents**<br>
 ```
-# (1.どうやってトーカナイズするか, 2.k-meansのcluster数を変えたらどのようにimageが変わるかを可視化する)
+# (トーカナイズ)
 # Repurpose the data preprocessing and k-means clustering logic from previous tasks.
 # Operate k-means image compression.
 # Visualize how the image changes as the number of clusters fed to the k-means algorithm is varid.
@@ -161,10 +161,24 @@ stop = stopwords.words('english') # 英語以外もある..
 [w for w in tokenizer_porter('a running like running and runs a lot')[-10:] if w not in stop]
 
 #=> ['run', 'like', 'run', 'run', 'lot'] andやaはstop wordなので除去される。
-
-
 ```
-**Documents Classification Using Logistic Regression**<br>
+**6.Transform Text Data into Vectors**<br>
+```
+# (dfのTF-IDF Vectors化)
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+tfidf = TfidfVectorizer(strip_accents=None,
+                        lowercase=False,
+                        preprocessor=None,
+                        tokenizer=tokenizer_porter,
+                        use_idf=True,
+                        norm='l2',
+                        smooth_idf=True)
+y = df.sentiment.values
+X = tfidf.fit_transform(df.review)
+```
+
+**7.Documents Classification Using Logistic Regression**<br>
 ```
 # (データを分割し、grid searchを行う)
 # Split the data into training and test sets of equal size.
@@ -172,14 +186,14 @@ stop = stopwords.words('english') # 英語以外もある..
 # Emply cross-validated grid-search to estimate the best parameters and model.
 
 ```
-**Load Saved Model from Disk**<br>
+**8.Load Saved Model from Disk**<br>
 ```
 # (GridSearchは時間がかかるのでpre-trainしたmodelを読み込む)
 # Although the time it takes to train logistic regression model is very little,
 # estimating the best parameters for our model using GridSearchCV can take hours for some data amount.
 
 ```
-**Model Accuracy**<br>
+**9.Model Accuracy**<br>
 ```
 # (テストdatasetを使い感情の予測)
 # Take a look at the best parameter settings, cross-validation score and how well
