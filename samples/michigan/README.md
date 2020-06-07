@@ -217,7 +217,7 @@ saved_model.close()
 ```
 **8. Load Saved Model from Disk / Model Accuracy**<br>
 ```
-# (テストdatasetを使い,感情の予測)
+# (TrainされたModelを使い感情を予測する)
 # Take a look at the best parameter settings, cross-validation score and how well
 # out model classifiers the sentiments of reviews from the test set.
 
@@ -225,7 +225,7 @@ saved_model.close()
 filename = 'saved_model.sav'
 saved_clf = pickle.load(open(filename, 'rb'))
 
-# score(予測精度)を確認する
+# score(予測精度=Accuracy)を確認する
 saved_clf.score(X_test, y_test)
 # => 0.89604 # 感情予測としてはとても良い(ほぼ90%なのでとても良いと言える)精度が出ている。
 ```
