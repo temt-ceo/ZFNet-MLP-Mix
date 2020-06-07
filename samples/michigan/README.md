@@ -187,21 +187,33 @@ X = tfidf.fit_transform(df.review)
 # Although the time it takes to train logistic regression model is very little,
 # estimating the best parameters for our model using GridSearchCV can take hours for some data amount.
 
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1, test_size=0.5,
+                                                    shuffle=False) # X: tf-idf value, y: sentiments, 結果を再生産可能にする
+
+# ModelをDisc保存できるライブラリをimport
 import pickle
 # 公式->Cross-validation estimators are named EstimatorCV and tend to be roughly equivalent to GridSearchCV(Estimator(), ...).
+# LogisticRegressionにはチューニングが必要なCパラメータなどがあるが
+# それらのチューニングを自動で行いたいのでcross-validationのライブラリを使う
 from sklearn.linear_model import LogisticRegressionCV
 
 # GridSearchでtrain。LogisticRegression自体は高速だが、GridSearchは時間がかかるので直後にModelを保存する
-
-clf = LogisticRegressionCV(cv=5,
-                           scoring='accuracy',
+clf = LogisticRegressionCV(cv=5,                # K-Foldsのkの数
+                           scoring='accuracy',　# Measurement
                            random_state=0,
-                           n_jobs=-1,
-                           verbose=3,
-                           max_iter=300).fit(X_train, y_train) # default:100(100だと不十分かもしれない)
-saved_model = open('saved_model.sav', 'wb')
+                           n_jobs=-1,           # parallelでCPUをいくつ利用するか(-1:全てのプロセッサーを使う)
+                           verbose=3,           # computationのoutputを行う
+                           max_iter=300).fit(X_train, y_train)
+                           # default:100(100だとCVでは不十分かもしれない(データが多いほど増やした方がいい))
+                           
+saved_model = open('saved_model.sav', 'wb') # bite単位で書き込む
 pickle.dump(clf, saved_model)
 saved_model.close()
+
+# => [Parallel(n_jobs=-1)]: Usingbackend LokyBackend with 2 concurrent workers.
+#    [Parallel(n_jobs=-1)]: Done 5 out of 5 | elapsed: 2.6min finished   <= 2.6分かかっている。
 ```
 **8. Load Saved Model from Disk / Model Accuracy**<br>
 ```
