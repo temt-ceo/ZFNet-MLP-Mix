@@ -20,3 +20,11 @@ so, K = 2log2(n+1) -1
 diameter is 2K
 
 ```
+# Random Graphs
+```
+Start with n nodes
+
+each link is formed independently with some probability p
+
+Serves as a benchmark : G(n,p)
+```
