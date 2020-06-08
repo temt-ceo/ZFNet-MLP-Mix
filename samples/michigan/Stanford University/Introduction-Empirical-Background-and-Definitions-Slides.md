@@ -22,9 +22,27 @@ diameter is 2K
 ```
 # Random Graphs
 ```
+# All have same degree - really are random
+# some links may double back (ある末端のノードはまだ未達)
+
 Start with n nodes
 
 each link is formed independently with some probability p
 
-Serves as a benchmark : G(n,p)
+Serves as a benchmark : G(n,p) # 現実世界とは異質である。
+
+AvgDist(n) / (log(n)/log(d(n))) => 1 (Diameterも同様に求められる)
+
+kステップ後の増加するノード数: d * (d-1)^(k-1)   d:１回のステップで到達するノード数
 ```
+# Diameter of Random Graphs
+```
+Avg distance and diameter 
+
+Large d: log(3d) & log(d/3) tend to log(d)
+log(n)/log(3d) < 1 < log(n)/log(d/3)
+log(n)/log(d) ≒ 1
+# Chernoff Boundsの式
+```
+
+
