@@ -46,5 +46,9 @@ if k < log(n)/log(d) Then n - d^k (much bigger than d^k) are still unreached.
 log(d) ==> degree
 log(n) ==> Nodeの数
 ```
+# Clustering
+```
+Cl(g) = neighbor同士の結びつきの数 / degree(neighborの数)
+```
 
 
