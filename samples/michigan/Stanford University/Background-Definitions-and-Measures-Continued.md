@@ -41,6 +41,33 @@ What affects Diffusion(拡散)?
        there should be a better spread of information about micro-finance.
   (コンポーネントの中のリーダー(且つそのノードを中心に他のコンポーネントにも繋がっていく)のノードをどう見つけ出すかが主眼)
   (プロットしてHigher Participation(Diffusion)と良い相関係数を出す仮説が出るまでGrid Searchすれば良い。)
+
+Which networks form?
+- random graph models - "How"
+  ・Useful Benchmark
+   - component structure
+   - diameter
+   - degree distribution   
+   - clustering
+    ・ Properties of Networks
+      1. Every network has some probability of forming
+      2. How to make sense of that?
+      3. Examine what happens for "large" networks
+    ・ Specifying Properties
+      - G(N) = all the undirected networks on the set of nodes N
+  ・Tools and methods
+   - properties and thresholds
+- Economic/game theoretic models - "Why"
+
+How does it depend on context?
+```
+# Diffusion Centrality
+```
+DCi(p,T) = Σt=1...T (pg)^t*1
+ - i is initially informed, each informed node tells each of its neighbors with probability "p" in each period, run for T periods?
+ - If T=1: propotional to degree.
+ - If p<1/λ and T is large, becomes Katz-Bonacich
+ - If p>=1/λ and T is large, becomes eigenvector 
 ```
 # Exercise
 ```
