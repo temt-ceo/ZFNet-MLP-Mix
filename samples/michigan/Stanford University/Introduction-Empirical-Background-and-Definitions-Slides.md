@@ -35,14 +35,16 @@ AvgDist(n) / (log(n)/log(d(n))) => 1 (Diameterも同様に求められる)
 
 kステップ後の増加するノード数: d * (d-1)^(k-1)   d:１回のステップで到達するノード数
 ```
-# Diameter of Random Graphs
+# Avg distance and diameter 
 ```
-Avg distance and diameter 
-
-Large d: log(3d) & log(d/3) tend to log(d)
-log(n)/log(3d) < 1 < log(n)/log(d/3)
-log(n)/log(d) ≒ 1
 # Chernoff Boundsの式
+Large d: log(3d) & log(d/3) tend to log(d)  ==> log(n)/log(d) ≒ 1
+log(n)/log(3d) < 1 < log(n)/log(d/3)
+
+# 最後まで到達しないノードの数
+if k < log(n)/log(d) Then n - d^k (much bigger than d^k) are still unreached. 
+log(d) ==> degree
+log(n) ==> Nodeの数
 ```
 
 
