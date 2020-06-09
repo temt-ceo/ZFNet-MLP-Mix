@@ -53,7 +53,7 @@ Cl(g) = neighbor同士の結びつきの数 / degree(neighborの数)
 For an Erdos-Renyi(E-R) random network with large n, its overall clustering CL(g) is approximately p( ≒ p ),
 since p of all pairs of neighbors is linked.
 ```
-# Excercise
+# Exercise
 ```
 How many networks on just 4 nodes -> 2^6
 
@@ -85,6 +85,38 @@ Which of the following represents row stochastic network?
 -> degreeのweightを足すと1になる。【row stochastic: Σ g(ij) = 1】
 
 ```
-他の問題は、はっきり言って簡単。ミシガン大学の方がはるかに難しい。。
+# Exercise2
+```
+Given a network(N,g), define its complement to be the network(N,g'), such that (ij 被含有 g') if and only if (ij 非被含有 g).
+Which statement is correct of networks with at least four nodes?
+-> There is a network such that both itself and its complement are connected.
+(Consider N={1,2,3,4} and g={12,23,34}, we have k'={13,24,14} is also connected.)
 
+If g^2 is the matrix on right, which of the following network could be represented by g?
+-> 最後に行き着く場所がどのノードかがMatrixの数字となる。g^2なので行って戻る動きができるので対角線が1以上になる。neighborの数がこの対角線の数になる
+
+Among all possible connected networks with 5 nodes:
+What is the largest possible diameter? What is the shortest possible diameter?
+->4,1
+
+On the Florentine Marriage Network(親戚), what is the diameter of the largest component?
+->5
+
+Consider the two networks of close friends in the following two schools:
+school1: A university has 400 students; on average each student has also 8 close friends.
+school2: A middle school has 150 students; on average each student has 8 close friends.
+Which of the following is a reasonable approximation for the ratio Diameter(school1)/Diameter(school2)
+For this question, you should presume that the networks are connected and use an approximation
+from a network where links are formed uniformly at random (an E-R random graph).
+(ここで、8 ≒ e^2, 150 ≒ e^5, 400 ≒ e^6)
+->(e^6/e^2)/(e^5/e^2)...6/5=1.2    【AvgDist(n) / (log(n)/log(d(n))) => 1 (Diameterも同様に求められる)】
+
+What is the overall clustering of the network? How about the average clustering?(When computing average
+clustering and looking at the clustering for some node i, if it has 0 or 1 links, count its clustering as 0)
+->1/3, 1/3  
+(0/2 + 0/2 + 1/3 + 1 + 1/3) / 5 = 5/(3*5) ≒ 1/3   【1ペアのneighbor(つまり2つのneighbor)がlinkしていたら"1"】
+Cl_1(g)=0,Cl_2(g)=0,Cl_3(g)=1/3,Cl_4(g)=1,Cl_5(g)=1/3
+For overall clustering: There are 9 pairs of neighbors in total, and 3 out of which are linked, then cl(g)=3/9.
+```
+他の問題も、はっきり言って簡単。ミシガン大学の方がはるかに難しい。。
 
