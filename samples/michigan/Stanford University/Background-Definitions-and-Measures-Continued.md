@@ -24,6 +24,23 @@ Positions in networks
    (Normalizeする時は(n-1)σで割る (n-1)σ = 最小のdecay centralityの値)
 ・ Betweenness Centrality (Freeman) .. そのノードを通過するiとj間の最小パスの数の合計 / iとj間の最小パスの数の合計（但しi,jにそのノードを含まない）
 　　式: Σi,j≠k [Pk(i,j)/P(i,j)] / [(n-1)(n-2)/2]
+・ Eigenvector Centrality(アイゲンベクター)
+   式: Σ(j:friend of i) Cj .. Neighborのdegree centralityに比例する
+     - Look for one with largest eigenvalue will be nonnegative(Perron-Frobenius Theorem)
+     - Normalize entries to sum to one
+     - Google Page Rank: score of a page is propotional to the sum of the scores of pages linked to it.
+・ Bonacich Centrality .. base valueをshortest pathに掛けていく
+   式: Cb(g) = ag1 + bgag1 + b^2g^2ag1 ... = a(g1 + bg^2*1 + b^2g^3*1 ...)
+     - Normalize a to 1, need small b to be finite.
+```
+# Application Networks
+```
+What affects Diffusion(拡散)?
+ 上記のCentrality Measureを使って仮説を立て、その仮説によりDiffusionが行われていると(相関があると)実証する事
+仮説例: In villages where first contacted people have "higher eigenvector centrality",
+       there should be a better spread of information about micro-finance.
+  (コンポーネントの中のリーダー(且つそのノードを中心に他のコンポーネントにも繋がっていく)のノードをどう見つけ出すかが主眼)
+  (プロットしてHigher Participation(Diffusion)と良い相関係数を出す仮説が出るまでGrid Searchすれば良い。)
 ```
 # Exercise
 ```
@@ -35,6 +52,10 @@ What is the (normalized) degree centrality of node1?
 
 What is the decay centrality of node 1, with σ = 0.5
 ->(shortest path=1) * 3 * 0.5 + (shortest path=2) * 1 * 0.5^2 = 1.5 + 0.25 = 1.75
+
+Compare nodes 3 and 4:which one has a larger betweenness centrality but a lower Bonacich centrality(b=1/3)?
+->betweenness centralityの高いノード（消去法で行ける）
+
 
 
 ```
