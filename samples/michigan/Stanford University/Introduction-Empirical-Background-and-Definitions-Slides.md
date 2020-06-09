@@ -49,6 +49,9 @@ log(n) ==> Nodeの数
 # Clustering
 ```
 Cl(g) = neighbor同士の結びつきの数 / degree(neighborの数)
+
+For an Erdos-Renyi(E-R) random network with large n, its overall clustering CL(g) is approximately p( ≒ p ),
+since p of all pairs of neighbors is linked.
 ```
 
 
