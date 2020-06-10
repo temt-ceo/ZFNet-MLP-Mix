@@ -34,6 +34,14 @@ Preferential Attachment
     - Newborn nodes form m links to existing nodes
 初期からある古株のノードがたくさんDegreeを持つようになる。
  
+Distribution of Expected Degrees
+ Expected degree for node i born at m<i<t is
+  di(t) = m(t/i)^0.5
+ Nodes that have expected degree less than d at some time t are those such 
+  m(t/i)^0.5 < d
+ - Fraction(Distribution of Expected Degreesの断片)
+ Ft(d) = 1 - (m/d)^2 and ft(d) = 2m^2/d^3
+ 
 ```
 # EXERCISE
 ```
