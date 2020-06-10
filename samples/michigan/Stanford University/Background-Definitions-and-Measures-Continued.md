@@ -69,6 +69,12 @@ DCi(p,T) = Σt=1...T (pg)^t*1
  - If p<1/λ and T is large, becomes Katz-Bonacich
  - If p>=1/λ and T is large, becomes eigenvector 
 ```
+# Examples of Properties
+```
+A(N)={g|Ni(g) nonempty for all i in N} -> property of no isolated nodes
+A(N)={g|l(i,j) finite for all i,j in N} -> network is connected
+A(N)={g|l(i,j)<log(n) for all i in N} -> diameter is less than log(n)
+```
 # Exercise
 ```
 Which of the following is not evidence for Homophily?
