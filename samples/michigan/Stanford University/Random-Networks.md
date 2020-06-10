@@ -21,14 +21,19 @@ Continuous Time Approximation
  - starting condition .. di(i) = m
  - new links gained per unit time .. ddi(t)/dt = m/t
  Then, di(t) = m+ m * log(t/i)
-
+ i: birth date
 Power Law Explanations
  - Rich get richer .. growth of existing objects is proportional to size
 
 Preferential Attachment
  - Nodes born over time, foem links at random with existing nodes
   Form links with probability [proportional to number of links a node already has.]
+  Probability of attaching to i is
+   di(t)/2tm
+   tm: links in total, 2tm: total degree
+    - Newborn nodes form m links to existing nodes
 初期からある古株のノードがたくさんDegreeを持つようになる。
+ 
 ```
 # EXERCISE
 ```
@@ -50,4 +55,12 @@ a. Nodes form links uniformly at random to other nodes
 b. Growing networks, i.e. nodes are born dynamically, where older nodes have more links in expectation than the younger
 c. "Rich get richer", i.e. links are formed with probability propotional to number of links a node already has
 -> b and c
+
+【Preferential Attachment】
+Consider a Preferential attachment model described in the lecture, with m = 10 and t = 50.
+What is the fraction of nodes with degree < 20 or F50(20)?
+自力で回答:Ft(d) = (t - te^(d-m)/m)/t = 1 - e^(d(d-m)/m) = 1 - e^(20(20-50)/50) = 1 -e^(2*-3/5) = 1 - e^(-1.2) = 1 - 0.3 = 0.7
+-> 0.75
+
+
 ```
