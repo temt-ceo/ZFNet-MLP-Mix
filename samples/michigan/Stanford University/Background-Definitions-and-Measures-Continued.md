@@ -83,6 +83,8 @@ What is the decay centrality of node 1, with σ = 0.5
 Compare nodes 3 and 4:which one has a larger betweenness centrality but a lower Bonacich centrality(b=1/3)?
 ->betweenness centralityの高いノード（消去法で行ける）
 
-
-
+Consider all undirected networks with 3 nodes {1,2,3} - there are x^3=8 networks in total.
+Which of the following is the property the every node has at least one lonk: A(N) = {g|N_i(b) is nonempty for all i in N}?
+-> { {12,23},{13,23},{12,13},{12,23,13} }
+There are 4 networks in A(N): 3 networks {12,23},{13,23} and {12,13}, each of which has 2 links; and {12,23,13}, which has 3 links.
 ```
