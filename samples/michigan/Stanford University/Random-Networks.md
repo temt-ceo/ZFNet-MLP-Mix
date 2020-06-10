@@ -13,8 +13,22 @@ Degree Distribution
  - Nodes that have expected degree less than d at some time t are those such that
  m(1+log(t/i)) < d
  - Fraction(閾値後の断片)
- Ft(d) = (t - te^(d-m)/m)/t = 1 - e^(d(d-m)/m)
- 
+ Ft(d) = (t - te^(d-m)/m)/t = 1 - e^(d(d-m)/m) 
+```
+# Mean Field Approximations
+```
+Continuous Time Approximation
+ - starting condition .. di(i) = m
+ - new links gained per unit time .. ddi(t)/dt = m/t
+ Then, di(t) = m+ m * log(t/i)
+
+Power Law Explanations
+ - Rich get richer .. growth of existing objects is proportional to size
+
+Preferential Attachment
+ - Nodes born over time, foem links at random with existing nodes
+  Form links with probability [proportional to number of links a node already has.]
+初期からある古株のノードがたくさんDegreeを持つようになる。
 ```
 # EXERCISE
 ```
@@ -30,4 +44,10 @@ and then 1 more with probability 5/10 when the 10th node is born.
 What is the average degree of a growing random network with m, at date t? (m: mean)
 -> 2m (Since d-m is exponentially distributed with mean m, so the average degree is m+m=2m, independent with t)
 
+According to the lecture, which two of the following elements when combined can give a "Power Law" degree
+distributions (which have "fat tails" similar to the obserbed data in practice)?
+a. Nodes form links uniformly at random to other nodes
+b. Growing networks, i.e. nodes are born dynamically, where older nodes have more links in expectation than the younger
+c. "Rich get richer", i.e. links are formed with probability propotional to number of links a node already has
+-> b and c
 ```
