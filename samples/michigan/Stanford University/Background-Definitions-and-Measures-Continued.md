@@ -75,6 +75,10 @@ A(N)={g|Ni(g) nonempty for all i in N} -> property of no isolated nodes
 A(N)={g|l(i,j) finite for all i,j in N} -> network is connected
 A(N)={g|l(i,j)<log(n) for all i in N} -> diameter is less than log(n)
 ```
+# Random Networks Thresholds and Phase Transitions
+```
+
+```
 # Exercise
 ```
 Which of the following is not evidence for Homophily?
