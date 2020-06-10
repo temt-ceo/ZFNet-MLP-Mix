@@ -4,9 +4,17 @@ Degree Distribution
  - Start with m nodes fully connected
  - New node forms m links to existing nodes
  - An existing node has a probability m/t of getting new link each period
+ ● t(time)経過後のDegreeを予測する
  - Expected degree for node i born at m<i<t is ↓ formed at birth.
-  m + m/(i+1) + m/(i+2) + ... + m/t
- - t: time(回数),  i: node
+  m + m/(i+1) + m/(i+2) + ... + m/t  (t: time(回数), m:links(数), i: node born at "i"th)
+  or m(1 + log(t/i))
+ birthdateが経過するとdegree（new link）の増えるスピードが鈍化する 
+ ● 予測Degreeがある数dを下回る時のt(time)を求める
+ - Nodes that have expected degree less than d at some time t are those such that
+ m(1+log(t/i)) < d
+ - Fraction(閾値後の断片)
+ Ft(d) = (t - te^(d-m)/m)/t = 1 - e^(d(d-m)/m)
+ 
 ```
 # EXERCISE
 ```
@@ -15,5 +23,11 @@ with m=5, i.e. with 5 new links formed by each newborn node.
 What is the expected degree for the node #7 (the 7th born node) at time t=10
 (When the 10th node is born)?
 -> 5 + 5/(8) + 5/(9) + 5/10
-解説: The node #7
+解説: The node #7 born with 5 links, then 1 link is added with probability 5/8 when the 8th node is born,
+then 1 more link with probability 5/9 when the 9th node is born,
+and then 1 more with probability 5/10 when the 10th node is born.
+
+What is the average degree of a growing random network with m, at date t? (m: mean)
+-> 2m (Since d-m is exponentially distributed with mean m, so the average degree is m+m=2m, independent with t)
+
 ```
