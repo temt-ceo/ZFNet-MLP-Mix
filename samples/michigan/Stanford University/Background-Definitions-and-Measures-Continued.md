@@ -77,7 +77,11 @@ A(N)={g|l(i,j)<log(n) for all i in N} -> diameter is less than log(n)
 ```
 # Random Networks Thresholds and Phase Transitions
 ```
-
+A phase transaction occurs at t(n)
+t(n) is a threshold function for a monotone property A(N) if
+ Pr[A(N) | p(n)] -> 1 if p(n)/t(n) -> infinity
+ Pr[A(N) | p(n)] -> 0 if p(n)/t(n) -> 0
+ Graphがpropertyのedgeを持つか(p=0.1)、cycleを持つか(p=0.2)など。
 ```
 # Exercise
 ```
@@ -97,4 +101,8 @@ Consider all undirected networks with 3 nodes {1,2,3} - there are x^3=8 networks
 Which of the following is the property the every node has at least one lonk: A(N) = {g|N_i(b) is nonempty for all i in N}?
 -> { {12,23},{13,23},{12,13},{12,23,13} }
 There are 4 networks in A(N): 3 networks {12,23},{13,23} and {12,13}, each of which has 2 links; and {12,23,13}, which has 3 links.
+
+The Small-World model in Watts and Strogatz(1999) shows that by randomly rewiring a small but nontrivial function of links from a highly structured lattice(格子):
+-> Networks with high clustering and low diameter are generated.
+
 ```
