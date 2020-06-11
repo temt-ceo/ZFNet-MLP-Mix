@@ -41,7 +41,24 @@ Distribution of Expected Degrees
   m(t/i)^0.5 < d
  - Fraction(Distribution of Expected Degreesの断片)
  Ft(d) = 1 - (m/d)^2 and ft(d) = 2m^2/d^3
- 
+```
+# Hybrid Models
+```
+Simple Hybrid
+ - Simple version of Jackson-Rogers
+ - Fraction a uniformly at random, 1-a　(fraction) via searching neighborhoods of friends
+   (aはランダムに、1-aはその（ランダムにつながったノードの）neighborをサーチして繋がる事を想定したModel)
+
+Meeting 'Friends of Friends'
+ - Find new nodes via others: Network-based search
+ - New node meets a*m nodes uniformly at random and directs links to them
+ - Meets (1-a)m of their neighbors and attaches to them too.
+ Relation to Preferential Attachment:
+ - In a network with half degree k and half degree 2k individuals
+ (Degreeが多いほど繋がりやすいという意味)
+ - randomly select a link and then a node on one end of it
+ - 2/3 chance that it has degree 2k,
+ - 1/3 chance that it has degree k
 ```
 # EXERCISE
 ```
@@ -69,6 +86,14 @@ Consider a Preferential attachment model described in the lecture, with m = 10 a
 What is the fraction of nodes with degree < 20 or F50(20)?
 自力で回答:Ft(d) = (t - te^(d-m)/m)/t = 1 - e^(d(d-m)/m) = 1 - e^(20(20-50)/50) = 1 -e^(2*-3/5) = 1 - e^(-1.2) = 1 - 0.3 = 0.7
 -> 0.75
+
+【Hybrid Models】
+Suppose in a network half degree k individuals and half degree 3k individuals,
+you randomly select a link and then a node on one end of it.
+What is the probability that the node found has degree 3k?
+-> 0.75
+(The chance of finding a node with degree 3k is 3k/k = 3 times of the chance of finding a node with degree k.
+ Hence, the probability of finding a node with degree 3k is 3/(3+1)=0.75)
 
 
 ```
