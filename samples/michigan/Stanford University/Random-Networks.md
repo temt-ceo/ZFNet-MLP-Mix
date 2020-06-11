@@ -48,7 +48,7 @@ Simple Hybrid
  - Simple version of Jackson-Rogers
  - Fraction a uniformly at random, 1-a　(fraction) via searching neighborhoods of friends
    (aはランダムに、1-aはその（ランダムにつながったノードの）neighborをサーチして繋がる事を想定したModel)
-
+ - Fraction a uniformly at random, 1-a via preferential attachment
 Meeting 'Friends of Friends'
  - Find new nodes via others: Network-based search
  - New node meets a*m nodes uniformly at random and directs links to them
@@ -59,6 +59,12 @@ Meeting 'Friends of Friends'
  - randomly select a link and then a node on one end of it
  - 2/3 chance that it has degree 2k,
  - 1/3 chance that it has degree k
+ Chance of finding some node via the second part of this procedure is proportional to its degree.
+ 
+ Nodes that have expected degree less than d at some time t are those i such that:
+  (m + xam)(t/i)^(1/x) - xam < d  where x= 2/(1-a)
+ a near 1 nearly exponential, a near 0 nearly preferential
+ (aが１に近ければ逆U字、0に近ければfat-tail)
 ```
 # EXERCISE
 ```
@@ -95,5 +101,9 @@ What is the probability that the node found has degree 3k?
 (The chance of finding a node with degree 3k is 3k/k = 3 times of the chance of finding a node with degree k.
  Hence, the probability of finding a node with degree 3k is 3/(3+1)=0.75)
 
+Consider a Hybrid model described in the lecture, with m = 10 and a = 0.5. 
+What is approximately the threshold i such that nodes born after which have expected degree less than 20, at t = 50?
+(i/t=[(m+xam)/(d+xam)]^x in which x = 2/(1-a))
+->回答:16  .. x= 2/(1-a) = 4. Hence i/t = (3/4)^4 ≒ 0.32, and i = 16 is the threshold of interest.
 
 ```
