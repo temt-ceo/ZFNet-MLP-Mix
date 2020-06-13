@@ -102,7 +102,7 @@ Pcross = 0.006
 Pwithun = 0.089
 Because likelihood of link depends on node attributes, also depends on whether nodes have friends in common.
 ```
-# ERGMs, SERGMs
+# ERGMs, SERGMs, SUGMs
 ```
 ERG Model:
  - Probability of a network depends on number of links
@@ -115,6 +115,22 @@ Issues of ERGM:
  - MCMC estimation techniques are inaccurate (computing parameters)
  - Consistency of estimators of ERGMs (When are parameters accurate and how many nodes are needed?)
  - How to generate networks randomly?
+
+SERGMs:
+ - flexible way to introduce various local features and dependencies
+ - Many networks lead to the same statistics, probabilities only depend on statistics
+ - Networks with same statistics are "equivalent", collapse all equivalent networks.
+ P = exp[ βS(g)] / Σ βS(g')
+ - S can encode many things:
+   - Links, cliques, k-stars, subgraphs, friends in common per link, multi-graphs, adapt for degree distributions
+   - Can do preference based-models
+   - Allow for node characteristics
+
+Issues of SERGM:
+ - Do they still provide enough information?
+ 
+SUGMs:
+
 ```
 # EXERCISE
 ```
