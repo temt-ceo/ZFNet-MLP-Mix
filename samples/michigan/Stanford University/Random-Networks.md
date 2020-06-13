@@ -93,6 +93,29 @@ Prison       2.7         無限          0.31             7
 Rommance     0.83        無限           -               -
 r = a/(1-a)
 ```
+# Stochastic Block Models
+```
+表面上では分からない要素を繋がりの可能性の考慮を入れる
+stochastic: 確率的な
+Blue/Red
+Pcross = 0.006
+Pwithun = 0.089
+Because likelihood of link depends on node attributes, also depends on whether nodes have friends in common.
+```
+# ERGMs, SERGMs
+```
+ERG Model:
+ - Probability of a network depends on number of links
+ - Probability of a network also depends on number of triangles.
+ - likelihood of link depends on node attributes, also depends on whether nodes have friends in common.
+ P = exp[ βlinks(g) + βtriangles(g) - c ]    c: constant
+ トライアングルとスター（閉じていない）、アイソレイト(単独)のパラメータでProbabilityを求める  
+ 
+Issues of ERGM:
+ - MCMC estimation techniques are inaccurate (computing parameters)
+ - Consistency of estimators of ERGMs (When are parameters accurate and how many nodes are needed?)
+ - How to generate networks randomly?
+```
 # EXERCISE
 ```
 Consider a Growing random network with links formed to existing nodes uniformly, 
@@ -144,5 +167,22 @@ a is wrong since fat tails n general not limited to the Power Law degree distrib
 b is wrong since high clustering is a result of the specific "frind of friends" searching procedure;
  Preferential attachment itself is not enough.
 d is wrong since assortativity is a result of "growing" feature of the model; "Friends of friends" is not necessary.
+
+【Block Models】
+Consider the following example of a block model as discussed in the lecture.
+Which of the following correctly calcurates Prob(Yelloe, Yellow) and Prob(Blue, Green)
+Yellow .. 3 nodes, 3 inner path, two outer path to blue, one outer path to green
+  -> 繋がる可能性は青2, 黄(3-1=)2, 緑1 .. yellow,green=1/(3つの黄のinner path * 4つの緑のinner path)=1/12
+blue .. 4 nodes, 5 inner path, two outer path to yellow, two outer path to green
+  -> 繋がる可能性は青(4-1=)3, 黄2, 緑1 .. blue,blue=5/6のprobability
+green .. 4 nodes, 5 inner path, one outer path to yellow, two outer path to blue
+  -> 繋がる可能性は青2, 黄1, 緑(4-1=)3
+-> 1, 1/8 (1/8 = 2つの繋がり/(4つの青のinner path * 4つの緑のinner path))
+
+【ERGMs】
+If one fits an ERGM G(n,p) with just links, and finds a parameter β = 0.5. Which would be the corresponding
+parameter p from the model?
+-> e^0.5 / (1+e^0.5)
+We have the relationship that β = log(p/(1-p)), hence p = e^β / (1 + e^β).
 
 ```
