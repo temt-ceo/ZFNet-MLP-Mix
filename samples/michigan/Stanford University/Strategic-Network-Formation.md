@@ -68,6 +68,19 @@ Coauthor Model
                       = 2 + 1 + 1/4 = 3.25 
   - 1-2-3-4の構成の1 -> 1/1 + 1/2 + 1/(1*2) = 2
 ```
+# Network Formation and Transfers
+```
+Transfers
+ - Outside intervention, taxing or subsidizing relationships
+  (外部要因による繋がり)
+ - stabilityとefficiencyのconflictを解消できるか？
+  u(g) --> u(g) + t(g) に変える
+ 
+Egalitarian Transfers
+ - Every agent has societal incentives (どのノードも同じutilityを持つようになる)
+
+Transfersは孤立したノードを除外するので完璧ではない。
+```
 # EXERCISE
 ```
 Consider a symmetric version of the Connections Model with the following utility function(↑の式)
@@ -132,4 +145,21 @@ Consider the undirected network in the picture using "Coauthor Model".
 What is the utility of agent 1?
 2-1-3
 -> 4 (1/1 + 1/2 + 1/(1*2) が2つ = 2 * 2 = 4)
+
+【Transfers】
+Consider undirected networks on 3 nodes, with the utilities of nodes depicted in the picture.
+Choose the option that correctly answers the following two questions:
+(1) In which row are the etwork(s) Efficient?
+(2) In which row are the etwork(s) Pairwise stable?
+a) 3-3-3(トライアングル)
+b) 4-5-4(スター)
+c) 6-6 0(path)
+d) 0 0 0
+->(1):b, (2): c
+理由) Transfersには前提となる２つの事があり、
+ - completely isolated nodes that generate no value get 0
+ - nodes that are completely interchangeable get same transfers
+完全に孤立しているものはカウントしない。そして<合計した>uの最も大きいものがEfficient, 孤立したものを除き全て等しいuを持つものがPairwise stable。
+孤立したものをカウントしないので見かけ上一番大きいもの(6)がEfficientになるのではなく、合計したものが一番大きいもの(13)をEfficientとする必要がある。
+
 ```
