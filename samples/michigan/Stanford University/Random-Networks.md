@@ -130,6 +130,8 @@ Issues of SERGM:
  - Do they still provide enough information?
  
 SUGMs:
+ - Subgraph Generation Models
+ リンクやトライアングルが徐々に結びつき合ってネットワークが構成されるというModel
 
 ```
 # EXERCISE
@@ -200,5 +202,12 @@ If one fits an ERGM G(n,p) with just links, and finds a parameter β = 0.5. Whic
 parameter p from the model?
 -> e^0.5 / (1+e^0.5)
 We have the relationship that β = log(p/(1-p)), hence p = e^β / (1 + e^β).
+
+【SUGMs】
+Which of the following lists the challenge of applying SUGMs to relatively dense(not parse) networks?
+a) There tend to be many incidentally generated subgraphs and so the number that were directly
+   generated needs to be estimated carefully.
+b) There tend to be many subgraphs of one kind, which are impossible to calculate.
+-> a (There can be too many incidentally generated subgraphs when the network is not sparse.)
 
 ```
