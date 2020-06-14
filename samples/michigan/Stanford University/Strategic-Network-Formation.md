@@ -44,7 +44,29 @@ Strategic Network(損得のネットワーク)が以下にして結合してい�
  - medium cost: σ - σ^2 < c < σ + ((n-2)σ^2)/2     star networkが一番efficient
  - high cost: σ + ((n-2)σ^2)/2 < c                 empty networkが一番efficient
  
- 
+Pairwise Stability in the Connections Model
+ - low cost: c < σ - σ^2      complete network(全てが全てと結びつく)がPairwise Stabile
+ - medium low cost: σ - σ^2 < c < σ            star networkもそうだし、他のもPairwise Stabile
+ - medium high cost: σ < c < σ + ((n-2)σ^2)/2  star networkはPairwise Stabileではない
+ - high cost: σ + ((n-2)σ^2)/2 < c                 empty networkがPairwise Stabile
+```
+# Externalities and the Coauthor Model
+```
+Externalities
+ - Positive u(g + ij) >= u(g)  ..但しijが計算している該当ノードでない場合
+   ->Graphの該当ノードにリンクを追加した時にネットワーク内の他のノードのBenefitが下がる
+ - Negative u(g + ij) <= u(g)  ..但しijが計算している該当ノードでない場合
+   ->Graphの該当ノードにリンクを追加した時にネットワーク内の他のノードとBenefitが上がる
+
+Coauthor Model
+ - 親和性（synergy,collaboration）を計測する .. Benefitの大きさを求める式
+ u = Σij in g[1/di + 1/dj + 1/(di*dj)]
+   = 1 + Σij in g[1/dj + 1/(di*dj)]
+  d: degree
+  - 1-2の構成 -> 1/1 + 1/1 + 1/(1*1)
+  - 1-2-3-4の構成の2 -> 1/1 + 1/2 + 1/(1*2) + 1/2 + 1/2 + 1/(2*2)
+                      = 2 + 1 + 1/4 = 3.25 
+  - 1-2-3-4の構成の1 -> 1/1 + 1/2 + 1/(1*2) = 2
 ```
 # EXERCISE
 ```
@@ -84,5 +106,30 @@ d) 0.5, 1
    σ + ((n-2)σ^2)/2 = 0.5 + (5 - 2)*0.25 / 2 = 0.5 + 0.75 / 2 = 0.875 (<- upper bound)
    Then, b
 
+【Pairwise Stability in the Connections Model】
+Consider a symmetric version of the Connections Model in a society with n = 7 people and σ = 0.5.
+For which of the following costs c are star networks pairwise stable?
+a) 0.8
+b) 0.4
+c) 0.6
+d) 0.2
+-> σ - σ^2 < c < σ ...  σ - σ^2 = 0.25. So.. 0.25 < c < 0.5. Then b.
 
+【Externalities】
+In the picture, consider adding a link 12 to the network g = {13, 24}.
+So the left network is g, and the right network is g+12.
+The number next to each node is the node's utility from that network.
+Regarding the externality to node 3 brought by adding link 12, which if the following statements is correct?
+
+1(3)-3(3) 2(3)-4(3)  =>  3(2)-1(3.25)-2(3.25)-4(2)
+a) Adding link 12 brings positive externality on node 3.
+b) Adding link 12 brings negative externality on node 3.
+c) None of the above.
+-> b (Since its value from the network is reduced from 3 to 2.)
+
+【Coauthor Model】
+Consider the undirected network in the picture using "Coauthor Model".
+What is the utility of agent 1?
+2-1-3
+-> 4 (1/1 + 1/2 + 1/(1*2) が2つ = 2 * 2 = 4)
 ```
