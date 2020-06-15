@@ -1,10 +1,16 @@
 ## Hands-on Facial Expression Recognition with Keras
 
-**1. Importing the Data**<br>
+#### Develop a facial expression recognition model in Keras
+#### Build and train a convolutional neural network(CNN)
+#### Deploy the trained model to a web interface with Flask
+#### Apply the model to real-time video streams and image data
+##### Build and train a convolutional neural network (CNN) in Keras from scratch to recognize facial expressions. Once trained, saved, and exported the CNN, serve the trained model to a web interface and perform real-time facial expression recognition on video and image data.
+
+**1. Explore the Data**<br>
 ```
 # (dataの説明を行う)
-# Explanation of the data set and the problem oerview
-# import essential modules and helper functions from NumPy, Mathplotlib and scikit-learn
+# import essential modules and helper functions from NumPy, Mathplotlib and Keras
+# Display some images from every expression type in the Emotion FER [dataset](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data) .
 
 """
 データの内容: Movieのrating(スター数, コメント)がpositiveとnegativeが25000件ずつ。
