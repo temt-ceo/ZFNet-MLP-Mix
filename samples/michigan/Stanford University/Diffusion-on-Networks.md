@@ -9,6 +9,8 @@ Diffusion(拡散)
  - disease
  - ideas basic information
  - buy a product or not
+ 他の人にアドバイスされた回数が多いほど
+
 ```
 # EXERCISE
 ```
