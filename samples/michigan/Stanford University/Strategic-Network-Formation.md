@@ -80,6 +80,40 @@ Egalitarian Transfers
  - Every agent has societal incentives (どのノードも同じutilityを持つようになる)
 
 Transfersは孤立したノードを除外するので完璧ではない。
+
+Heterogeneity .. Enriching Strategic Models
+ - Small worlds derived from costs/benefits のBasic Idea
+   - low costs to local links .. high clustering
+     distanceがあってもリンクを維持しようとする。
+     - islands connections model
+       The features of islands connections model include high clustering, 
+       low diameter, and regular degree (which does not increase dramatically
+       as the number of islands increase).
+     小規模の所属するクラスターと他のそれぞれのクラスターとの繋がり。
+   - high value to distant connections .. low diameter
+   - high cost of distant connections .. few distant links
+
+Strategic Formation
+ - Efficient networks and stable Networks need not coincide
+ - Need not coincide even when transfers are possible, and with complete information
+ - Depends on 
+   setting
+   restrinctions on transfers, endogenous transfers..
+   forward looking, errors ..
+ - Can match and explain some observables
+   
+Strengths of an economic approach
+ - Payoffs allow for a welfare analysis
+ - Tie the nature of externalities to network formation..
+ - Put network structures in context
+ - Account for and explain some observables
+
+Models that marry strategic with random are needed
+ - Weaknesses of Random are Strengths of Economic approach, and vice versa.
+ - Mixed models
+   - allow for welfare/efficiency analysis
+   - take model to data and fit observed networks
+   - do so across applications
 ```
 # EXERCISE
 ```
@@ -161,5 +195,18 @@ d) 0 0 0
  - nodes that are completely interchangeable get same transfers
 完全に孤立しているものはカウントしない。そして<合計した>uの最も大きいものがEfficient, 孤立したものを除き全て等しいuを持つものがPairwise stable。
 孤立したものをカウントしないので見かけ上一番大きいもの(6)がEfficientになるのではなく、合計したものが一番大きいもの(13)をEfficientとする必要がある。
+
+【Heterogeneity】
+In the pairwise stable structure of network described in this video for Islands connections model, 
+which of the following properties are correct?
+(Islands connections model = low costs to local links)
+a) Diameter increases proportionally to the total number of nodes, as the number of islands goes up
+  (fixing the number of nodes in each island)
+b) Relatively high clustering
+c) Relatively low diameter
+d) Average degree increases proportionally to the total number of nodes, as the number of islands goes up
+  (fixing the number of nodes in each island)
+-> b,c
+  b: The features of islands connections model include high clustering, low diameter, and regular degree (which does not increase dramatically as the number of islands increase).
 
 ```
