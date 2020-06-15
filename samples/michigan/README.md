@@ -5,7 +5,7 @@
 **the Sentiment Analysis and distinguishing positive review**<br>
 [TextMiningSentimentAnalysis](TextMiningSentimentAnalysis.ipynb)<br>
 
-**Document Similarity and Topic Modeling**<br>
+**Document Similarity and Topic Modeling：類似文書を検索、トピック(主題)抽出モデルの実装**<br>
 [TextMiningAssignment4](TextMiningAssignment4.ipynb)<br>
 
 ### Applied Data Science Recap
