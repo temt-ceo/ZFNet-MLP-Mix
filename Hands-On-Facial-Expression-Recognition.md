@@ -6,11 +6,12 @@
 #### Apply the model to real-time video streams and image data
 ##### Build and train a convolutional neural network (CNN) in Keras from scratch to recognize facial expressions. Once trained, saved, and exported the CNN, serve the trained model to a web interface and perform real-time facial expression recognition on video and image data.
 
-**1. Explore the Data**<br>
+**1. Explore the [Data](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data)**<br>
 ```
-# (dataの説明を行う)
+# (dataのimport)
 # import essential modules and helper functions from NumPy, Mathplotlib and Keras
 # Display some images from every expression type in the Emotion FER [dataset](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data) .
+# Check for class imbalance problems in the training data
 
 """
 データの内容: Movieのrating(スター数, コメント)がpositiveとnegativeが25000件ずつ。
@@ -33,13 +34,12 @@ df.head(10) # reviewカラム(コメント), sentiment(0or1)の２つのカラ�
 # review全文を見る
 df['review'][0]
 ```
-**2. Transforming Documents into Feature Vectors**<br>
+
+**2. Generate Training and Validation Batches**<br>
 ```
-# (テキストをsparse feature vectorsに変換する)
-# Information retrieval
-# Represent text data using the bag-of-words model
-# Construct the vocabulary of the bag-of-words model
-# Transform the sentences into sparse feature vectors
+# (training batchを作成する)
+# Generate batches of tensor image data with real-time data augmentation.
+# Specify paths to training and validation image directories and generates batches of augmented data.
 
 """
              Bag of words/Bag of N-grams model
@@ -70,14 +70,12 @@ print(bag.toarray())
 #     [0 1 0 0 0 1 1 0 1]     and(0)は最後の文にだけ２回登場するので上から0 0 2となっている。
 #     [2 3 2 1 1 1 2 1 1]]
 ```
-**3. Term Frequency-Inverse Document Frequency**<br>
+
+**3. Create a Convolutional Neural Network(CNN) Model**<br>
 ```
-# (非常に頻出のワードを観察する) 
-# Observe words that crop up across our corpus of documents.　These words can lead to bad performance because they don't contain useful information.
-# Apply scikit-learn's TfIdfTransformer to convert text into a vector of tf-idf values.
-# Using this method, downweight these class of words in the feature vector representation.
-# (downweight:頻出するものは重要度が下がるのでweightも下がる。tf-idfの理論(inverse document frequency)に沿ったもの)
-# Apply the L2-normalization to it.
+# (Modelを作成する) 
+# Design a convolutional neural network with 4 convolution layers and 2 fully connected layers to predict 7 types of facial expressions.
+# Use Adam as the optimizer, categorical crossentropy as the loss function, and accuracy as the evaluation metric.
 
 """
     式:    df(出現回数)が多いほど idf()の値は下がる↓　tf(term frequency)と掛け合わせてtf-idfを求める。
@@ -100,11 +98,12 @@ print(tfidf.fit_transform(count.fit_transform(docs)).toarray())
 #     [0. 0.43 0. 0. 0. 0.56 0.43 0. 0.56]     最後の文章でis(1)は3回出現するがand(0)(2回出現)の方が大きいので"is"は重要でないと計算から求められた。
 #     [0.5 0.45 0.5 0.19 0.19 0.19 0.3 0.25 0.19]]
 ```
-**4. Data Preparation**<br>
+**4. Train and Evaluate Model**<br>
 ```
-# (Cleaningをする)
-# Cleaning and pre-processing text data is a vital process in data analysis and especially in natural language processing.
-# Skip the data set of reviews of irrelevant characters including HTML tags, punctuation and emojis using regular expression.
+# (train後weightsを保存する)
+# Train the CNN by invoking the model.fit() method.
+# Use ModelCheckpoint() to save the weights associated with the higher validation accuracy.
+# Observe live training loss and accuracy plots in Jupyter Notebook for Keras.
 
 # 不必要なwordがないか観察する
 df.loc[0, 'review'][-50:] #=> 'is seven.<br /><br />Title (Brazil): Not Available' 最後の５０文字
@@ -125,12 +124,12 @@ preprocessor('</a>This :) is a :( test :-)!')
 
 df['review'] = df['review'].apply(preprocessor)
 ```
-**5. Tokenization of Documents**<br>
+**5. Save and Serialize Model as JSON String**<br>
 ```
-# (トーカナイズ)
-# Repurpose the data preprocessing and k-means clustering logic from previous tasks.
-# Operate k-means image compression.
-# Visualize how the image changes as the number of clusters fed to the k-means algorithm is varid.
+# (シリアライズなModelを保存)
+# Sometimes, you are only interested in the architecture of the model,
+# and you don't need to save the weight values or the optimizer.
+# Use to_json(), which uses a JSON string, to store the model architecture.
 
 from nltk.stem.porter import PorterStemmer
 porter = PorterStemmer()
@@ -155,9 +154,13 @@ stop = stopwords.words('english') # 英語以外もある..
 
 #=> ['run', 'like', 'run', 'run', 'lot'] andやaはstop wordなので除去される。
 ```
-**6. Transform Text Data into Vectors**<br>
+
+**6. Create a Flask App to Serve Predictions**<br>
 ```
-# (dfのTF-IDF Vectors化)
+# (Flaskを使ってWebサイトを用意)
+# Use open-source code from "[Video Streaming with Flask Example](https://github.com/log0/video_streaming_with_flask_example)"
+# to create a flask app to serve the model's prediction images directly to a web interface.
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 # initialize
 tfidf = TfidfVectorizer(strip_accents=None, # preprocessorをすでに下処理している為無効にする
@@ -171,14 +174,11 @@ y = df.sentiment.values
 X = tfidf.fit_transform(df.review)
 ```
 
-**7. Documents Classification Using Logistic Regression**<br>
+**7. Create a Class to Output Model Predictions**<br>
 ```
-# (データを分割し、grid searchを行う)
-# Split the data into training and test sets of equal size.
-# Create a pipeline to build a logistic regression model
-# Emply cross-validated grid-search to estimate the best parameters and model.
-# Although the time it takes to train logistic regression model is very little,
-# estimating the best parameters for our model using GridSearchCV can take hours for some data amount.
+# (シリアライズされたModelをロードし表情を予想する)
+# Create a FacialExpressionModel class to load the model from the JSON file,
+# load the trained weights into the model, and predict expressions.
 
 from sklearn.model_selection import train_test_split
 
@@ -208,11 +208,11 @@ saved_model.close()
 # => [Parallel(n_jobs=-1)]: Usingbackend LokyBackend with 2 concurrent workers.
 #    [Parallel(n_jobs=-1)]: Done 5 out of 5 | elapsed: 2.6min finished   <= 2.6分かかっている。(30Mほどのサイズのファイルが出来上がる)
 ```
-**8. Load Saved Model from Disk / Model Accuracy**<br>
+
+**8. Design an HTML Template for the Flask App**<br>
 ```
-# (TrainされたModelを使い感情を予測する)
-# Take a look at the best parameter settings, cross-validation score and how well
-# out model classifiers the sentiments of reviews from the test set.
+# (HTMLを整形する)
+# Design a basic template in HTML to create the layout for the Flask app.
 
 # Discから保存されたModelを読み込む
 filename = 'saved_model.sav'
@@ -223,3 +223,10 @@ saved_clf.score(X_test, y_test)
 # => 0.89604 # 感情予測としてはとても良い(ほぼ90%なのでとても良いと言える)精度が出ている。
 ```
 
+**9. Use Model to Recognize Facial Expressions in Videos**<br>
+```
+# (Flaskを立ち上げモデルを動かす)
+# Run the main.py script to create the Flask app and serve the model's predictions to a web interface.
+# Apply the model to saved videos on disc
+
+```
