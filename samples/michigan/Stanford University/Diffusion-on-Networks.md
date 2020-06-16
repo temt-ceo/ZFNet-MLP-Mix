@@ -36,7 +36,7 @@ Richer Model(より複雑なModel)を紹介
 ```
 # Giant Component Poisson Case
 ```
-Calculating the Size of the Giant Component
+Calculating the Size of the Giant Component(1度だけ感染する前提)
  - q: fraction of nodes in largest component
  - 1 - q: probability that a node is outside of the giant component
  - 1 - q = Σ(1-q)^d * P(d)
@@ -44,6 +44,17 @@ Calculating the Size of the Giant Component
  コンポーネントの拡大には生成されるdegreeが鍵を握っている。（最初は全てindividualな状態）
 Solve for q..
  Solve 1 - q = Σ(1-q)^d * P(d)  .. E(d)により感染の大きさカーブが形成される。
+```
+# SIS Model
+```
+Susceptible(感受性が強い) Infective Susceptible (繰り返すことを意味している。)
+ - get well randomely in any period at rate δ > 0
+ - Let p be the percent infected
+ - number of infected neighbors with rate v > 0, plus spontaneous ε
+ Bass Modelに回復者をプラスしたような式
+ - p = 1 - δ/v (但し、p>=0)(δ < v で感染者は増える。)
+ - p(d): fraction of nodes of degree d infected = fraction of nodes that have d meetings
+ 
 ```
 # EXERCISE
 ```
