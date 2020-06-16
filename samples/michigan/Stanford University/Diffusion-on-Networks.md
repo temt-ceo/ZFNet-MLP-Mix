@@ -34,7 +34,17 @@ Richer Model(より複雑なModel)を紹介
  - ネットワークのコンポーネントが大きいほど感染は多い。
  - Size of the giant component when .. 1/n < p < log(n)/n (大きなコンポーネントができる条件。最低はcircleができ初める条件)
 ```
-
+# Giant Component Poisson Case
+```
+Calculating the Size of the Giant Component
+ - q: fraction of nodes in largest component
+ - 1 - q: probability that a node is outside of the giant component
+ - 1 - q = Σ(1-q)^d * P(d)
+ - P(d): the chance that the node has d neighbors (d=degree)
+ コンポーネントの拡大には生成されるdegreeが鍵を握っている。（最初は全てindividualな状態）
+Solve for q..
+ Solve 1 - q = Σ(1-q)^d * P(d)  .. E(d)により感染の大きさカーブが形成される。
+```
 # EXERCISE
 ```
 【Diffusion】
@@ -65,4 +75,14 @@ and yet the network is unlikely to be connected.
 Which of the following approximates this region of p for n = 50 nodes?
 [Hint: log(50) is approximately 3.9.]
 -> 1/50 < p < 3.9/50 => 0.02 < p < 0.078 -> p 非含有 (0.02, 0.078)
+
+【Giant Component Poisson Case】
+Recall that an approximation for the probability q that a node is in the giant component, as described in this lecture,
+is the solution of the equation 1-q=Σ(1-q)^d * P(d)
+Suppose the degree distribution is such that d = 0 has probability 1/3 and d=2 has probability 2/3,
+so that P(0)=1/3, P(2)=2/3. Also, take (1-q)^0 = 1.
+The (nonzero) probability q that a node is in the giant component is then a solution to which of the following equations?
+-> P(0): 1-q = Σ(1-q)^d * P(d) = 1*1/3
+   P(2): 1-q = Σ(1-q)^d * P(d) = (1-q)^2*2/3
+   P(d): 1-q = 1/3 + 2/3 * (1-q)^2
 ```
