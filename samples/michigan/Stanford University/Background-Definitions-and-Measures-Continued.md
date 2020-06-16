@@ -89,6 +89,10 @@ Threshold
    Then p(n) >> log(n)/n .. have connected network
         p(n) << log(n)/n .. not connected network
 
+Let us show that E[d] = log(n) is the threshold above which we expect each node to have some links.
+  E[d]: Expected degree
+E(d) - log(n) = r→∞ implies Expected number of isolated nodes goes to 0
+E(d) - log(n) = r→-∞ implies Expected number of isolated nodes become infinite.
 ```
 # Exercise
 ```
@@ -117,4 +121,20 @@ Out of the options for p below, which is the lowest for which the networks are s
 So which is the lowest number that is still larger than the threshold for connection? [Hint: log(1100)=7]
 a) 0.001 b) 0.01 c) 0.1 d) 0.2
 ->log(n)/n = 7/1100 = 0.0063, So b.
+
+Imagine that you are advertising your new product of popcorn. You realize that various potential areas where you will
+be selling your corn are connected to each other in a network, and that if you advertise it in one area then it might
+be communicated to neighboring areas. You only have the chance to advertise in one area to seed the market and hope that
+news spreads from there. You know the communication network among all the area. If you were to have to rely on one
+centrality measure to pick the best area, and you did this based on what was found from the data analysis in video 2.5a,
+which centrality measure would you use?
+-> The area with highest Eigenvector centrality
+
+In a Poisson random network G(n,p), which of the following is a threshold function 
+for p for there being at least one link network?
+a) t(n) = 1/n^2
+b) t(n) = 1/n
+c) t(n) = -log(n)
+d) t(n) = 1/n^1.5
+->a (1/n^2 is a threshold that the network has some links, since then the ave degree is 1/n)
 ```
