@@ -82,6 +82,13 @@ t(n) is a threshold function for a monotone property A(N) if
  Pr[A(N) | p(n)] -> 1 if p(n)/t(n) -> infinity
  Pr[A(N) | p(n)] -> 0 if p(n)/t(n) -> 0
  Graphがpropertyのedgeを持つか(p=0.1)、cycleを持つか(p=0.2)など。
+
+Threshold
+ - A threshold function for the connectedness of a Poisson random network is
+   t(n) = log(n)/n
+   Then p(n) >> log(n)/n .. have connected network
+        p(n) << log(n)/n .. not connected network
+
 ```
 # Exercise
 ```
@@ -105,4 +112,9 @@ There are 4 networks in A(N): 3 networks {12,23},{13,23} and {12,13}, each of wh
 The Small-World model in Watts and Strogatz(1999) shows that by randomly rewiring a small but nontrivial function of links from a highly structured lattice(格子):
 -> Networks with high clustering and low diameter are generated.
 
+Consider generating Poisson random networks on 1100 nodes where each link has a probability p.
+Out of the options for p below, which is the lowest for which the networks are still likely to be connected?
+So which is the lowest number that is still larger than the threshold for connection? [Hint: log(1100)=7]
+a) 0.001 b) 0.01 c) 0.1 d) 0.2
+->log(n)/n = 7/1100 = 0.0063, So b.
 ```
