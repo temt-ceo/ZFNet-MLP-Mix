@@ -109,6 +109,7 @@ ERG Model:
  - Probability of a network also depends on number of triangles.
  - likelihood of link depends on node attributes, also depends on whether nodes have friends in common.
  P = exp[ βlinks(g) + βtriangles(g) - c ]    c: constant
+ β = log(p/(1-p)), hence p = e^β / (1 + e^β).
  トライアングルとスター（閉じていない）、アイソレイト(単独)のパラメータでProbabilityを求める  
  
 Issues of ERGM:
@@ -133,6 +134,53 @@ SUGMs:
  - Subgraph Generation Models
  リンクやトライアングルが徐々に結びつき合ってネットワークが構成されるというModel
 
+```
+# Estimating SUGMs
+```
+Sparseness
+ - Incidental Triangles(Typical node involved in less than n^.5 links, n^.5 triangles)
+  - 直感的な例) p(L) = o(n^-.5),  p(T) = o(n^-1.5)
+  - 例（最初に42ノードと10個のトライアングルがある）) n=42, T=10 .. n choose 3 = 11480, p(T) = 0.00087  [10/11480 ≒ 0.00087]
+  - 例（最初に42ノードと23個のリンクがある）) n=42, L=23 .. n choose 2 = 861 -(28 links in triangles) = 833,
+    p(L) = 0.276  [23/833 ≒ 0.276]
+  (ここのリンクは"トライアングルの中にないリンクのみ"を指している。)
+
+Exercise:
+  Consider the following graph: There are 25 nodes, 11 triangles and 31 links
+  (out of which 24 are in some triangle and 7 are not in any triangles).
+  [Note 25 choose 3 = 2300, 25 choose 2 = 300]
+  
+  According to this lecture, which of the following should be your estimation of the probability of triangles?
+  a) p(T)=11/2300
+  b) p(T)=7/276
+  c) p(T)=24/2300
+  d) p(T)=11/24
+  -> a (T = 11, n choose 3 = 2300 Then p(T)=11/2300)
+
+  According to this lecture, which of the following should be your estimation of the probability of links?
+  a) p(L)=11/2300
+  b) p(L)=7/276
+  c) p(L)=24/2300
+  d) p(L)=31/300
+  ->b .. 7/(n choose 2 = 300 -(24 links in triangles) = 276)
+
+Need for SERGMs / SUGMs:
+ - Two nodes are either same or different(Block Modelはリンクが同じもの違うものの確率を出せる。Triangleは出せない。
+ 　 そこにSUGMを追加しトライアングルが同じもの違うものの確率を求める)
+ - Step1: Estimate models
+ - Step2: randomly generate links
+ （Block Modelだけでは正しくネットワークを評価できないことが多い。SUGMを使いネットワークをモデリングすると似たネットワークを計算できる（上記理由により））
+
+[Random Networks まとめ]
+Strength Random Networks:
+ - Generate large networks with well identified properties
+ - Mimic real networks
+ - Tie specific properties to specific processes
+
+Weaknesses Random Network Models:
+ - Missing the "Why" (Why this process?)
+ - Missing implications(含有) of network structure (contextがないので効率的と言えない)
+ - 実証に基づいた分析（small worldなど）の構造の説明が難しい
 ```
 # EXERCISE
 ```
@@ -210,4 +258,12 @@ a) There tend to be many incidentally generated subgraphs and so the number that
 b) There tend to be many subgraphs of one kind, which are impossible to calculate.
 -> a (There can be too many incidentally generated subgraphs when the network is not sparse.)
 
+【Random Networks まとめ】
+In the example with Indian village data, relative to the standard link-based model(or block model),
+the SUGM based on both link and traiangle counts:
+a) Generates networks with better fit of observed data in terms of aspects other than links and triangles,
+   such as the fraction in giant component, and patterns of diffution(captured by first eigenvalue)
+   and homophily(captured by second eigenvalue);
+b) Generates networks with better fit of obserbed data in terms of triangles.
+-> Both.(a,b)
 ```
