@@ -26,14 +26,15 @@ Power Law Explanations
  - Rich get richer .. growth of existing objects is proportional to size
 
 Preferential Attachment
- - Nodes born over time, foem links at random with existing nodes
-  Form links with probability [proportional to number of links a node already has.]
-  Probability of attaching to i is
-   di(t)/2tm
-   tm: links in total, 2tm: total degree
-    - Newborn nodes form m links to existing nodes
-初期からある古株のノードがたくさんDegreeを持つようになる。
- 
+ - Newborn nodes form m links to existing nodes
+ - tm links in total,
+ - total degree is 2tm
+ - Probability of attaching to i is d<i>(t)/2tm
+ - Nodes born over time, form links at random with existing nodes
+ 初期からある古株のノードがたくさんDegreeを持つようになる。
+ Expected degree: dd<i>(t)/dt = m(d<i>(t)/2tm) and d<i>(i)=m
+                  => d<i>(t) = m(t/i)^0.5
+
 Distribution of Expected Degrees
  Expected degree for node i born at m<i<t is
   di(t) = m(t/i)^0.5
@@ -266,4 +267,38 @@ a) Generates networks with better fit of observed data in terms of aspects other
    and homophily(captured by second eigenvalue);
 b) Generates networks with better fit of obserbed data in terms of triangles.
 -> Both.(a,b)
+
+Consider the model of "Growing Random Networks" described in lecture 3.1(so the first model where links
+are added to existing nodes uniformly at random), with m = 10.
+At date t=40, what are:
+(1)the expected degree for node 15 born at i=15, and
+(2)the expected degree for node 30 born at i=30?
+-> (1): 10 + 10/(16)≒0.67 + 10/(17) .. 10/40=0.25 => 10 + 0.46*25 = 21.5
+   (2): 10 + 10/(31)≒0.33 + 10/(32) .. 10/40=0.25 => 10 + 0.29*10 = 12.9
+(Growing Random Networks => birthdateが経過するとdegree（new link）の増えるスピードが鈍化する )
+
+Consider the model of "Preferential Attachment Model" described in lecture 3.3, with m = 10.
+At date t=40, what are:
+(1)the expected degree for node 15 born at i=15, and
+(2)the expected degree for node 30 born at i=30?
+-> (1): m(t/i)^0.5 = 10(40/15)^0.5 = 10(8/3)^0.5 = 16.329
+   (2): m(t/i)^0.5 = 10(40/30)^0.5 = 10(4/3)^0.5 = 11.547
+(Preferential Attachment Model => 初期からある古株のノードがたくさんDegreeを持つようになる。)
+
+Consider the model of "Hybrid Model" described in lecture 3.4, with m = 10.
+Let us compare the cases of a = 0.8 and a = 0.2
+At date t = 10,000, consider a node born at date i=20 and a node born at date i= 9999.
+Recall that the approximation of the expected degree at time t of a node born at time i is
+(m + 2am/(1-a))*(t/i)^((1-a)/2) - 2am/(1-a).
+Which option makes the following statement correct?
+At date t = 10,000,
+a node born at date i=9999 has a ( 1 ) expected degree with a = 0.8 than with a = 0.2;
+a node born at date i=20 has a ( 2 ) expected degree with a = 0.8 than with a = 0.2;
+->a=0.2 .. 0.8がPreferential Attachment, 0.2がUnifomly Random
+  and Preferential Attachment Model => 初期からある古株のノードがたくさんDegreeを持つ
+  and Random Networks => birthdateが経過するとdegree（new link）の増えるスピードが鈍化する
+  Then If a is lower, it depends Preferential Attachment = 初期からある古株のノードがたくさんDegreeを持つ
+  and If a is higher, it depends Random Networks = birthdateが経過するとdegree（new link）の増えるスピードが鈍化する
+  (1): higher, (2): lower
+  
 ```
