@@ -63,6 +63,10 @@ The fraction of the population with degree d that is infected in steady state is
 ```
 # Solving the SIS Model
 ```
+あなたが歩いて会う人の内感染している人の割合 θ = H(θ) = ΣP(d)λθd^2/[(λθd+1)*E[d]]
+How H(θ) depends on P(d), E[d] etc.
+
+
 
 ```
 # EXERCISE
