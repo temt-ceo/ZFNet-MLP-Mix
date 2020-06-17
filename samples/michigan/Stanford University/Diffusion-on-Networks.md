@@ -54,7 +54,16 @@ Susceptible(感受性が強い) Infective Susceptible (繰り返すことを意�
  Bass Modelに回復者をプラスしたような式
  - p = 1 - δ/v (但し、p>=0)(δ < v で感染者は増える。)
  - p(d): fraction of nodes of degree d infected = fraction of nodes that have d meetings
- 
+
+The fraction of the population with degree d that is infected in steady state is
+ρ(d) = λθd/(λθd+1), where λ = υ/δ:
+・ υ is the infection rate (at which uninfected node gets infected by an infected neighbor);
+・ δ is the recovery rate (at which infected node recovers from infection);
+・ θ is the fraction of randomly chosen neighbors who are infected.
+```
+# Solving the SIS Model
+```
+
 ```
 # EXERCISE
 ```
@@ -96,4 +105,18 @@ The (nonzero) probability q that a node is in the giant component is then a solu
 -> P(0): 1-q = Σ(1-q)^d * P(d) = 1*1/3
    P(2): 1-q = Σ(1-q)^d * P(d) = (1-q)^2*2/3
    P(d): 1-q = 1/3 + 2/3 * (1-q)^2
+
+【SIS Model】
+Following a mean-field approximation of the SIS model, the fraction of the population
+with degree d that is infected in steady state is ρ(d) = λθd/(λθd+1), where λ = υ/δ, and recall that:
+・ υ is the infection rate (at which uninfected node gets infected by an infected neighbor);
+・ δ is the recovery rate (at which infected node recovers from infection);
+・ θ is the fraction of randomly chosen neighbors who are infected.
+Which of the following statement(s) are correct in a case where θ and λ are positive?
+[Hint: if your calculus(公式) is rusty, simply examine this expression for d at 0 and d very large.]
+a) The steady state infection fraction ρ(d) increased in d.
+b) The steady state infection fraction ρ(d) approaches 0 as d becomes very large.
+c) The steady state infection fraction ρ(d) does not depend on the value of d.
+d) The steady state infection fraction ρ(d) decreases in d.
+-> a
 ```
