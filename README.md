@@ -32,10 +32,10 @@ URL. https://www.kaggle.com/takashitahara/concrete-data-and-strength-analysis
 **これはIBM認定AI Engineering Professionalの最終課題、127x127x3の画像をPyTorchを使って解析する、**<br>
 **を無料環境では最も早いkaggle上で解析したものです。Modelは全て手作りです。**<br>
 URL. https://www.kaggle.com/takashitahara/recognizing-concrete-crack-using-pytorch
-<br><br>
+<br><br><br>
+
+--------------------------------------------------------------------------------------------------
 ### Hands On
 **(1)[表情解析](Hands-On-Facial-Expression-Recognition.ipynb): ビデオを読み込み、顔を検出、正方形の枠出し及び感情をリアルタイムに枠上にテキスト化、ブラウザ上に表示する**<br>
-<br>
-
 **上記以外のHands Onファイルは**
 [こちら](https://github.com/temt-ceo/ZFNet-MLP-Mix/tree/master/samples/michigan/Stanford%20University/HandsOn)にあります。<br>
