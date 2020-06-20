@@ -629,3 +629,43 @@ the scope resolution operator, ::, denotes the fully-qualified name of a functio
 the class members utilize pass-by-reference as shown by the & operator; It means that a direct reference to the memory is being passed, which uses the same concept of indirection that pointers offer, but with a simple syntax—you just use the variable as you would normally, not by dereferencing a memory address explicitly with the * operator as pointers do, and yet you are still able to implicitly manipulate the data located at the original memory location. This convenience feature was one of the benefits of C++ over the older C language.
 
 
+--------------------------------以下Javaの場合-------------------------------------------
+**SimpleLocation.java**<br>
+```
+public class SimpleLocation
+{
+  public double latitude;
+  public double longitude;
+  
+  public SimpleLocation(double lat, double lon)
+  {
+    this.latitude = lat;
+    this.longitude = lon;
+  }
+  public double distance(SimpleLocation other)
+  {
+    return getDist(this.latitude, this.longitude,
+                   other.latitude, other.longitude);
+  } 
+}
+```
+**LocationTester.java**<br>
+```
+public class LocationTester
+{
+  public static void main(String[] args)
+  {
+    SimpleLocation ucsd = new SimpleLocation(32.9, -117.2);
+    SimpleLocation lima = new SimpleLocation(-12.0, -77.0);
+    
+    System.out.println(ucsd.distance(lima));
+  }
+}
+```
+**実行**<br>
+```
+javac *.java
+java LocationTester
+-> 6567.659
+```
+
