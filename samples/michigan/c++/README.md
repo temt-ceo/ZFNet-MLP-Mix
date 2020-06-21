@@ -634,7 +634,7 @@ the class members utilize pass-by-reference as shown by the & operator; It means
 ```
 public class SimpleLocation
 {
-  public double latitude;
+  public double latitude; // privateにしてpublic double getLatitudeメソッドを作ったほうがいい
   public double longitude;
   
   public SimpleLocation()
