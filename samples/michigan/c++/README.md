@@ -633,8 +633,8 @@ the class members utilize pass-by-reference as shown by the & operator; It means
 **SimpleLocation.java**<br>
 ```
 public class SimpleLocation
-{
-  public double latitude; // privateにしてpublic double getLatitudeメソッドを作ったほうがいい
+{ 
+  public double latitude; // privateにしてpublic double getLatitude, public void setLatitudeメソッドを作ったほうがいい(out-of-rangeチェックなどが書ける。)
   public double longitude;
   
   public SimpleLocation()
