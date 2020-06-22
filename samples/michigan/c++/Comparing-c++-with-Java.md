@@ -30,7 +30,7 @@ public classs SimpleLocation // class名は必ずファイル名と同じにす�
 **ArrayLocation.java**<br>
 ```
 public class ArrayLocation {
-    private double coords[];
+    private double[] coords;
     
     public ArrayLocation(double[] coords) {
         this.coords = coords;
