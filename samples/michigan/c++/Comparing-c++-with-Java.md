@@ -43,5 +43,17 @@ public class ArrayLocation {
         coords[1] = -117.2;
         System.out.println(accra.coords[0]); //->32.9(同じheap memory内の値を変更されたから。)
     }
+    public int[] sunColorSec(float seconds)
+    {
+       int[] rgb = new int[3];
+       float diffFrom30 = Math.abs(30-seconds);
+       float ratio = diffFrom30/30;
+       rgb[0] = (int)(255*ratio); // convert to int from float
+       rgb[1] = (int)(255*ratio);
+       rgb[2] = 0;
+
+       //System.out.println("R" + rgb[0] + " G" + rgb[1] + " B" + rgb[2]);
+       return rgb;
+    }	
 }
 ```
