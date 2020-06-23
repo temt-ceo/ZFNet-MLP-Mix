@@ -38,7 +38,7 @@ public class ArrayLocation {
     
     public static void main(String[] args) {
         double[] coords = {5.0, 0.0};  // この時点で既にheap memory
-        ArrayLocation accra = new ArrayLocation(coords);
+        ArrayLocation accra = new ArrayLocation(coords); // coordsにはアドレスが入っているだけ
         coords[0] = 32.9; // heap memory内の値を変更
         coords[1] = -117.2;
         System.out.println(accra.coords[0]); //->32.9(同じheap memory内の値を変更されたから。)
