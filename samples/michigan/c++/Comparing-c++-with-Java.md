@@ -43,6 +43,7 @@ public class ArrayLocation {
         coords[1] = -117.2;
         System.out.println(accra.coords[0]); //->32.9(同じheap memory内の値を変更されたから。)
     }
+    
     public int[] sunColorSec(float seconds)
     {
        int[] rgb = new int[3];
@@ -54,6 +55,15 @@ public class ArrayLocation {
 
        //System.out.println("R" + rgb[0] + " G" + rgb[1] + " B" + rgb[2]);
        return rgb;
-    }	
+    }
+    
+    public void setup() {
+      // ...
+      Location valLoc = new Location(-38.14f, -73.03f);
+      /* MarkerはJavaDocを見るとInterface キーワードが付いているのでabstract data typeであると分かる。
+         右辺は何かの種類のMarkerであれば何でもよく、そこはMarker自体は気にしない。*/
+      Marker val = new SimplePointMarker(valLoc);
+      map.addMarker(val);
+    }
 }
 ```
