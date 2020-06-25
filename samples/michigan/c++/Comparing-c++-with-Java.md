@@ -69,7 +69,7 @@ public class ArrayLocation {
       
       /* 以下も上記と同じ理由で、ArrayListをparent classであるListでabstract的に受け取っている。 
          そのため右辺はArrayListでもLinkedListでもAttributeListでも
-      　　何でも良いという柔軟性が生まれる。ArrayListはc++のvectorArrayに近い。詳しくはc++の説明を見ること。 */
+      　　何でも良いという柔軟性が生まれる。RandomAccessなArrayListはc++のvectorArrayに近い。詳しくはc++の説明を見ること。 */
       //List<Marker> markers = new ArrayList<Marker>();
     }
 }
