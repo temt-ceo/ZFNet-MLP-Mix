@@ -61,7 +61,7 @@ public class ArrayLocation {
       // ...
       Location valLoc = new Location(-38.14f, -73.03f);
       /* MarkerはJavaDocを見るとInterface キーワードが付いているのでabstract data typeであると分かる。
-         また、CimplePointMarkerのJavaDocを見ると "All Implemented Interfaces: Marker"と書かれている。
+         また、SimplePointMarkerのJavaDocを見ると "All Implemented Interfaces: Marker"と書かれている。
          これは実装されるのはMarkerの機能を持ったものだけなので、new でオブジェクトを作成時に、左辺はMarkerとしても
          右辺は何かの種類のMarkerであれば何でもよく、そこはMarker自体は気にしない。*/
       Marker val = new SimplePointMarker(valLoc);
