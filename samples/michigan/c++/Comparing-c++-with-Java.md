@@ -66,6 +66,11 @@ public class ArrayLocation {
          右辺は何かの種類のMarkerであれば何でもよく、そこはMarker自体は気にしない。*/
       Marker val = new SimplePointMarker(valLoc);
       map.addMarker(val);
+      
+      /* 以下も上記と同じ理由で、ArrayListをparent classであるListでabstract的に受け取っている。 
+         そのため右辺はArrayListでもLinkedListでもAttributeListでも
+      　　何でも良いという柔軟性が生まれる。ArrayListはc++のvectorArrayに近い。詳しくはc++の説明を見ること。 */
+      //List<Marker> markers = new ArrayList<Marker>();
     }
 }
 ```
