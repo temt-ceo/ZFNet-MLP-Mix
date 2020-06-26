@@ -183,3 +183,13 @@ int m = p.getID(); // 無理(今（一行上の行で）, Person p は Student s
 f = q; // 無理(こっちはRuntimeエラー。Compileは通る。)
 o = s; // ok
 ```
+
+## InheritanceとConstructor
+ - ⑴ constructorがクラス内に無い時は自動でcompilerが用意する。extendsキーワードが無い時はextends Objectをcompilerが用意する。 <br>
+ - ⑵ constructorの最初の行は this();またはsuper();でなければならない。(this(args), super(args)も考えられる。<br>
+     ※this();は他のConstructorを呼び出す。例えば引数なしのconstructorが呼ばれた時にデフォルトの引数をセットしたい時にthis('default value');のように呼び出す。)<br>
+ - ⑶ ⑵のthis();と super();どちらも無い時はsuper();をcompilerがConstructorの最初の行に用意する。(つまり最も最初に呼ばれるコードはObjectクラスのconstructorという事になる。) <br>
+
+**Case1.java**<br>
+```
+```
