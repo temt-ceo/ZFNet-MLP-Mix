@@ -26,8 +26,8 @@ public classs SimpleLocation // class名は必ずファイル名と同じにす�
   }
 }
 ```
-#### ⑴ 次にmember変数もlocal変数もheap memoryの情報のケース
-#### ⑵ List<T> = new ArrayList<T>() や Map = new HashMap()　の説明 (Java "interface" specifies behaviors, not implementation)
+# 次にmember変数もlocal変数もheap memoryの情報のケース
+ - List<T> = new ArrayList<T>() や Map = new HashMap()　の説明 (Java "interface" specifies behaviors, not implementation)
 **ArrayLocation.java**<br>
 ```
 public class ArrayLocation {
