@@ -61,23 +61,28 @@ public class ArrayLocation {
     public void setup() {
       // ...
       Location valLoc = new Location(-38.14f, -73.03f);
-      /* MarkerはJavaDocを見るとInterface キーワードが付いているのでabstract data typeであると分かる。
+      /* MarkerはJavaDocを見るとInterface キーワードが付いているのでabstract data typeであると分かる（c++の.hファイルだけみたいなもの）。
          また、SimplePointMarkerのJavaDocを見ると "All Implemented Interfaces: Marker"と書かれている。
          これは実装されるのはMarkerの機能を持ったものだけなので、new でオブジェクトを作成時に、左辺はMarkerとしても
-         右辺は何かの種類のMarkerであれば何でもよく、そこはMarker自体は気にしない。*/
+         右辺は何かの種類のMarkerであれば何でもよく、そこはMarker自体は気にしない。（実際に.cppファイルの役割を果たすのがinstantiateする右辺のクラスということ。）*/
       Marker val = new SimplePointMarker(valLoc);
       map.addMarker(val);
       
       /* 以下も上記と同じ理由で、ArrayListをparent classであるListでabstract的に受け取っている。 
          そのため右辺はArrayListでもLinkedListでもAttributeListでも
-      　　何でも良いという柔軟性が生まれる。RandomAccessなArrayListはc++のvectorArrayに近い。詳しくはc++の説明を見ること。 */
+      　　何でも良いという柔軟性が生まれる。RandomAccessであるArrayList<T>はc++のvector<T>に近い。詳しくはc++の説明を見ること。
+	 同様にSet<T>とHashSet<T>, TreeSet<T>も同じ理由である。（但し、Mapだけ理由が少し異なる↓）*/
       //List<Marker> markers = new ArrayList<Marker>();
     }
     
     private Map<String, Float> loadLifeExpectancyFromCSV(String fileName) {
 
          /* 以下のConstructor式では、左辺のMapがReference Type, 右辺(HashMapの事)がObject Typeと呼ばれる。
-            Object Typeは機能や実装の詳細部分であり、Reference Typeはそのオブジェクトの動きを表すもの。*/
+            Object Typeは機能や実装の詳細部分であり、Reference Typeはそのオブジェクトの動きを表すもの。
+	    Map<T>, Set<T>, List<T>は全てInterfaceであり、このままではinstantiateできない。
+	    JavaでInterfaceはあくまでClassのblueprintであり引数と返り値以外の中身を持たない（c++の.hファイルみたいなもの）。
+	    -> https://stackoverflow.com/questions/20235118/difference-between-reference-type-and-object-type
+	    */
          Map<String, Float> lifeExpMap = new HashMap<String, Float>();
 
          String[] rows = loadStrings(fileName); // -> String[] processing.core.PApplet.loadStrings(String filename)
@@ -92,6 +97,7 @@ public class ArrayLocation {
 	return lifeExpMap;
     }
     
+    /* 以下は実際にMapを参照しているところ */
     private void shadeCountries() {
         for (Marker marker : countryMarkers) {
             String countryId = marker.getId();
@@ -103,12 +109,23 @@ public class ArrayLocation {
             else {
                 marker.setColor(color(150,150,150));
             }
+	    /*  ↑Mapは以下のようにループさせることも可能(試しにremove試みている)
+	      for (String key: lifeExpByCountry.keySet())
+		  //lifeExpByCountry.remove(key)
+		  //↑これはエラー(.keySet()メソッドは正しく更新されないので次のthreadがconsistency errorを吐く)になるのでこの場合は
+		  // Map<String, Float> lifeExpMap = new HashMap<String, Float>();の部分を
+		  // Map<String, Float> lifeExpMap = new ConcurrencyHashMap<String, Float>();としなければならない。
+		 or 
+	      for (Map.Entry<String, Float> entry: lifeExpByCountry.entrySet()) {
+		  System.out.println(entry.getKey() + ": " + entry.getValue());
+	      }
+	         or
+	      lifeExpByCountry.forEach((k,v) -> System.out.println(k,v)); // Java1.8
+	      // Java1.9ではconstructorも簡単。
+	      Map<String Float> lifeExpByCountry = Map.of("aa", 1.0f, "bb", 2.0f, "cc", 3.0f); // Java1.9
+	    */
         }
     }
-    /*  ↑Mapは以下のようにループさせることも可能(試しにremoveしている)
-      for (String key: lifeExpByCountry.keySet)
-          lifeExpByCountry.remove(key)
-    */
     
 }
 ```
