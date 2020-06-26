@@ -27,7 +27,8 @@ public classs SimpleLocation // class名は必ずファイル名と同じにす�
 }
 ```
 #### ⑴ 次にmember変数もlocal変数もheap memoryの情報のケース
-#### ⑵ List = new ArrayList() や Map = new HashMap()　の説明
+#### ⑵ List<T> = new ArrayList<T>() や Map = new HashMap()　の説明 (Java "interface" specifies behaviors, not implementation)
+(<T> means generic class)<br><br>
 **ArrayLocation.java**<br>
 ```
 public class ArrayLocation {
@@ -64,7 +65,11 @@ public class ArrayLocation {
       /* MarkerはJavaDocを見るとInterface キーワードが付いているのでabstract data typeであると分かる（c++の.hファイルだけみたいなもの）。
          また、SimplePointMarkerのJavaDocを見ると "All Implemented Interfaces: Marker"と書かれている。
          これは実装されるのはMarkerの機能を持ったものだけなので、new でオブジェクトを作成時に、左辺はMarkerとしても
-         右辺は何かの種類のMarkerであれば何でもよく、そこはMarker自体は気にしない。（実際に.cppファイルの役割を果たすのがinstantiateする右辺のクラスということ。）*/
+         右辺は何かの種類のMarkerであれば何でもよく、そこはMarker自体は気にしない。（実際に.cppファイルの役割を果たすのがinstantiateする右辺のクラスということ。）
+	 => UC SanDiegoでは以下のように習う。
+	    Java "interface" specifies behaviors, not implementation. (左辺のReference Typeのこと)
+	    Actual Java class implements List behavior.　(右辺のObject Typeのこと)
+	 */
       Marker val = new SimplePointMarker(valLoc);
       map.addMarker(val);
       
