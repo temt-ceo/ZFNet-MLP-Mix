@@ -72,5 +72,23 @@ public class ArrayLocation {
       　　何でも良いという柔軟性が生まれる。RandomAccessなArrayListはc++のvectorArrayに近い。詳しくはc++の説明を見ること。 */
       //List<Marker> markers = new ArrayList<Marker>();
     }
+    
+    	private Map<String, Float> loadLifeExpectancyFromCSV(String fileName) {
+
+         /* 以下のConstructor式では、左辺のMapがReference Type, 右辺(HashMapの事)がObject Typeと呼ばれる。
+            Object Typeは機能や実装の詳細部分であり、Reference Typeはそのオブジェクトの動きを表すもの。*/
+         Map<String, Float> lifeExpMap = new HashMap<String, Float>();
+
+         String[] rows = loadStrings(fileName);
+         for (String row : rows) {
+             // Reads country name and population density value from CSV row
+             String[] columns = row.split(",");
+             if (columns.length == 6 && !columns[5].equals("..")) {
+                 lifeExpMap.put(columns[4], Float.parseFloat(columns[5]));
+             }
+     }
+
+		return lifeExpMap;
+	}
 }
 ```
