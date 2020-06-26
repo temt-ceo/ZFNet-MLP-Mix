@@ -148,6 +148,7 @@ public class ArrayLocation {
 ## Reference and Object type
  - Reference type => Compile time decisions. <br>
  - Object type => Run time decisions. <br><br>
+
 **Case1.java**<br>
 ```
 // in main
@@ -170,15 +171,15 @@ Public class Faculty extends Person {
   private String id;
   public String getID() {return id;}
 }
-Student s = new Student()
-Person p = new Person()
-Person q = new Person()
-Faculty f = new Faculty()
-Object o = new Faculty()
+Student s = new Student(); // この時 this が constructorに渡される。 (new自体はメモリ割当の働きのみ。その割当てたスペース自体がthisの事。つまりthisとは割り当てられたメモリスペースの事。)
+Person p = new Person();
+Person q = new Person();
+Faculty f = new Faculty();
+Object o = new Faculty();
 
 p = s; //ok
 int m = p.getID(); // 無理(今（一行上の行で）, Person p は Student s を指しているが、CompilerはPersonがgetIDを持っている事を知らないので、以下のように修正が必要)
                    // → int m = ((Student)p).getID(); (Runtime上ではp=sなので普通に取得が可能)
-f = q; // 無理
+f = q; // 無理(こっちはRuntimeエラー。Compileは通る。)
 o = s; // ok
 ```
