@@ -28,7 +28,6 @@ public classs SimpleLocation // class名は必ずファイル名と同じにす�
 ```
 #### ⑴ 次にmember変数もlocal変数もheap memoryの情報のケース
 #### ⑵ List<T> = new ArrayList<T>() や Map = new HashMap()　の説明 (Java "interface" specifies behaviors, not implementation)
-(<T> means generic class)<br><br>
 **ArrayLocation.java**<br>
 ```
 public class ArrayLocation {
@@ -73,11 +72,18 @@ public class ArrayLocation {
       Marker val = new SimplePointMarker(valLoc);
       map.addMarker(val);
       
-      /* 以下も上記と同じ理由で、ArrayListをparent classであるListでabstract的に受け取っている。 
-         そのため右辺はArrayListでもLinkedListでもAttributeListでも
-      　　何でも良いという柔軟性が生まれる。RandomAccessであるArrayList<T>はc++のvector<T>に近い。詳しくはc++の説明を見ること。
-	 同様にSet<T>とHashSet<T>, TreeSet<T>も同じ理由である。（但し、Mapだけ理由が少し異なる↓）*/
+      /* 以下も上記と同じ理由で。RandomAccessであるArrayList<T>はc++のvector<T>に近い。詳しくはc++の説明を見ること。
+      　　またはJavaDoc(https://docs.oracle.com/javase/8/docs/api/)でArrayListの項目を調べると詳細が出てくる。
+	   ※ ArrayListはjava.utilのpackageに入っているので、まずjava.utilをクリック、AbstractListやArrayList等が出てくるのでArrayListをクリックする。
+	 同様にSet<T>とHashSet<T>, TreeSet<T>も同じ理由である。（但し、Mapだけ理由が少し異なる↓）（<T> means generic class.）*/
       //List<Marker> markers = new ArrayList<Marker>();
+      
+      /* 余談だが、Ordered ListであるArrayListではset an element at an indexで以下２通りの方法がある(ArrayListの強みは(c++のvectorのように)expand（拡張）が可能な事)
+        countries[0] = 'a';
+	countries.set(0, 'a'); // <-> countries.get(0);
+	  ※ Lengthを取得する方法も２通りある
+	  int len = countries.length; と int len = countries.size();
+      */
     }
     
     private Map<String, Float> loadLifeExpectancyFromCSV(String fileName) {
