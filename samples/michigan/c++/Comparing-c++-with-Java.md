@@ -91,5 +91,24 @@ public class ArrayLocation {
 
 	return lifeExpMap;
     }
+    
+    private void shadeCountries() {
+        for (Marker marker : countryMarkers) {
+            String countryId = marker.getId();
+            if (lifeExpByCountry.containsKey(countryId)) {
+                float lifeExp = lifeExpByCountry.get(countryId);
+                int colorLevel = (int) map(lifeExp, 40, 90, 10, 255);
+                marker.setColor(color(255-colorLevel, 100, colorLevel));
+            }
+            else {
+                marker.setColor(color(150,150,150));
+            }
+        }
+    }
+    /*  ↑Mapは以下のようにループさせることも可能(試しにremoveしている)
+      for (String key: lifeExpByCountry.keySet)
+          lifeExpByCountry.remove(key)
+    */
+    
 }
 ```
