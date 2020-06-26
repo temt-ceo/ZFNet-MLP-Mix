@@ -1,4 +1,4 @@
-# Memory Models (Drawing Memory Models)
+## Memory Models (Drawing Memory Models)
  - Primitive types(boolean, byte, short, int, long, float, double, char) の6種類
  - Object types(Arrays and vlasses)
 
@@ -26,7 +26,9 @@ public classs SimpleLocation // class名は必ずファイル名と同じにす�
   }
 }
 ```
-# 次にmember変数もlocal変数もheap memoryの情報のケース
+
+
+## member変数もlocal変数もheap memoryの情報のケース
  - List<T> = new ArrayList<T>() や Map = new HashMap()　の説明 (Java "interface" specifies behaviors, not implementation)<br><br>
 **ArrayLocation.java**<br>
 ```
@@ -139,4 +141,44 @@ public class ArrayLocation {
     }
     
 }
+```
+
+
+
+## Reference and Object type
+ - Reference type => Compile time decisions. <br>
+ - Object type => Run time decisions. <br><br>
+**Case1.java**<br>
+```
+// in main
+Person[] p = new Person[3]
+p[0] = new Person();
+p[1] = new Student(); // A Person array CAN store Student and Faculty objects.
+p[2] = new Faculty();
+```
+**Case2.java**<br>
+```
+Public class Person {
+  private String name;
+  public String getName() {return name;}
+}
+Public class Student extends Person {
+  private String id;
+  public String getID() {return id;}
+}
+Public class Faculty extends Person {
+  private String id;
+  public String getID() {return id;}
+}
+Student s = new Student()
+Person p = new Person()
+Person q = new Person()
+Faculty f = new Faculty()
+Object o = new Faculty()
+
+p = s; //ok
+int m = p.getID(); // 無理(今（一行上の行で）, Person p は Student s を指しているが、CompilerはPersonがgetIDを持っている事を知らないので、以下のように修正が必要)
+                   // → int m = ((Student)p).getID(); (Runtime上ではp=sなので普通に取得が可能)
+f = q; // 無理
+o = s; // ok
 ```
