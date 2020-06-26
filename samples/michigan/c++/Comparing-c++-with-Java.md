@@ -185,9 +185,9 @@ o = s; // ok
 ```
 
 ## InheritanceとConstructor
- - ⑴ constructorがクラス内に無い時は自動でcompilerが用意する。extendsキーワードが無い時はextends Objectをcompilerが用意する。 <br>
- - ⑵ constructorの最初の行は this();またはsuper();でなければならない。(this(args), super(args)も考えられる。<br>
-     ※this();は他のConstructorを呼び出す。例えば引数なしのconstructorが呼ばれた時にデフォルトの引数をセットしたい時にthis('default value');のように呼び出す。super()はその先のconstructorにセットされる。)<br>
+ - ⑴ constructorがクラス内に無い時は自動でcompilerが用意する(但し、引数付constructorが存在する時、default(no-argument)constructorは自動で作成されない(c++と一緒))。extendsキーワードが無い時はextends Objectをcompilerが用意する。 <br><br>
+ - ⑵ constructorの最初の行は this();またはsuper();でなければならない。<br>
+     ※this();は他のConstructorを呼び出す。例えば引数なしのconstructorが呼ばれた時にデフォルトの引数をセットしたい時にthis('default value');のように呼び出す。super()はその先のconstructorにセットされる。<br><br>
  - ⑶ ⑵のthis();と super();どちらも無い時はsuper();をcompilerがConstructorの最初の行に用意する。(つまり最も最初に呼ばれるコードはObjectクラスのconstructorという事になる。) <br>
 
 **Case1.java**<br>
