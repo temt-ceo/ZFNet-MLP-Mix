@@ -191,6 +191,14 @@ o = s; // ok
  - ⑶ ⑵のthis();と super();どちらも無い時はsuper();をcompilerがConstructorの最初の行に用意する。(つまり最も最初に呼ばれるコードはObjectクラスのconstructorという事になる。) <br><br>
  - ⑷ ↑はメソッドでも応用可能で、method overriding でparent/childどちらも同じメソッドを有する時に敢えてparentのメソッドを呼びたい時はsuper.methodName();で呼ぶ事ができる。<br>
 
+**Polymorphism.java**<br>
+```
+// in main
+Person p[] = new Person[3];
+p[0] = new Student("Cara", 1234);
+System.out.print(p[0]); // これはPersonのtoStrint()ではなくStudentのtoString()が呼ばれる。(=>Polymorphism)
+```
+
 ## SAMPLE1 (直近の地震をアプレットで表示)
 **EarthquakeCityMap.java**<br>
 ```
