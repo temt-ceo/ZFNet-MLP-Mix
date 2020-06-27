@@ -197,6 +197,8 @@ System.out.print(p[0]); // これはPersonのtoStrint()ではなくStudentのtoS
   2. Runtime時にはobject typeの動きに追随する。
   3. (Subclass)でCastingする事で、compilerはCastingしている方のクラスのメソッドを確認するのでCompile Errorを防ぐ事ができる。
   4. Runtime Error(CastingしたクラスとObjectのクラスが一致しない時など)を防ぐには if (o instanceof ClassName ){} を使う。
+  // 特にPolymorphismの中でややこしいのは以下:
+  5. 上記コードでp[0].status()というPersonにしか無いメソッドを呼びその中でthis.isAsleep()というPersonにもStudentにもあるメソッドを呼んだ場合、StudentのクラスのisAsleepメソッドが呼ばれる。
 */
 ```
 
