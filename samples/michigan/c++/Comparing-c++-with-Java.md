@@ -184,20 +184,28 @@ f = q; // 無理(こっちはRuntimeエラー。Compileは通る。)
 o = s; // ok
 ```
 
-## InheritanceとConstructor
- - ⑴ constructorがクラス内に無い時は自動でcompilerが用意する(但し、引数付constructorが存在する時、default(no-argument)constructorは自動で作成されない(c++と一緒))。extendsキーワードが無い時はextends Objectをcompilerが用意する。 <br><br>
- - ⑵ constructorの最初の行は this();またはsuper();でなければならない。<br>
-     ※this();は他のConstructorを呼び出す。例えば引数なしのconstructorが呼ばれた時にデフォルトの引数をセットしたい時にthis('default value');のように呼び出す。super()はその先のconstructorにセットされる。<br><br>
- - ⑶ ⑵のthis();と super();どちらも無い時はsuper();をcompilerがConstructorの最初の行に用意する。(つまり最も最初に呼ばれるコードはObjectクラスのconstructorという事になる。) <br><br>
- - ⑷ ↑はメソッドでも応用可能で、method overriding でparent/childどちらも同じメソッドを有する時に敢えてparentのメソッドを呼びたい時はsuper.methodName();で呼ぶ事ができる。<br>
-
 **Polymorphism.java**<br>
 ```
 // in main
 Person p[] = new Person[3];
 p[0] = new Student("Cara", 1234);
 System.out.print(p[0]); // これはPersonのtoStrint()ではなくStudentのtoString()が呼ばれる。(=>Polymorphism)
+
+/*
+  "Polymorphism" の要点
+  1. Compilerはreference typeのみ参照する。（そのためreferenct typeに存在しないメソッドを呼ぼうとするとエラーになる）
+  2. Runtime時にはobject typeの動きに追随する。
+  3. (Subclass)でCastingする事で、compilerはCastingしている方のクラスのメソッドを確認するのでCompile Errorを防ぐ事ができる。
+  4. Runtime Error(CastingしたクラスとObjectのクラスが一致しない時など)を防ぐには if (o instanceof ClassName ){} を使う。
+*/
 ```
+
+## InheritanceとConstructor
+ - ⑴ constructorがクラス内に無い時は自動でcompilerが用意する(但し、引数付constructorが存在する時、default(no-argument)constructorは自動で作成されない(c++と一緒))。extendsキーワードが無い時はextends Objectをcompilerが用意する。 <br><br>
+ - ⑵ constructorの最初の行は this();またはsuper();でなければならない。<br>
+     ※this();は他のConstructorを呼び出す。例えば引数なしのconstructorが呼ばれた時にデフォルトの引数をセットしたい時にthis('default value');のように呼び出す。super()はその先のconstructorにセットされる。<br><br>
+ - ⑶ ⑵のthis();と super();どちらも無い時はsuper();をcompilerがConstructorの最初の行に用意する。(つまり最も最初に呼ばれるコードはObjectクラスのconstructorという事になる。) <br><br>
+ - ⑷ ↑はメソッドでも応用可能で、method overriding でparent/childどちらも同じメソッドを有する時に敢えてparentのメソッドを呼びたい時はsuper.methodName();で呼ぶ事ができる。<br>
 
 ## SAMPLE1 (直近の地震をアプレットで表示)
 **EarthquakeCityMap.java**<br>
