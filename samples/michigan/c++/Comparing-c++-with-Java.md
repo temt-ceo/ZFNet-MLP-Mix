@@ -272,8 +272,20 @@ public class EarthquakeCityMap extends PApplet {
 	private void addKey() 
 	{	
 		// Remember you can use Processing's graphics methods here
-		// for( : markers)
-		// this.createMarker(feature)
+		this.fill(255,255,255);
+		this.rect(30, 50, 150, 250);
+		this.textSize(12);
+		this.fill(0, 0, 0);
+		this.text("Earthquake Key", 50, 90);
+		this.text("5.0+ Magnitude", 75, 140);
+		this.text("4.0+ Magnitude", 75, 190);
+		this.text("Below 4.0", 75, 240);
+		this.fill(255, 0, 0);
+		this.ellipse(50, 136, 15, 15);
+		this.fill(255, 255, 0);
+		this.ellipse(50, 186, 10, 10);
+		this.fill(0, 0, 255);
+		this.ellipse(50, 236, 5, 5);
 	}
 
 	//Add main method for running as application
