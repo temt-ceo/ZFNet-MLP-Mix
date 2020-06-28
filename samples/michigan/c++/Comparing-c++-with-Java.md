@@ -143,7 +143,12 @@ public class ArrayLocation {
 }
 ```
 
-
+## InheritanceとConstructor
+ - ⑴ constructorがクラス内に無い時は自動でcompilerが用意する(但し、引数付constructorが存在する時、default(no-argument)constructorは自動で作成されない(c++と一緒))。extendsキーワードが無い時はextends Objectをcompilerが用意する。 <br><br>
+ - ⑵ constructorの最初の行は this();またはsuper();でなければならない。<br>
+     ※this();は他のConstructorを呼び出す。例えば引数なしのconstructorが呼ばれた時にデフォルトの引数をセットしたい時にthis('default value');のように呼び出す。super()はその先のconstructorにセットされる。<br><br>
+ - ⑶ ⑵のthis();と super();どちらも無い時はsuper();をcompilerがConstructorの最初の行に用意する。(つまり最も最初に呼ばれるコードはObjectクラスのconstructorという事になる。) <br><br>
+ - ⑷ ↑はメソッドでも応用可能で、method overriding でparent/childどちらも同じメソッドを有する時に敢えてparentのメソッドを呼びたい時はsuper.methodName();で呼ぶ事ができる。<br>
 
 ## Reference and Object type
  - Reference type => Compile time decisions. <br>
@@ -202,135 +207,5 @@ System.out.print(p[0]); // これはPersonのtoStrint()ではなくStudentのtoS
 */
 ```
 
-## InheritanceとConstructor
- - ⑴ constructorがクラス内に無い時は自動でcompilerが用意する(但し、引数付constructorが存在する時、default(no-argument)constructorは自動で作成されない(c++と一緒))。extendsキーワードが無い時はextends Objectをcompilerが用意する。 <br><br>
- - ⑵ constructorの最初の行は this();またはsuper();でなければならない。<br>
-     ※this();は他のConstructorを呼び出す。例えば引数なしのconstructorが呼ばれた時にデフォルトの引数をセットしたい時にthis('default value');のように呼び出す。super()はその先のconstructorにセットされる。<br><br>
- - ⑶ ⑵のthis();と super();どちらも無い時はsuper();をcompilerがConstructorの最初の行に用意する。(つまり最も最初に呼ばれるコードはObjectクラスのconstructorという事になる。) <br><br>
- - ⑷ ↑はメソッドでも応用可能で、method overriding でparent/childどちらも同じメソッドを有する時に敢えてparentのメソッドを呼びたい時はsuper.methodName();で呼ぶ事ができる。<br>
-
-## SAMPLE1 (直近の地震をアプレットで表示)
-**EarthquakeCityMap.java**<br>
-```
-package module3;
-
-//Java utilities libraries
-import java.util.ArrayList;
-//import java.util.Collections;
-//import java.util.Comparator;
-import java.util.List;
-import processing.core.PApplet;
-import de.fhpotsdam.unfolding.UnfoldingMap;
-import de.fhpotsdam.unfolding.marker.Marker;
-import de.fhpotsdam.unfolding.data.PointFeature;
-import de.fhpotsdam.unfolding.marker.SimplePointMarker;
-import de.fhpotsdam.unfolding.providers.Google;
-import de.fhpotsdam.unfolding.utils.MapUtils;
-import parsing.ParseFeed;
-
-/** EarthquakeCityMap
- * An application with an interactive map displaying earthquake data.
- * Author: UC San Diego Intermediate Software Development MOOC team
- * @author Takashi Tahara
- * Date: June 27, 2020
- * */
-public class EarthquakeCityMap extends PApplet {
-
-	// You can ignore this.  It's to keep eclipse from generating a warning.
-	private static final long serialVersionUID = 1L;
-	// Less than this threshold is a light earthquake
-	public static final float THRESHOLD_MODERATE = 5;
-	// Less than this threshold is a minor earthquake
-	public static final float THRESHOLD_LIGHT = 4;
-	private UnfoldingMap map;
-	//feed with magnitude 2.5+ Earthquakes
-	private String earthquakesURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.atom";
-	
-	public void setup() {
-		size(950, 600, OPENGL);
-		map = new UnfoldingMap(this, 200, 50, 700, 500, new Google.GoogleMapProvider());		
-	    map.zoomToLevel(2);
-	    MapUtils.createDefaultEventDispatcher(this, map);	
-	    List<Marker> markers = new ArrayList<Marker>();
-	    List<PointFeature> earthquakes = ParseFeed.parseEarthquake(this, earthquakesURL);
-		for (PointFeature point : earthquakes) {
-			markers.add(createMarker(point));
-		}
-	    map.addMarkers(markers);
-	}
-
-	private SimplePointMarker createMarker(PointFeature feature)
-	{  
-		SimplePointMarker marker = new SimplePointMarker(feature.getLocation());
-		Object magObj = feature.getProperty("magnitude");
-		float mag = Float.parseFloat(magObj.toString());
-	    int yellow = color(255, 255, 0);
-	    int blue = color(0, 0, 255);
-		int red = color(255, 0, 0);
-		if (mag >= THRESHOLD_MODERATE) {
-			marker.setColor(red);
-			marker.setRadius(15.0f);
-		} else if (mag >= THRESHOLD_LIGHT) {
-			marker.setColor(yellow);
-			marker.setRadius(10.0f);
-		} else {
-			marker.setColor(blue);
-			marker.setRadius(5.0f);
-		}
-	    return marker;
-	}
-	
-	public void draw() {
-	    background(10);
-	    map.draw();
-	    addKey();
-	}
-
-	// helper method to draw key in GUI
-	private void addKey() 
-	{	
-		// Remember you can use Processing's graphics methods here
-		this.fill(255,255,255);
-		this.rect(30, 50, 150, 250);
-		this.textSize(12);
-		this.fill(0, 0, 0);
-		this.text("Earthquake Key", 50, 90);
-		this.text("5.0+ Magnitude", 75, 140);
-		this.text("4.0+ Magnitude", 75, 190);
-		this.text("Below 4.0", 75, 240);
-		this.fill(255, 0, 0);
-		this.ellipse(50, 136, 15, 15);
-		this.fill(255, 255, 0);
-		this.ellipse(50, 186, 10, 10);
-		this.fill(0, 0, 255);
-		this.ellipse(50, 236, 5, 5);
-	}
-
-	//Add main method for running as application
-	public static void main (String[] args) {
-		PApplet.main(new String[] {"module3.EarthquakeCityMap"});
-	}
-}
-```
-**.classpath**<br>
-```
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="data"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="lib" path="lib/core.jar"/> // processing.coreのjar file
-	<classpathentry kind="lib" path="lib/gluegen-rt.jar"/>
-	<classpathentry kind="lib" path="lib/jogl-all.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="unfolding-app-template/libNative"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/log4j-1.2.15.jar"/>
-	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.7.2.jar"/>
-	<classpathentry kind="lib" path="lib/json4processing.jar"/>
-	<classpathentry kind="lib" path="lib/libTUIO.jar"/>
-	<classpathentry kind="lib" path="lib/unfolding.0.9.7-uscd.jar"/>
-	<classpathentry kind="output" path="build"/>
-</classpath>
-```
+## User Events
+ - <br><br>
