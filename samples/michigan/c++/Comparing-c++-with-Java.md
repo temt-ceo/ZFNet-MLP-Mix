@@ -207,5 +207,13 @@ System.out.print(p[0]); // これはPersonのtoStrint()ではなくStudentのtoS
 */
 ```
 
-## User Events
+## User Events (Event-Driven code)
+ - MouseListenerとKeyListenerはInterfaceなので、提供するjarなどのclassファイル内でデフォルトの動きが実装がされている。それをoverridingする事でイベントハンドリング処理が書ける。<br><br>
+
+## Search
+ - linear search: <br><br>
+ - binary search: <br><br>
+ - Why binary search is better than linear search: <br><br>
+
+## Sort
  - <br><br>
