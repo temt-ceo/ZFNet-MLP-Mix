@@ -168,8 +168,8 @@ public class ArrayLocation {
  　　static final 変数: static{}ブロックの中で１度だけ設定できる <br>
  　　final メソッド: overrideできないメソッド <br>
  　　final class: extendsできないclass <br>
- 　　static 変数: クラス変数（継承したサブクラスがアクセスできる変数) <br>
- 　　private 変数: クラス変数にあらず（継承したサブクラスがアクセスできない変数) <br><br>
+ 　　static 変数: staticメソッドからダイレクトに参照できるクラス変数（継承したサブクラスがアクセスできる変数)（動きが基本はインスタンス経由なのでprotectedなどのキーワードはつけない。） <br>
+ 　　private 変数: 継承したサブクラスが直接アクセスできない変数 <br><br>
  具体的な違いは..<br>
  - Abstract classはメソッドの中身も記載できるがInterfaceは出来ない。 <br>
  - Abstract classはpublic/private,static,finalキーワードの変数を自由に使用できるがInterfaceはpublic static finalしか使えない(=private変数が持てない。)。 <br>
