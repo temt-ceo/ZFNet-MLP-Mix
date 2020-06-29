@@ -161,7 +161,7 @@ public class ArrayLocation {
  - Interface: <br>
  　　Interfaceはcodeの設計書を提供する。(c++の.hファイルのようなもの) <br>
  　　Interfaceはconstantsとabstractメソッドしか持てない。(何もキーワードをつけなければpublic static finalの定数となる。) <br>
-    Interfaceはpublic static final(=constant)しか使えないので、Constantsに何もつけなくてもpublic static final変数(=constant)になる
+ 　　Interfaceはpublic static final(=constant)しか使えないので、Constantsに何もつけなくてもpublic static final変数(=constant)になる<br>
  　　↑の特徴により、純粋にAbstractなクラスを継承してオブジェクトの継承ツリーを構成したい時に利用する。 <br><br>
  - 用語説明:<br>
  　　final 変数: 変更できない変数（=constant）(値を設定しなかった時はConstructorの中で１度だけ設定できる) <br>
