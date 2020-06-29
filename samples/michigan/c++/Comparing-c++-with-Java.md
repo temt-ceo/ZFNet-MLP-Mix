@@ -211,9 +211,42 @@ System.out.print(p[0]); // これはPersonのtoStrint()ではなくStudentのtoS
  - MouseListenerとKeyListenerはInterfaceなので、提供するjarなどのclassファイル内でデフォルトの動きが実装がされている。それをoverridingする事でイベントハンドリング処理が書ける。<br><br>
 
 ## Search
- - linear search: <br><br>
+ - linear search: <br>
+    　Airport ap1 = new Airport("Montreal", "Canada", "YMX"); <br>
+    　Airport ap2 = new Airport("Lagos", "Nigeria", "LOS"); <br>
+    　Airport ap3 = new Airport("Essen", "Germany", "ESS"); <br>
+    　Airport ap4 = new Airport("Chicago", "USA", "ORD"); <br>
+    　Airport ap5 = new Airport("Beijing", "China", "PEK"); <br>
+    　Airport ap6 = new Airport("Sydney", "Australia", "SYD"); <br>
+    　Airport ap7 = new Airport("Agra", "India", "AGR"); <br>
+    　Airport[] airports = new ArrayList{ap1, ap2, ap3, ap4, ap5, ap6, ap7}; <br>
+    　Loop to Find Beijing index 0 1 ->.. 4<br><br>
  - binary search: <br><br>
  - Why binary search is better than linear search: <br><br>
 
+```
+// toFind is a city name by linear search
+public static String findAirportCode (String toFind, Airport[] airports)
+{
+  String airportCode = "";
+  for (Airport apObj : airports) {
+    /* 
+      '=='は、String objectのメモリ上の参照先が同じかどうかを比較する。
+      純粋に文字そのものが同一かどうかは'=='ではなく、str.equals(str)となる。
+      Stringに限らず、オブジェクト同士を比較する時はメモリ参照先を比較する'=='ではなく.equals()を使用する。
+    */
+    if (toFind.equals(apObj.getCity()) {
+      airportCode = apObj.getCode();
+      break;
+    }
+  }
+  if (airportCode == "") {
+    return null;
+  } else {
+    return airportCode;
+  }
+}
+
+```
 ## Sort
  - <br><br>
