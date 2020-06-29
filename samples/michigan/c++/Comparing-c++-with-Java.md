@@ -222,7 +222,10 @@ System.out.print(p[0]); // これはPersonのtoStrint()ではなくStudentのtoS
     　Airport[] airports = new ArrayList{ap1, ap2, ap3, ap4, ap5, ap6, ap7}; <br>
     　Loop to Find Beijing index 0 1 ->.. 4<br><br>
  - binary search: <br><br>
- - Why binary search is better than linear search: <br><br>
+    　// ListではなくDictionaryを使用する。（keyによりTree構造でソートされるので。） <br>
+    　2分割して目的地まで比較しながら探索する<br><br>
+ - Why binary search is better than linear search: 
+    　log2nだけBinary Searchが早い。（1Mのデータがある時、lineary searchが最大でn(=1M)処理が必要に対して、binary searchは最大でlog2n(=20)で処理が終わる）<br><br>
 
 ```
 // toFind is a city name by linear search
@@ -246,7 +249,26 @@ public static String findAirportCode (String toFind, Airport[] airports)
     return airportCode;
   }
 }
-
+```
+```
+// Binary Search Algorithm
+public static String findAirportCode (String toFind, Airport[] airports)
+{
+  initialize low = 0; high = size of list -1; int mid;
+  while (low <= high) {
+    mid = (high+low)/2;
+    // (String)str1.compareTo(str2)は辞書学的に(Unicodeの大小で)比較し、同じであれば0を返す。str1の最初の文字が辞書学的にstr2より大きければ正の数を、そうでなければ負の数を返す。
+    int compare = toFind.compareTo(airports[mid].getCity());
+    if (compare < 0){
+      high = mid - 1
+    } else if (compare > 0){
+      low = mid + 1
+    } else {
+      return airports[mid].getCode();
+    }
+  }
+  return null
+}
 ```
 ## Sort
  - <br><br>
