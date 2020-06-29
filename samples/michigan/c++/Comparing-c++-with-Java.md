@@ -296,4 +296,10 @@ public static String findAirportCode (String toFind, Airport[] airports)
 }
 ```
 ## Sort
+ - Selection Sort: 一番値が低いelementを探し一番先頭に持ってくる。これを繰り返す。(パフォーマンス最悪。ダメな例)<br>
+    　For each position i from 0 to length-2 { swap the smallest element to i position; }<br>
+ -  Sort: <br>
+    　For each <br>
+ -  Sort: <br>
+    　For each <br>
  - <br><br>
