@@ -154,15 +154,17 @@ public class ArrayLocation {
  - Reference type => Compile time decisions. <br>
  - Object type => Run time decisions. <br><br>
 
-## Abstract class VS Interface
+## Abstract classes and Interfaces
  - Abstraction: <br>
  　　Abstractionは大事な内容はメソッドを中身まで記載するが、そうでない場合はメソッドの宣言だけで中身を隠している。 <br>
- 　　↑の仕様を満たすため、よく変数などは前もって定義しておき、動きの内容は実装者に任せるようなクラスに使われる。 <br>
+ 　　↑の仕様を満たすため、共通コードなどは前もって定義しておき、動きの内容は実装者に任せるようなクラスに使われる。 <br>
  - Interface: <br>
  　　Interfaceはcodeの設計書を提供する。(c++の.hファイルのようなもの) <br>
  　　Interfaceはconstantsとabstractメソッドしか持てない。(何もキーワードをつけなければpublic static finalの定数となる。) <br>
  　　Interfaceはpublic static final(=constant)しか使えないので、Constantsに何もつけなくてもpublic static final変数(=constant)になる<br>
- 　　↑の特徴により、純粋にAbstractなクラスを継承してオブジェクトの継承ツリーを構成したい時に利用する。 <br><br>
+ 　　↑の特徴により、純粋にAbstractなクラスを継承してオブジェクトの継承ツリーを構成したい時に利用する。 <br>
+ 　　c++の < や > のcompare関連のメソッドもComparable<E> というinterfaceで用意されている(メソッドはcompareTo)ので継承(implements keyword)して実装できる。 <br>
+ - どちらもそのままではインスタンスを作れない。(Class内のいずれかのメソッドがabstractであればabstract classでなければならず、subclassでoverrideが必要) <br><br>
  - 用語説明:<br>
  　　final 変数: 変更できない変数（=constant）(値を設定しなかった時はConstructorの中で１度だけ設定できる) <br>
  　　static final 変数: static{}ブロックの中で１度だけ設定できる <br>
