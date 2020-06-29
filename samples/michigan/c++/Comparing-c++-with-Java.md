@@ -154,6 +154,29 @@ public class ArrayLocation {
  - Reference type => Compile time decisions. <br>
  - Object type => Run time decisions. <br><br>
 
+## Abstract class VS Interface
+ - Abstraction: <br>
+ 　　Abstractionは大事な内容はメソッドを中身まで記載するが、そうでない場合はメソッドの宣言だけで中身を隠している。 <br>
+ 　　↑の仕様を満たすため、よく変数などは前もって定義しておき、動きの内容は実装者に任せるようなクラスに使われる。 <br>
+ - Interface: <br>
+ 　　Interfaceはcodeの設計書を提供する。(c++の.hファイルのようなもの) <br>
+ 　　Interfaceはconstantsとabstractメソッドしか持てない。(何もキーワードをつけなければpublic static finalの定数となる。) <br>
+    Interfaceはpublic static final(=constant)しか使えないので、Constantsに何もつけなくてもpublic static final変数(=constant)になる
+ 　　↑の特徴により、純粋にAbstractなクラスを継承してオブジェクトの継承ツリーを構成したい時に利用する。 <br><br>
+ - 用語説明:<br>
+ 　　final 変数: 変更できない変数（=constant）(値を設定しなかった時はConstructorの中で１度だけ設定できる) <br>
+ 　　static final 変数: static{}ブロックの中で１度だけ設定できる <br>
+ 　　final メソッド: overrideできないメソッド <br>
+ 　　final class: extendsできないclass <br>
+ 　　static 変数: クラス変数（継承したサブクラスがアクセスできる変数) <br>
+ 　　private 変数: クラス変数にあらず（継承したサブクラスがアクセスできない変数) <br><br>
+ 具体的な違いは..<br>
+ - Abstract classはメソッドの中身も記載できるがInterfaceは出来ない。 <br>
+ - Abstract classはpublic/private,static,finalキーワードの変数を自由に使用できるがInterfaceはpublic static finalしか使えない(=private変数が持てない。)。 <br>
+ - Abstract classはabstract classとclassを継承できるがInterfaceはinterfaeしか継承出来ない。 <br>
+ - Abstract classは１つしかclassを継承できないがInterfaceはinterfaeを複数継承出来る。 <br>
+ - Abstract classのメソッドはabstractキーワードが必須(メソッドの中身を書いているものは書かない。)だがInterfaceはabstractキーワードはoptional。(全部abstractだから) <br><br>
+
 **Case1.java**<br>
 ```
 // in main
@@ -221,10 +244,10 @@ System.out.print(p[0]); // これはPersonのtoStrint()ではなくStudentのtoS
     　Airport ap7 = new Airport("Agra", "India", "AGR"); <br>
     　Airport[] airports = new ArrayList{ap1, ap2, ap3, ap4, ap5, ap6, ap7}; <br>
     　Loop to Find Beijing index 0 1 ->.. 4<br><br>
- - binary search: <br><br>
+ - binary search: <br>
     　// ListではなくDictionaryを使用する。（keyによりTree構造でソートされるので。） <br>
     　2分割して目的地まで比較しながら探索する<br><br>
- - Why binary search is better than linear search: 
+ - Why binary search is better than linear search: <br>
     　log2nだけBinary Searchが早い。（1Mのデータがある時、lineary searchが最大でn(=1M)処理が必要に対して、binary searchは最大でlog2n(=20)で処理が終わる）<br><br>
 
 ```
