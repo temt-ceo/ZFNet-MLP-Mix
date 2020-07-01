@@ -140,6 +140,8 @@ public class ArrayLocation {
         }
     }
     /* 以下はMapを使ってよく書くデバッグコード */
+    import java.util.Map;
+    import java.util.HashMap;
     Map<String, Integer> intMap = new HashMap<String, Integer>();
     for (Marker country : countryMarkers) {
        intMap.put( (String)country.getProperty("name"), 0 );
