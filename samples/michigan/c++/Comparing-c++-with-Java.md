@@ -178,7 +178,7 @@ public class ArrayLocation {
  　　Interfaceはconstantsとabstractメソッドしか持てない。(何もキーワードをつけなければpublic static finalの定数となる。) <br>
  　　Interfaceはpublic static final(=constant)しか使えないので、Constantsに何もつけなくてもpublic static final変数(=constant)になる<br>
  　　↑の特徴により、純粋にAbstractなクラスを継承してオブジェクトの継承ツリーを構成したい時に利用する。 <br>
- 　　c++の < や > のcompare関連のメソッドもComparable<E> というinterfaceで用意されている(メソッドはcompareTo)ので継承(implements keyword)して実装できる。 <br>
+ 　　c++の < や > のcompare関連のメソッドもComparable<E> というinterfaceで用意されている(メソッドはcompareTo)ので継承(Interfaceを継承する時はextendsではなくimplementsを使用する)して実装できる。 <br>
  - どちらもそのままではインスタンスを作れない。(Class内のいずれかのメソッドがabstractであればabstract classでなければならず、subclassでoverrideが必要) <br><br>
  - 用語説明:<br>
  　　final 変数: 変更できない変数（=constant）(値を設定しなかった時はConstructorの中で１度だけ設定できる) <br>
