@@ -139,7 +139,20 @@ public class ArrayLocation {
 	    */
         }
     }
-    
+    /* 以下はMapを使ってよく書くデバッグコード */
+    Map<String, Integer> intMap = new HashMap<String, Integer>();
+    for (Marker country : countryMarkers) {
+       intMap.put( (String)country.getProperty("name"), 0 );
+    }
+    for (PointFeature quake : earthquakes) {
+        String country = (String)quake.getProperty("country");
+        if (country != null && intMap.get(country) != null ) {
+            intMap.put(country, intMap.get(country) + 1);
+        }
+    }
+    for (Map.Entry<String, Integer> entry : intMap.entrySet()) {
+        System.out.println(entry.getKey() + " : " + entry.getValue());
+    }    
 }
 ```
 
