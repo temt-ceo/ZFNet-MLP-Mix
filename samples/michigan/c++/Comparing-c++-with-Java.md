@@ -313,8 +313,9 @@ public static String findAirportCode (String toFind, Airport[] airports)
 ## Sort
  - Selection Sort: 一番値が低いelementを探し一番先頭に持ってくる。これを繰り返す。(パフォーマンス最悪。ダメな例)<br>
     　For each position i from 0 to length-2 { swap the smallest element to i position; }<br>
- -  Sort: <br>
-    　For each <br>
+ - Insertion Sort: 行ったり来たりするソート。（隣り合う２つに逆順が見つかるたびにindex=1まで戻る。パフォーマンス悪い。但しSelection Sortと違ってソートされた配列に対しては滅法早い。）<br>
+      indexの0から順に隣り合う２つを比較し、swapが発生したら１つ前のindexも比較する。これをindex=1まで続ける。<br>
+    　For each position position from 1 to length-1 { currInd = position; while (currInd>0 && val[currInd] < val[currInd-1]) {swap(); currInd = currInd-1;} }<br>
  -  Sort: <br>
     　For each <br>
  - <br><br>
