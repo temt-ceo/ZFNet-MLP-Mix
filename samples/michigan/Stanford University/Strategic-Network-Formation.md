@@ -153,15 +153,6 @@ d) 0.5, 1
    σ + ((n-2)σ^2)/2 = 0.5 + (5 - 2)*0.25 / 2 = 0.5 + 0.75 / 2 = 0.875 (<- upper bound)
    Then, b
 
-【Pairwise Stability in the Connections Model】
-Consider a symmetric version of the Connections Model in a society with n = 7 people and σ = 0.5.
-For which of the following costs c are star networks pairwise stable?
-a) 0.8
-b) 0.4
-c) 0.6
-d) 0.2
--> σ - σ^2 < c < σ ...  σ - σ^2 = 0.25. So.. 0.25 < c < 0.5. Then b.
-
 【Efficiency in the Connections Model】
 Consider a symmetric version of the Connections Model in a society with n=7 people and with σ = 0.5 and c=1.
 Which of the following describes the efficient network architectures?
@@ -170,6 +161,15 @@ b) Star networks involving all nodes
 c) The empty network
 d) None of the above
 -> d. In this case, σ-σ^2 = 0.25 and σ + (n-2)σ^2/2 = 1.125, and c=1 is in between of those two. Therefore the star networks are (uniquely) efficient.
+
+【Pairwise Stability in the Connections Model】
+Consider a symmetric version of the Connections Model in a society with n = 7 people and σ = 0.5.
+For which of the following costs c are star networks pairwise stable?
+a) 0.8
+b) 0.4
+c) 0.6
+d) 0.2
+-> σ - σ^2 < c < σ ...  σ - σ^2 = 0.25. So.. 0.25 < c < 0.5. Then b.
 
 【Externalities】
 In the picture, consider adding a link 12 to the network g = {13, 24}.
