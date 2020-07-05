@@ -137,8 +137,16 @@ Strategic Formation Models(Modeling Stability and Dynamics)
      - coordinated deviations
    - Nash Stability : if and only if no player wants to delete some set of his or her links = Positive Network(NegativeがNetwork内に無い)
    　リンクを切ることでよりポジティブなネットワークができる時はNash Stabeでは無い
-   
-
+ - Dynamic Strategic Network Formation
+   - Natural dynamics: link is picked at random
+     - added if it benefits both players(at least one)
+     - deleted if it benefits either to delete it
+   - Will find pairwise stable networks
+ - Improving path: Natural dynamics(↑)の理論によりpathを追加する。（Negativeになるようにはpathは追加削除されない）
+   -> この法則で行き着いた先がPaiwise Nash Stableとなる。
+   ε: ネットワークにpathがつか削除される確率。 1 - ε: ネットワークがそのまま変化なしの確率
+ -  
+ 
 ```
 # EXERCISE
 ```
@@ -261,4 +269,42 @@ c) 1(3) 2(3) 3(3)
 d) 1(1)-2(1) 3(2)
 -> c (Network c is both Pairwise stable and Nash stable, so it is Pairwise Nash stable. Network b is only Pairwise stable but not Nash stable.)
   Pairwise Nash Stableとあるのでリンクを切れるだけ切った最もPositiveな状態を見つけ出す。
+
+【Dynamic Strategic Network】
+Consider connetions model with
+δ - δ^2 < c < δ (スター型が一番安定), and the following process described by A. Watts(2001):
+・ a link is picked uniformly at random;
+・ the link is added is that weakly benefits both player;
+・ go back to the first bullet point and repeat;
+Which statements are true? (This is to guide through the Proposition)
+a) When the above process reaches a star network, it may still move forward to other networks.
+b) Star networks involving all nodes are efficient.
+c) Star networks involving all nodes are pairwise stable.
+d) As the number of nodes n grows, the probability that the above process stops at a star network foes to 0.
+-> b, c, d (= Once a process hits a star, it will stop there.)
+
+【Improving path ①】
+Consider all undirected networks with 3 nodes as depicted in the picture.
+In which row(s) are the network Pairwise Nash stable?
+a) 1(0) 2(0) 3(0)
+b) 1(-1)-2(-1) 3(0), 1(0) 2(-1)-3(-1), 2(0) 3(-1)-1(-1)  <- 他に移行する余地あり
+c) 1(1)-2(1)-3(1), 2(1)-1(1)-3(1), 1(1)-3(1)-2(1)
+d) 1(2)-2(2)-3(2)
+-> a, d
+
+【Improving path ②】
+Consider the discussion of improving paths with error ε = 0.05 on networks with 3 nodes (as described in this video, 
+with utilities as a function of the network depicted in the picture).
+Stariting from "the green network" in the middle of third row, what is the probability of staying at the same network after one step?
+1(0) 2(0) 3(0)
+1(-1)-2(-1) 3(0), 1(0) 2(-1)-3(-1), 2(0) 3(-1)-1(-1)  <- 他に移行する余地あり
+2(1)-1(1)-3(1), 1(1)-2(1)-3(1)<==="the green network", 1(1)-3(1)-2(1)
+1(2)-2(2)-3(2)
+a) 0
+b) 1
+c) 0.15
+d) 0.65
+-> d (グリーンの状態は一番下の形態にしか変異できないので、there is a chance(1 - ε) / 3 to move to the nwtwork with 3 links and a chance ε/3 to move to
+      either (left or right) networks with 2 links. Thus the probability of staying is 1 - (1 - ε)/3 - 2ε/3 = 0.65.)
+
 ```
