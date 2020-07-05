@@ -48,6 +48,7 @@ Efficiency
 ```
 # Connections Model
 ```
+↓↓↓Efficiencyの説明。
 Strategic Network(損得のネットワーク)が以下にして結合していくかをモデリングする
  - low cost: c < σ - σ^2      complete network(全てが全てと結びつく)が一番efficient
  - medium cost: σ - σ^2 < c < σ + ((n-2)σ^2)/2     star networkが一番efficient
@@ -144,9 +145,25 @@ Strategic Formation Models(Modeling Stability and Dynamics)
    - Will find pairwise stable networks
  - Improving path: Natural dynamics(↑)の理論によりpathを追加する。（Negativeになるようにはpathは追加削除されない）
    -> この法則で行き着いた先がPaiwise Nash Stableとなる。
-   ε: ネットワークにpathがつか削除される確率。 1 - ε: ネットワークがそのまま変化なしの確率
- -  
+   ε: ネットワークのpathが変更れる確率(Negativeにも動く)。 1 - ε: ネットワークがそのまま変化なしの確率
+ - Directed Network Formation
+   - Nash Stable: (Two way flow)
+     - low cost: c < σ - σ^2      two-way complete network are Nash Stabile
+     - medium low cost: σ - σ^2 < c < σ            all star networkare Nash Stabile, plus others
+     - medium high cost: σ < c < σ + ((n-2)σ^2)/2  peripherally sponsored star networks are Nash Stabileではない
+     - efficient and stable can be empty(high costでは無い): σ - σ^2 < c < 2(σ - σ^2)   complete is efficient, not equilibrium
+   - n-player "wheels" if c < n-1   otherwise empty.
+
+Hybrid Network Models(テクニック)
+ Types: i 非含有 {1,....,K}
  
+ si : # of same type friends
+ di : # of different type friends
+ Ui = (si + γi*di)^α   utility to type i
+   γ is the preference bias
+   α < 1 captures diminishing returns.
+
+
 ```
 # EXERCISE
 ```
@@ -306,5 +323,25 @@ c) 0.15
 d) 0.65
 -> d (グリーンの状態は一番下の形態にしか変異できないので、there is a chance(1 - ε) / 3 to move to the nwtwork with 3 links and a chance ε/3 to move to
       either (left or right) networks with 2 links. Thus the probability of staying is 1 - (1 - ε)/3 - 2ε/3 = 0.65.)
+
+【Directed Network Formation ①】
+Consider a network formation game with directed networks on 2 nodes and with resulting utilities depicted in the picture as a function
+of the directed links formed (with arrows pointing from the node that formed the link to the node at whivh it directed the link).
+Which networks are the outcome of Nash equilibrium?
+a) 1(0)   2(0)
+b) 1(1)-->2(2)
+c) 1(2)<--2(1)
+d) 1(1)<->2(1)
+-> b,c
+
+【Directed Network Formation ②】
+Consider the directed connections model with no decay (as described in this video)
+What is the "payoff to each nodes" in the wheel network in the picture, with n=5 and c=3?
+Wheels netowrk(1->2->3->4->5->1)
+a) 3
+b) 1
+c) 2
+d) 5
+-> b (The total payoff is (n-1)-c = 1 )
 
 ```
