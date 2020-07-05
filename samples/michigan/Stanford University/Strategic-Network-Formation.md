@@ -2,7 +2,12 @@
  - δ -- Benefit(友人と結びつくことで得られる利益（友人の友人はδ^2, 友人の友人の友人はδ^3。δは１未満。）)
  - c -- Cost(結びつくのにかかるコスト（直接結びつく(path=1)友人が2人いれば2c。)
  - u -- δとcの合計(人が多いほど合計のcは大きくなるのでスター型の方がcomplete型（リンクが多数）よりuが高くなることもある。)<br>
- 　u = Σij in g[1/di + 1/dj + 1/(di*dj)]  (u: utility)
+ 　u = Σij in g[1/di + 1/dj + 1/(di*dj)]  (u: utility)(F: frequency)
+ 
+ - Pairwise Stable .. リンクを多くても１つ切ってそれ以上安定な状態にはなれない状態。（リンクを切ってマイナスがより大きくなるようならその前の状態がPairwise Stable）
+
+ - Nash Stable .. リンクを幾つか切ってでも安定する状態（必ずすべてのノードが0以上のutility）
+ 
 ```
 Random Network Modelsより個々を選択する向きがある（経済的な事等）
  - 0 <= σ <= 1 a benefit parameter for i from connection between i and j
@@ -121,8 +126,19 @@ Models that marry strategic with random are needed
 ```
 # SUGMS and Strategic Network Formation
 ```
-Transfers
- - 
+Estimating Random Networks
+ - pairwise stability : links form if and only if
+    ε[ij] < U(Xi,Xj) and ε[ji] < U(Xj,Xi)
+    U(Xi,Xj) - ε[ij] ... utility of a link between i, j
+Strategic Formation Models(Modeling Stability and Dynamics)
+ - Refining pairwise stability
+   - Beyond Pairwise Stability
+     - multiple links by individuals
+     - coordinated deviations
+   - Nash Stability : if and only if no player wants to delete some set of his or her links = Positive Network(NegativeがNetwork内に無い)
+   　リンクを切ることでよりポジティブなネットワークができる時はNash Stabeでは無い
+   
+
 ```
 # EXERCISE
 ```
@@ -227,4 +243,22 @@ d) Average degree increases proportionally to the total number of nodes, as the 
 -> b,c
   b: The features of islands connections model include high clustering, low diameter, and regular degree (which does not increase dramatically as the number of islands increase).
 
+【Nash Stabe ①】
+Consider the networks with 3 nodes and the utilities as shown in the picture.
+Which networks are Nash Stable?
+a) 1(2)-2(1)-3(2)
+b) 1(1)-2(1)-3(1) (トライアングル)
+c) 1(0) 2(0) 3(0)
+d) 1(1)-2(1) 3(0)
+-> a,c,d (bはまだリンクが切れる余地がある。)
+
+【Nash Stabe ②】
+Consider the networks with 3 nodes as shown in the picture.
+which networks are Pairwise Nash Stable?
+a) 1(2)-2(1)-3(2)
+b) 1(1.5)-2(1.5)-3(1.5) (トライアングル)
+c) 1(3) 2(3) 3(3)
+d) 1(1)-2(1) 3(2)
+-> c (Network c is both Pairwise stable and Nash stable, so it is Pairwise Nash stable. Network b is only Pairwise stable but not Nash stable.)
+  Pairwise Nash Stableとあるのでリンクを切れるだけ切った最もPositiveな状態を見つけ出す。
 ```
