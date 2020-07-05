@@ -1,4 +1,8 @@
 # Strategic Network Formation
+ - δ -- Benefit(友人と結びつくことで得られる利益（友人の友人はδ^2, 友人の友人の友人はδ^3。δは１未満。）)
+ - c -- Cost(結びつくのにかかるコスト（直接結びつく(path=1)友人が2人いれば2c。)
+ - u -- δとcの合計(人が多いほど合計のcは大きくなるのでスター型の方がcomplete型（リンクが多数）よりuが高くなることもある。)<br>
+ 　u = Σij in g[1/di + 1/dj + 1/(di*dj)]  (u: utility)
 ```
 Random Network Modelsより個々を選択する向きがある（経済的な事等）
  - 0 <= σ <= 1 a benefit parameter for i from connection between i and j
@@ -42,13 +46,13 @@ Efficiency
 Strategic Network(損得のネットワーク)が以下にして結合していくかをモデリングする
  - low cost: c < σ - σ^2      complete network(全てが全てと結びつく)が一番efficient
  - medium cost: σ - σ^2 < c < σ + ((n-2)σ^2)/2     star networkが一番efficient
- - high cost: σ + ((n-2)σ^2)/2 < c                 empty networkが一番efficient
+ - high cost: σ + ((n-2)σ^2)/2 < c                 empty network（結び付きの無い状態）が一番efficient
  
 Pairwise Stability in the Connections Model
  - low cost: c < σ - σ^2      complete network(全てが全てと結びつく)がPairwise Stabile
  - medium low cost: σ - σ^2 < c < σ            star networkもそうだし、他のもPairwise Stabile
  - medium high cost: σ < c < σ + ((n-2)σ^2)/2  star networkはPairwise Stabileではない
- - high cost: σ + ((n-2)σ^2)/2 < c                 empty networkがPairwise Stabile
+ - high cost: σ + ((n-2)σ^2)/2 < c                 empty network（結び付きの無い状態）がPairwise Stabile
 ```
 # Externalities and the Coauthor Model
 ```
@@ -114,6 +118,11 @@ Models that marry strategic with random are needed
    - allow for welfare/efficiency analysis
    - take model to data and fit observed networks
    - do so across applications
+```
+# SUGMS and Strategic Network Formation
+```
+Transfers
+ - 
 ```
 # EXERCISE
 ```
