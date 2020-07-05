@@ -163,6 +163,8 @@ Hybrid Network Models(テクニック)
    γ is the preference bias
    α < 1 captures diminishing returns.
 
+モデルはパターンを求めるものであり、F値（やRSS）を求めることで、パターンの類似性具合などが求められる。
+そのパターンを活用することでModelの効果は発揮できる。
 
 ```
 # EXERCISE
