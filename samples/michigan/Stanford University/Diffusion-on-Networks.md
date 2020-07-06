@@ -1,7 +1,8 @@
 # Diffusion(拡散) on Networks
- - E[d] -- Expected Degreeの意味.
+ - E[d] -- Expected Degreeの意味.(公式の"d"と置き換えられる)
  - nonzero steady state -- sustainableなinfectionがある状態（λ>0）
  - low density no condition (degreeが少ないと感染は少ない)
+ - θ: あなたがランダムに会う人が感染している確率(0~1,0:感染無し)。これが一定値あることをsteady state.
 # Networks and Behavior
 ```
 How does networs structure impact behavior?
@@ -74,6 +75,10 @@ nonzero steady stateをネットワークが持つためには -- υ/δ(=λ) > E
 　上記を満たす為に通常のネットワークで必要なのは -- υ/δ(=λ) > 1/E[d] (=> E[d]==E[d^2])
 　上記を満たす為にE-Rネットワークで必要なのは -- υ/δ(=λ) > 1/(1+E[d])
 　上記を満たす為にpower-lowネットワークで必要なのは -- E[d^2] diverges(always have a nonzero steady state)(=> λ>0)
+
+θ = Σ P(d)*λθ*d^2 / ((λθ*d + 1) * E[d])
+P（d）: 予想されるdegreeの確率
+
 ```
 # EXERCISE
 ```
@@ -137,5 +142,18 @@ does there exist a nonzero steady-state of θ?
 a) Yes
 b) No
 -> a (Notice υ/δ(=λ) = 1 > E[d]/E[d^2] = 0.6)
+
+【Solving the SIS Model】
+Consider three degree distributions, each of them places equal liklihood on a three different degrees.
+・ P1(d) is such that degrees are in {1,3,5}, each has probability 1/3;
+・ P2(d) is such that degrees are in {2,3,4}, each has probability 1/3;
+・ P3(d) is such that degrees are in {1,2,3}, each has probability 1/3;
+Compare the corresponding (nonzero) steady-state rates of infected neighbors: θ1, θ2 and θ3:
+According to our discussions on "Ordering Networks" in this lecture, which of the following comparisons are correct?
+a) θ１ < θ3
+b) θ2 < θ3
+c) θ2 > θ3
+d) θ１ > θ2
+-> c, d (θ1>θ2 because P1 is a mean-preserving spread of P2(凹の上を直線で引っ張った状態). θ2>θ3 because P2 First-Order Stochastically Dominates P3.)
 
 ```
