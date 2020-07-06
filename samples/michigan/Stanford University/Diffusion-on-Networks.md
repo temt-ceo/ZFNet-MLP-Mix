@@ -2,7 +2,8 @@
  - E[d] -- Expected Degreeの意味.(公式の"d"と置き換えられる)
  - nonzero steady state -- sustainableなinfectionがある状態（λ>0）
  - low density no condition (degreeが少ないと感染は少ない)
- - θ: あなたがランダムに会う人が感染している確率(0~1,0:感染無し)。これが一定値あることをsteady state.
+ - θ: あなたがランダムに会う人が感染している確率(0~1,0:感染無し)。これが一定値にあることをsteady state.
+ - SIS Diffusion Model = シミュレーションをするための拡散モデル。
 # Networks and Behavior
 ```
 How does networs structure impact behavior?
@@ -78,7 +79,12 @@ nonzero steady stateをネットワークが持つためには -- υ/δ(=λ) > E
 
 θ = Σ P(d)*λθ*d^2 / ((λθ*d + 1) * E[d])
 P（d）: 予想されるdegreeの確率
+```
+# Fitting a Diffusion Model to Data
+```
+1. ネットワークに参加する人と参加しない人の拡散率をモデルで求める。
 
+2. Application(適用): Financial Contagions  
 ```
 # EXERCISE
 ```
