@@ -1,3 +1,7 @@
+# Diffusion(拡散) on Networks
+ - E[d] -- Expected Degreeの意味.
+ - nonzero steady state -- sustainableなinfectionがある状態（λ>0）
+ - low density no condition (degreeが少ないと感染は少ない)
 # Networks and Behavior
 ```
 How does networs structure impact behavior?
@@ -66,8 +70,10 @@ The fraction of the population with degree d that is infected in steady state is
 あなたが歩いて会う人の内感染している人の割合 θ = H(θ) = ΣP(d)λθd^2/[(λθd+1)*E[d]]
 How H(θ) depends on P(d), E[d] etc.
 
-
-
+nonzero steady stateをネットワークが持つためには -- υ/δ(=λ) > E[d]/E[d^2]
+　上記を満たす為に通常のネットワークで必要なのは -- υ/δ(=λ) > 1/E[d] (=> E[d]==E[d^2])
+　上記を満たす為にE-Rネットワークで必要なのは -- υ/δ(=λ) > 1/(1+E[d])
+　上記を満たす為にpower-lowネットワークで必要なのは -- E[d^2] diverges(always have a nonzero steady state)(=> λ>0)
 ```
 # EXERCISE
 ```
