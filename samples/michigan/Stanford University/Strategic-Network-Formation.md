@@ -345,5 +345,66 @@ b) 1
 c) 2
 d) 5
 -> b (The total payoff is (n-1)-c = 1 )
+```
+# EXERCISE 2
+```
+Consider the four person society with the utility payoffs to agents as pictured below. The payoffs are listed as a function of
+the network architecture and an agent's position in the network:
+(agentの番号は無し)
+[0] [0] [0] [0]    ---- (a)
+[0] [0] [-1]-[-1]
+[-1]-[-1] [-1]-[-1]
+[1]-[-2]-[1] [0]                        <------(X)
+[-2]-[-2]-[-2] [0] (左３つはトライアングル)
+[3]-[0]-[0]-[3]    ---- (b)
+[0]-[0]-[-3]-[3] (左３つはトライアングル)
+[2]-[2]-[2]-[2] (輪)    ---- (d)
+[1]-[0]-[1]-[0] (輪とpayoff=1同士でたすき)
+[1]-[1]-[1]-[1] (complete network)    ---- (c)
+Which out of the networks labeled a,b,c and d are Efficient (in terms of maximizing the total utility across all agents)?
+-> d only (d is the only efficient network. Notice b is Pareto efficient, but not efficient in terms of maximizing the total utility across all agents.)
+Which out of the networks labeled a,b,c and d are Pareto Efficient?
+-> b and d
+Which out of the networks labeled a,b,c and d are Pairwise stable?
+-> a and c (bとdはどちらもリンクを切ってb->Xやd->bになることで個々のagentがより高いpayoff値を得られるから)
+
+Consider a symmetric version of the Connections model with n = 10 and δ = 0.5.
+For which of the costs listed below is a star network (involving all individuals) efficient but not pairwise stable? 
+a) c = .2
+b) c = .4
+c) c = 1.4
+d) c = 2.4
+-> c  (c　非含有(0.5, 1.5) is the right condition.)
+
+Consider a symmetric version of the Connections model with n = 6 and δ = 0.5 and c = 0.6.
+Which of the following statements are correct for these parameter values?
+1) Star networks involving all individuals are pairwise stable
+2) Star networks involving all individuals are efficient
+3) The empty network is pairwise stable
+4) These exists a nonempty network that is pairwise stable
+a) 2,3 and 4
+b) 1,2,3 and 4
+c) 1,3 and 4
+d) 1 and 2
+-> a (
+Star networks are not pairwise stable, since c=0.6 is bigger than δ=0.5;
+Star networks are uniquely efficient, since c=0.6 is between δ-δ^2 = 0.25 and δ+(n-2)δ^2/2 = 1;
+Empty network is pairwise stable, since c=0.6 is bigger than δ= 0.5, and hence any pair of nodes have no incentive to add a link;
+It can be verified that Ring networks are (the unique) pairwise stable nonempty networks, since (in this case with n=6) δ < c < (δ+δ^2+δ^3)(1-δ^2).
+)
+
+Consider the "islands" version of the connections model with K=3 islands and J=3 individuals on each island. Let δ=0.9, c=0.02 < 0.9-0.9^2, and C=4.
+Which of the following statement are true for these parameter values?
+1) The empty network is both efficient and pairwise stable.
+2) The complete network is both efficient and pairwise stable.
+3) In any efficient network, each island is completely connected internally.
+4) In any pairwise stable network, each island is completely connected internally.
+
+a) 1 and 2
+b) 3 only
+c) 1,2 and 4
+d) 3 and 4
+-> d (The efficient network is to have each island completely connected internally, and to have a star shape among islands.
+      The pairwise stable network is to have each island completely connected internally, but no links between islands.)
 
 ```
