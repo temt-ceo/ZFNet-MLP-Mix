@@ -123,4 +123,13 @@ b) The steady state infection fraction ρ(d) approaches 0 as d becomes very larg
 c) The steady state infection fraction ρ(d) does not depend on the value of d.
 d) The steady state infection fraction ρ(d) decreases in d.
 -> a
+
+【Solving the SIS Model】
+According to the "Theorem: Conditions for Steady State of Mean-Field SIS Process" covered in this lecture:
+If the parameters are such that υ=0.2, δ=0.2, E[d]=3 and E[d^2]=5,
+does there exist a nonzero steady-state of θ?
+a) Yes
+b) No
+-> a (Notice υ/δ(=λ) = 1 > E[d]/E[d^2] = 0.6)
+
 ```
