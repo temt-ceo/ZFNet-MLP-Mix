@@ -14,6 +14,10 @@ DeGroot Model: repeated communication, "naive" updating
  2. Start with beliefs, attitude, etc. ... b(0) in [0,1]
  3. Updating: b(t) = Σ T * b(t-1)  左辺:i, 右辺:j
  (これも最終的には全員同じ選択をする。)
+
+Convergence in DeGroot Model:
+ - b(t) = T * b(t-1)
+ - Convergenceするまで繰り返す計算を続ける。（tまで）
 ```
 # Exercise
 ```
@@ -42,4 +46,25 @@ c) Player1: 2/3, Player2:1,   Player3: 1/2
 d) Player1: 2/3, Player2:1/2, Player3: 1
 -> c
 
+【Convergence in DeGroot Model①】
+Consider the belief updating process from the DeGroot model.
+Suppose that the network and initial beliefs are as depicted in the picture below, and represented by the matrix T. 
+The belief vector at time t is b(t) = (3/4, 1/2, 0)`.
+What is b(t+1)?
+[[ 0  1/2 1/2], (initial belief=3/4)   T = [[ 0  1/2  1/2],
+ [ 1   0   0 ], (initial belief=1/2)        [ 1   0    0 ],
+ [ 0   1   0 ]] (initial belief=0)          [ 0   1    0 ]]
+->(1/4  3/4  1/2)`
+  (②が①の影響を受け取って①と同じ値になる。③が②の影響を受け取って②と同じ値になる。①は②と③の中間の値になる。矢印の先が影響を受ける元と考えると良い。）
+
+【Convergence in DeGroot Model②】
+Consider the belief updating process from the DeGroot model.
+Suppose that the network and weights are as depicted below.
+T = [[ 0  1/2  1/2],
+     [ 0   0    1 ],
+     [ 1   0    0 ]]
+Do beliefs converge?
+a) Yes.
+b) No.
+-> a
 ```
