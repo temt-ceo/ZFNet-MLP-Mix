@@ -188,3 +188,70 @@ c) The percentage of organizations that fail is initially (weakly) increasing in
 -> c (The percentage of organizations that fail is higher as the threshold of failure θ becomes higher.
       The percentage is at its peak with medium diversification in terms of degree d.)
 ```
+
+# EXERCISE 2
+```
+1. The picture plots three duffusion processes, with ...
+   Among these three curves, which is the closest match in terms of its shape to the patterns found in Griliches(1957)'s analysis of the data on hybrid corn diffusion?
+a) The blue curve. (S字状)
+b) The red dashed curve.(逆凸字状)
+c) The black dot-dashed curve.(逆S字状)
+-> a
+2. The version of the Bass Model described in lecture 5.2 is based on the following two key parameters:
+  p: the rate of spontaneous adoption;
+  q: the rate of imitation;
+   The picture below plots three diffusion processes for the following three sets of parameters:
+   p=0.01, q=0.9;
+   p=0.2, q=0.9;
+   p=0.2, q=0.1;
+   Identify which parameters correspond to which curve.
+-> p=0.01, q=0.9: Red curve (S字状)
+   p=0.2, q=0.9: Blue dashed curve (早く100にたどり着く)
+   p=0.2, q=0.1: Black dot-dashed curve (ゆっくり90ぐらいまでたどり着く)
+
+3. The approximation for the probability, q, that a node is in the giant component, as described in lecture, 
+   is the nonzero solution to the equation (1 - q) = Σd(1-q)^d*P(d).
+   Suppose the degree distribution P(d) is such that d = 0 has probability 1/3 and d = 2 has probability 2/3.
+   Also, take (1-q)^0 = 1.
+   What is the nonzero probability q that a node is in the giant component?
+   ->P(d=0): 1-q = 1 * 1/3
+     P(d=2): 1-q = (1-q)^2 * 2/3
+     P(d): 1-q = 1/3 + (1-q)^2 * 2/3
+           3-3q = 1 + 2(1-q)^2
+           2(1-q)^2 + 3q = 2
+           2*q^2 - q = 0
+           q = 0.5
+
+4. Consider contagion with immunity and link failure, as described in lecture.
+   In particular, consider contagion on a Erdos-Reny random network on n=51 nodes with p=0.15 being the probability of each link.
+   Suppose a fraction π = 0.5 of the nodes are immune naturaly, and only a fraction f= 0.4 of the links result in contagion.
+   What is the infected fraction of nodes, q(rounded to the nearest tenth)?
+   [Hint: recall the infected fraction of nodes is the solution to some equation that you have seen in lecture 5.4]
+   ->P(d=0): 1-q = 1 * 1/2
+     P(d=1): 1-q = (1-q) * 4/10
+     q:感染したノード数, 1-q:感染しなかったノード（これが5割）
+     P(d=1): 5-5q=2 - 4q + 2q^2
+             2q^2 + q - 3 = 0
+             q^2 + 0.5q - 1.5 = 0
+     p=0.15をかけてしも一桁で丸めると .2 <-   違うらしい。ここだけ分からなかった..
+
+5. Consider the Mean-Field SIS Process described in lecture. Recall that the steady state infection fraction of people 
+   that one meets is the solution to the following equation.
+   θ = H(θ) = Σ P(d) * λ * θ * d^2 / ((λ*θ*d + 1) * E[d]).
+   Consider a regular network with 50 nodes, each of which has exactly 10 neighbors. So P(10)=1, and P(d) = 0(d≠10).
+   Further suppose the infection/recovery ratio is λ = ν/δ = 0.5.
+   What is the (nonzero) steady state(θ) ?
+   -> θ = 1 *0.5 * θ * 100 / (0.5 * θ * 10 + 1) * 10
+      (50 * θ) / (50 * θ + 10) -　θ = 0
+      θ = 0.2 -> 10 / 20 - 0.2 = 0.3 ≠ 0
+      θ = 0.5 -> 25 / 35 - 0.5 = 0.1... ≠ 0
+      θ = 0.8 -> 40 / 50 - 0.8 = 0
+      よって0.8
+      
+6. Consider the Mean-Field SIS Process described in lecture. Recall that the steady state infection fraction of people that one meets..(上の問題と同じ説明)
+   Consider a regular network setting in which each person has the same number of interactions. So P(d) = 1 for some d > 1 and P(d意外)=0).
+   For which infection/recovery ratio is λ = ν/δ is there a positive steady state infection ratio.
+   -> υ/δ(=λ) > E[d]/E[d^2]
+      λ > 1/d
+
+```
