@@ -84,7 +84,14 @@ P（d）: 予想されるdegreeの確率
 ```
 1. ネットワークに参加する人と参加しない人の拡散率をモデルで求める。
 
-2. Application(適用): Financial Contagions  
+2. Application(適用): Financial Contagions  (欧州の国債持ち合いなど相互に負担し合う組み合わせ)
+  {1,...,n}: Organizations (countries, firms, banks)
+  pi:        price of investments of organization i.
+  Cij:       cross holdings (iとj organizationによる)
+  V:         Value of an Organization
+  
+  破産はどうなったら起こる？
+  ->ネットワークが中程度に絡み合っている状態が１箇所の破産が他へも広まりやすい。（小程度では他と干渉しない可能性が高く、大程度では影響は希釈（分散）される為）
 ```
 # EXERCISE
 ```
@@ -162,4 +169,22 @@ c) θ2 > θ3
 d) θ１ > θ2
 -> c, d (θ1>θ2 because P1 is a mean-preserving spread of P2(凹の上を直線で引っ張った状態). θ2>θ3 because P2 First-Order Stochastically Dominates P3.)
 
+【Financial Contagions①】
+From the example in the lecture, we see that A = C(hat)(I - C)^-1 = [[2/3 1/3][1/3 2/3]]. <= [[自分取り分, cross invest][cross invest 自分取り分]](上が１,下が2の会社)
+What are the two firms' final market values based on the cross holdings and direct investments if there is a direct investment income of $9 to firm 2?
+a) Firm1: $1/3, Firm2: $2/3
+b) Firm1: $3,   Firm2: $6
+c) Firm1: $1,   Firm2: $1
+d) Firm1: $3,   Firm2: $9
+-> b
+
+【Financial Contagions②】
+The simulation results concerning diversification and contagion (as described in this lecture) found patterns
+regarding how the "percentage of organizations that fail" is affected different factors.
+Which of the following statements are true?
+a) The percentage of organizations that fail is (weakly) descreasing in d, the level of diversification.
+b) The percentage of organizations that fail is (weakly) increasing in d, the level of diversification.
+c) The percentage of organizations that fail is initially (weakly) increasing in d and then (weakly) decreasing.
+-> c (The percentage of organizations that fail is higher as the threshold of failure θ becomes higher.
+      The percentage is at its peak with medium diversification in terms of degree d.)
 ```
