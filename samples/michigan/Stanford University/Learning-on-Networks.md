@@ -18,6 +18,12 @@ DeGroot Model: repeated communication, "naive" updating
 Convergence in DeGroot Model:
  - b(t) = T * b(t-1)
  - Convergenceするまで繰り返す計算を続ける。（tまで）
+ 
+Influence:
+ 色々な所から影響を受ける（内向的な）Agentほど影響力が強い。 ... GoogleのPageRankと同じ考え方。
+ - Let D = Σd
+ - Claim s = d/D for each i
+ - Recall s is unit eigenvector
 ```
 # Exercise
 ```
@@ -67,4 +73,25 @@ Do beliefs converge?
 a) Yes.
 b) No.
 -> a
+
+【Influence①】
+Consider the belief updating process from the DeGroot model and a society with a strongly connected and aperiodic network,
+so that beliefs will converge and each individual's influence on the final belief is represented by the s discussed in the lecture.
+Which of the following describes the node who have the largest influence?
+a) The node with the highest Closeness centrality
+b) The node with the highest Eigenvector centrality
+c) The node with the highest Betweenness centrality
+-> b
+
+【Influence②】
+Consider the belief updating process from the DeGroot model.
+As described in this lecture, suppose that all relationships are reciprocal(相互の) to that Tij > 0 if and only if Tji > 0,
+and all people equally weight their connections so that Tij=1/di where d is person i's out degree.
+Suppose that the network is also connected and that it is aperiodic so that the updating process converges.
+Which of the following statements are correct?
+a) The person with the hichest degree have the largest influence.
+b) The person with the lowest degree have the largest influence.
+c) Person i's influence is 1/2 for all i regardless of network size.
+-> a (内向的ほど影響力が強い)
+
 ```
