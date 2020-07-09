@@ -24,6 +24,17 @@ Influence:
  - Let D = Σd
  - Claim s = d/D for each i
  - Recall s is unit eigenvector
+
+Information Aggregation:
+ - When is the consensus accurate?
+ - Suppose true state is μ
+   Agent i sees bi(0) = μ + εi(error)
+   εi has 0 mean and finite variance, bounded below or abobe.
+   
+ - No Opinion Leaders
+   s(i) = ΣTji*s(j)
+    - If there is some i with Tji>a>0 for all j, then s(i) > a
+   
 ```
 # Exercise
 ```
@@ -94,4 +105,11 @@ b) The person with the lowest degree have the largest influence.
 c) Person i's influence is 1/2 for all i regardless of network size.
 -> a (内向的ほど影響力が強い)
 
+【Information Aggregation】
+Consider the DeGroot model with a "regular" society in which every agent has exactly d > 1 friends (with the same d for all agents), and such that the 
+network is connected. In particular, suppose that agent i puts weight Tij = a/d on each friend j, for some a>0 and weight Tii = 1-a>0 on him or herself.
+In this case:
+a) T will be wise and for large enough n each agent's limiting beliefs will be approximately correct with high probability since T is column stochastic (and so each person has influence 1/n).
+b) T will not be wise and beliefs will fail to converge since each agent places a positive weight on him or herself and so will never update beliefs.
+-> a
 ```
