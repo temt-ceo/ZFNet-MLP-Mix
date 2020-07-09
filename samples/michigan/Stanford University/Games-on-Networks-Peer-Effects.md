@@ -22,6 +22,10 @@ strategic substitues: negative relationships
 Equilibrium
  - Nash equilibrium: Every player's action is optimal for that player given the actions of others(他の選択をするきっかけになり収束した状態。)
 ```
+# Properties of Equilibrium
+```
+
+```
 # Exercise
 ```
 【Games on Networks①】
@@ -66,6 +70,16 @@ b) {a,b}
 c) {b,c,d}
 d) {a}
 -> c,d (independent set: a set S of nodes such that no two nodes in S are linked,
-        Maximal: every node in N is either in S or linked to a node in S
+        Maximal: every node in N is either in S or linked to a node in S,
         Maximal independent set: 【Best shotでは】 each 1 has no 1's in its neighborhood, each 0 has at least one 1)
+
+【Properties of Equilibrium】
+According to this lecture, which of the following are NOT complete lattices?
+(Suppose the partial order is defined based on the standard definition of greater than or equal to/less than or equal to between vectors.)
+a) {(0,0,0), (0,1,0), (0,0,1), (0,1,1)}
+b) {(0,0,0), (0,1,0), (0,0,1), (1,0,1)}
+c) {(1,0,0), (0,1,0), (0,0,1), (1,1,1)}
+d) {(0,0,0), (0,1,0), (1,0,1), (1,1,1)}
+->b,c
+  (aとbの違い)
 ```
