@@ -58,6 +58,11 @@ payoff: concave(凹状の) function
 Two types of pure equilibria
  - distributed: x* > xi > 0 for some i's
  - specialized: for each i either xi=0 or xi=x*
+
+Specialized Equilibria
+ - Maximal independent set - set S of nodes such that
+   - no two nodes in S are linked, and
+   - every node in N is either in S or linked to a node in S
 ```
 # Exercise
 ```
