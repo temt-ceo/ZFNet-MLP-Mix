@@ -66,6 +66,34 @@ Specialized Equilibria
  ※ Only stable equilibria are specialist equilibria such that every non-specialist has
    two specialists in his or her neighborhood.
 ```
+# Linear Quadratic Model
+```
+g = w(weight)/b
+x = α + gx (If α = 0, then x=gx, so unit eigenvector)
+友達にフィードバックを返す（invertible）ことのできる式
+特徴:
+ - Natural feedback from complementarities, actions relate to the total
+   feedback from various positions
+ - Centrality: relative number of weighted influences going from one node to another
+ - Captures complementarities.
+```
+# Repeated Games and Networks
+```
+Faver Exchange
+ How does successful favor exchange depend on/influence network structure?
+ v: value of favor
+ c: cost of a favor (v>c>0)
+ δ: discount factor (1>δ>0)
+ p: prob. i needs a favor from j in a period
+ value of perpetual(絶え間ない) relationship: p(v - c) / (1 - δ)
+ Favor exchange between two agents:
+  c < δ * p(v - c) / (1 - δ)    左辺: cost, 右辺: value of future relationship
+
+Ostracism(仲間はずれ) agent:
+  c < 2 * δ * p(v - c) / (1 - δ)
+
+周辺部のnodeもdegreeが２つあると持続的。
+```
 # Exercise
 ```
 【Games on Networks①】
@@ -171,4 +199,48 @@ c) 1 is a stable equilibrium
 d) 2 is a stable equilibrium
 ->b, c (According to the definition, a is a stable equilibrium, b is an unstable equilibrium, c is not an equilibrium.)
 
+【Linear Quadratic Model】
+For a given undirected network G, consider the linear-quadratic model where player i's payoff is:
+u(x(i),x(-i)) = x(i) - x(i)^2 + Σg*x(i)*x(j)
+in which g =1 if i,j 非含有 G, and g = 0 otherwise.
+In this setting, the best response of x(i) to x(-i) is a solution to which equation?
+a) (1 + Σ[j≠i] x(j))/2 = x(i)
+b) (1 + Σ[j非含有N] x(j))/2 = x(i)
+c) (1 - Σ[j非含有N] x(j))/2 = x(i)
+d) (1 + Σ[j≠i] x(j)) = x(i)
+-> b (Notice that Σ[j非含有N] x(j) = Σgx(j))
+
+【Favor Exchange】
+In the favor exchange model with two agents, favor exchange can be sustained in perpetuity if and only if
+c < δ * p(v - c) / (1 - δ)
+Suppose δ = 0.5, v=3, c = 1, and p is the probability that one player needs a favor from the other in a period.
+Which of the following p's are such that favor exchange can be sustained?
+a) 0.8
+b) 0.4
+c) 0.6
+d) 0.2
+-> 1 < 0.5 * p (3-1)/(1-0.5)
+   1 < 2p
+   1/2 < p
+   then, a,c
+
+【Two ways to support Favor Exchange①】
+Consider the favor exchange model with parameters δ=0.5, v=3, c=1, and p=0.4
+δ * p(v - c) / (1 - δ) < c < 2 * δ * p(v - c) / (1 - δ)
+Which of the following networks can be sustained in equilibrium?
+a) (5 nodes)十字, d=4
+b) (5 nodes)砂時計, d=4+2
+c) (5 nodes)Circle+中央nodeを貫いた直線, d=4+2
+d) (5 nodes)Circle+中央nodeを通る直角, d=4+2
+->b,c,d (a is not because each of the periphery(周辺部) players has only one neighbor.)
+
+【Two ways to support Favor Exchange②】
+Consider the favor exchange model with parameters δ=0.5, v=3, c=1, and p=0.4, so that
+δ * p(v - c) / (1 - δ) < c < 2 * δ * p(v - c) / (1 - δ)
+Which out of the following networks has the property that all links are supported?
+a) (5 nodes)十字, d=4
+b) (5 nodes)砂時計, d=4+2
+c) (5 nodes)Circle+中央nodeを貫いた直線, d=4+2
+d) (5 nodes)Circle+中央nodeを通る直角, d=4+2
+->b (Recall that for a network g, a link i,j非含有g is supported if there exists a node k ≠ i,j.
 ```
