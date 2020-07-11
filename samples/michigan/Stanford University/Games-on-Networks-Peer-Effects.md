@@ -63,6 +63,8 @@ Specialized Equilibria
  - Maximal independent set - set S of nodes such that
    - no two nodes in S are linked, and
    - every node in N is either in S or linked to a node in S
+ ※ Only stable equilibria are specialist equilibria such that every non-specialist has
+   two specialists in his or her neighborhood.
 ```
 # Exercise
 ```
@@ -153,5 +155,20 @@ d) 1 is a specialized equilibrium
 ->a,c,d (1 is a specialized equilibrium, 2 is a distributed equilibrium, 
          3 is not an equilibrium, as each of the players playing 1/4 has incentives to reduce her action to 0.)
 
+【Beyond 0-1 Choices - specialized】
+Consider the local public good setting covered in this lecture, so that player i's payoff is
+f(x + Σx) - cx
+Suppose x* = 1, i.e. f`(1) = c
+The picture depicts three action profiles, a, b and c,
+with the action taken by the node inside the circle.
+1: 1-0-1-0 (circle)
+2: 1/3-1/3-1/3-1/3 (circle)
+3: 0-1-1-1 (circle)
+Which statements are correct?
+a) 3 is a stable equilibrium
+b) 2 is an unstable equilibrium
+c) 1 is a stable equilibrium
+d) 2 is a stable equilibrium
+->b, c (According to the definition, a is a stable equilibrium, b is an unstable equilibrium, c is not an equilibrium.)
 
 ```
