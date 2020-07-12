@@ -86,7 +86,8 @@ Faver Exchange
  δ: discount factor (1>δ>0)
  p: prob. i needs a favor from j in a period
  value of perpetual(絶え間ない) relationship: p(v - c) / (1 - δ)
- Favor exchange between two agents:
+
+Favor exchange between two agents （*Favor Exchangeが絶え間なく起こる条件式）:
   c < δ * p(v - c) / (1 - δ)    左辺: cost, 右辺: value of future relationship
 
 Ostracism(仲間はずれ) agent:
@@ -263,3 +264,86 @@ c) (5 nodes)Circle+中央nodeを貫いた直線, d=4+2
 d) (5 nodes)Circle+中央nodeを通る直角, d=4+2
 ->b (Recall that for a network g, a link i,j非含有g is supported if there exists a node k ≠ i,j.
 ```
+
+# Exercise 2
+```
+1. Consider the following two games played on a network.
+   In both cases each player is a sellers of a good on a market. A seller's neighbors in the network are the other sellers
+   whose actions affect the seller's profits (so the seller's `competitors`).
+   
+   a). Each player i chooses where to produce a high or low quantity (and then the market determines the price at which the player sells).
+   
+   in particular, a(i)=1 stands for a high quality q(i)=5,a(i)=0 stands for a low quantity q(i)=3.
+   
+   Player i's profit as a function of her quantity and the quantities of her neighbors in the network j非含有N is
+   (100 - q(i) - Σ[j非含有N]q(j)/2)*q(i)
+   
+   b). Each player i chooses where to set a high or low price (and then the market will determine the quantity sold).
+   
+   In particular, a(i)=1 stands for changing a high price p(i)=5, and a(i)=0 stands for changing a low price p(i)=3.
+   
+   Player i's profit as a function of her price and the prices of her neighbors in the network j非含有N is
+   (100 - p(i) + Σ[j非含有N]p(j)/2)*p(i)
+   
+   According to the definition of strategic compleents/substitutes, which statement is correct?
+   
+   1) a): actions are strategic complements
+      b): actions are strategic complements
+   2) a): actions are strategic complements
+      b): actions are strategic substitutes
+   3) a): actions are strategic substitutes
+      b): actions are strategic complements
+   4) a): actions are strategic substitutes
+      b): actions are strategic substitutes
+   ->2
+   
+2. Consider the following game of complements with threshold 2 played on the network depicted in the picture.
+   In particular, the players' utility functions are such that for player i:
+   u(0, m) = 0;
+   u(1, m) = m - 1.6;
+   In lecture we have already seen three equilibria, as depicted in the picture.
+   A: 全部0, B: 一部1, C: sustainable平衡だが1は6つ（全部でノード数は11）
+   There is one more pure-strategy equilibrium. How many nodes are choosing action 1 in that equilibrium?
+   a)0
+   b)3
+   c)4
+   d)7
+   e)11
+   ->c (全部でノード数は11なので11以上にはならない。B一部1の違うパターン)
+
+3. Consider again a game of complements with threshold 2, now on a different network as depicted in the picture.
+   Which of the following is the largest pure strategy quilibrium ("largest" in the sense of having most players choosing 1)?
+   a) 全部0
+   b) 一部1
+   c) 平衡では最大
+   d) 平衡では無い。
+   e) いずれでも無い
+   -> c
+
+4. Consider the following best shot public game on a directed network g={12,23,31}.
+   In particular, player i can borrow a textbook from j if she has a directed link (arrow) pointing at j, and j buys the textbook.
+   ・ Each player strictly prefers to buy the textbook (a=1) if she cannotborrow a textbook from anyone;
+   ・ Otherwise, she strictly prefers to not buy (a=0) the textbook if she can borrow a textbook from her neighbor.
+   Which is an pure-strategy equilibrium of this game? The numbers in the circles are the actions of the nodes.
+   a) 0-0-0 (circle)
+   b) 0-1-0 (circle)
+   c) 0-1-1 (circle)
+   d) 1-1-1 (circle)
+   e) none of them
+   -> e
+   
+5. Questions 5 and 6 are based on the network depicted in the following picture.
+   There are three groups, green, blue and yellow, in the network.
+   ・ green: 3 nodes inner-degree=3 outer-degree=3
+   ・ blue: 4 nodes inner-degree=5 outer-degree=5
+   ・ yellow: 4 nodes inner-degree=6 outer-degree=2
+   What is the cohesiveness of each of the three groups?
+   a) Green group 0.6; Blue group 0.5; Yellow group 0.75.
+   b) Green group 0.5; Blue group 0.5; Yellow group 0.75.
+   c) Green group 0.6; Blue group 0.25; Yellow group 0.5.
+   d) Green group 0.6; Blue group 0.5; Yellow group 0.67.
+   ->cohesive = min[i非含有S(yellow)] {j非含有N and S(yellow)}/ degree = ターゲットのノード数/ターゲットのinner-degree
+     Green= 3/3 Blue= 4/5, Yellow=4/6
+   
+```
+
