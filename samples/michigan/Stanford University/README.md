@@ -87,4 +87,20 @@ Week7: Games on Networks - Peer Effects
 
 Week8: Final Exam.
 ```
-プリンストン大学Press の Matthew O. Jackson著 "Social and Economic Networks" という本が助けになります。
+プリンストン大学Pressの Matthew O. Jackson著 "Social and Economic Networks" という本が助けになります。
+
+## Summary - Games On Networks -
+```
+＊ ネットワーク分析上の推定
+ - Strategic Complements and Substitutes exhibit very different patterns
+ 
+ - Position Matters:
+   - more connected take
+     - higher actions in complements (and easier)
+     - lower actions in substitutes
+ 
+ - Structure matters:
+   - some networks lead to diffusion of behavior others do not
+   - Homophily(モフィリィ:似た性質同士は集まりやすい)/cohesion is a critical determinant of diversity of actions
+```
+
