@@ -94,6 +94,25 @@ Ostracism(仲間はずれ) agent:
 
 周辺部のnodeもdegreeが２つあると持続的。
 ```
+# Support and Clustering
+```
+If no pair of players could sustain favor exchange in isolation and a network is robust,
+then all of its links are supported.
+
+Support: With what frequently do a typical pair of connected nodes, A and B, have a common neighbor?
+        (共通の友人の有無)
+
+Clustering: With what frequently are a typical node A's neighbors, say B and C neighbors of each other? 
+        (友人同士の繋がりの有無)
+e.g.
+・ Support=1, Clustering=.47 ... 三角形の鎖のような細長い関係。（友人同士が繋がっていない。）
+　　- SupportはFavor Echangeによってとても高くなる(0.5~0.8)。`Social` Supportも高い(0.45~0.75)。
+     (一般的には友達の関係)
+
+・ Support=.46, Clustering=.88 ... 村（やサークル）のような構造になる。
+　　- ClusteringはBusinessによってとても高くなる(ほぼ１に近くなる)。Marriageも高い(0.85)。
+  　　(社交的な関係)
+```
 # Exercise
 ```
 【Games on Networks①】
