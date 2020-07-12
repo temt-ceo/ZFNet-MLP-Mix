@@ -96,8 +96,8 @@ Week8: Final Exam.
  
  - Position Matters:
    - more connected take
-     - higher actions in complements (and easier)
-     - lower actions in substitutes
+     - higher actions in complements (and easier) (e.g.友人が本を持っていたら自分も買うという行動)
+     - lower actions in substitutes (e.g.友人が本を持っていたら借りられるので本を買わないという行動)
  
  - Structure matters:
    - some networks lead to diffusion of behavior others do not
