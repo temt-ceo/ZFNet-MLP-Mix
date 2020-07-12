@@ -39,6 +39,16 @@ Equilibrium relation to network structure
  
  - Both actions are played if and only if there is a group S that is at least q cohesive and such that its complement is at least 1-q cohesive.
   q-cohesiveがあるからその凝集が形成された。
+  
+◾︎Cohesion
+ - Care only about fraction of neighbors
+ - prefer to take action 1 if fraction q or more take 1.(他の仲間が１のアクションを起こしていると自分も起こしやすい)
+e.g.
+ Let S be the group that take action 1,
+  Each i in S must have fraction of at least q neighbors in S (Sは同じアクションを起こした集団, Nは全ノード(1~n))
+  Each i not in S must have fraction of at least 1-q neighbors outside of S(集団の中で他のアクションの集団とも繋がりがあるノードの同じアクションのdegree数/全degreeが求めるcohessiveとなる)
+ q=1/2 だと友達の半分以上（過半数）がしていたらその人も同じ行動をするということ
+ q=2/3 だと友達の2/3以上
 ```
 # Application
 ```
@@ -90,7 +100,8 @@ Faver Exchange
 Favor exchange between two agents （*Favor Exchangeが絶え間なく起こる条件式）:
   c < δ * p(v - c) / (1 - δ)    左辺: cost, 右辺: value of future relationship
 
-Ostracism(仲間はずれ) agent:
+
+(仲間はずれ) agent:
   c < 2 * δ * p(v - c) / (1 - δ)
 
 周辺部のnodeもdegreeが２つあると持続的。
@@ -295,7 +306,7 @@ d) (5 nodes)Circle+中央nodeを通る直角, d=4+2
       b): actions are strategic complements
    4) a): actions are strategic substitutes
       b): actions are strategic substitutes
-   ->2
+   ->4(違った..)
    
 2. Consider the following game of complements with threshold 2 played on the network depicted in the picture.
    In particular, the players' utility functions are such that for player i:
@@ -342,8 +353,60 @@ d) (5 nodes)Circle+中央nodeを通る直角, d=4+2
    b) Green group 0.5; Blue group 0.5; Yellow group 0.75.
    c) Green group 0.6; Blue group 0.25; Yellow group 0.5.
    d) Green group 0.6; Blue group 0.5; Yellow group 0.67.
-   ->cohesive = min[i非含有S(yellow)] {j非含有N and S(yellow)}/ degree = ターゲットのノード数/ターゲットのinner-degree
-     Green= 3/3 Blue= 4/5, Yellow=4/6
-   
+   ->cohesive = (集団の中で他のアクションの集団とも繋がりがあるノードの同じアクションのdegree数/全degreeが求めるcohessiveとなる)
+     Green= 1/2(境界のノードが半々のdegreeの持ち主) Blue= 1/2(境界のノードが半々のdegreeの持ち主) , Yellow=3/4
+     then, B
+
+6. Again consider the following network:
+   ・ green: 3 nodes inner-degree=3 outer-degree=3
+   ・ blue: 4 nodes inner-degree=5 outer-degree=5
+   ・ yellow: 4 nodes inner-degree=6 outer-degree=2
+   Consider a coordination game on this network, such that:
+   ・ In each step, any player that was choosing action 0 changes to action 1 if and only if a fraction of at least 0.6 of
+     his or her neighbors have already chosen action 1;
+   ・ Once a player chooses action 1, she keeps choosing it;
+   ・ The process stops if in the last step there were no players changing from 0 to action 1.
+   Start from 2 nodes (seeds) choosing action 1, and the others all choosing action 0:
+   Is that possible to have contagion to the whole network, i.e. all players in the network choose action 1 evetually?
+   a) Yes. If the 2 seeds choosing 1 are both Yellow OR both Green.
+   b) Yes. If the 2 seeds choosing 1 are both Blue.
+   c) Yes. There exists one such cantagion process starting from Green seed and one Blue seed.
+   d) No. Contagion to the whole network never happens no matter which two seeds are picked.
+   -> d
+7. Consider a local public good game played on a ring network with 5 players, in which each player chooses an action x={0,10},
+   and such that player i's payoff is
+   (x + Σ[j非含有N]x)^0.5 - 0.5x.
+   Which of the following satisfies the following three conditions (as defined in lecture):
+   1: it is an equilibrium
+   2: it is distributed
+   3: it is unstable
+   (unstableだけどequilibrium（平衡）でdistributed)
+   a) 2/3 - 2/3 - 2/3 - 2/3 - 2/3 (circle)
+   b) 1/3 - 1/3 - 1/3 - 1/3 - 1/3 (circle)
+   c) 1 - 1 - 1 - 1 - 1 (circle)
+   d) 0 - 1 - 0 - 0 - 1 (circle)
+   e) none of them
+   -> dは平衡では無い。cはspecialized
+      then b.
+8. The picture depicts the Florentine Marriage network we have seen in several lectures.
+   Consider the favor exchange model discussed in lecture with parameters δ=0.5, v=4, c=1, and p=0.3.
+   Thus, δ * p(v - c) / (1 - δ) < c < 2 * δ * p(v - c) / (1 - δ)
+   For these parameters, nodes with just one link cannot be expected to perform any favors in any equilibrium of
+   the repeated favor exchange game. So, they can be ignored. Similarly nodes with just one link in what remains
+   cannot be expected to perform any favors in any equilibrium, and you can iterate on this process. Nodes that
+   have two or more links can be induced to exchange favors in some equilibria of the game.
+   What is the maximum number of nodes that can be induced to exchange favors in some equilibrium of this game
+   for these parameters?
+   a) 4
+   b) 8
+   c) 10
+   d) 11
+   e) All the nodes  
+   -> Favor exchange between two agents （*Favor Exchangeが絶え間なく起こる条件式）:
+      current cost < δ * p(v - c) / (1 - δ)
+      current cost < 0.5 * 0.3(4-1) / (1-0.5)
+      current cost < 0.9
+      周辺部のnodeもdegreeが２つあると持続的だがそうで無いノードが4つある。全部でn=15ノード。
+      then d.(違った..)
 ```
 
