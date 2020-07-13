@@ -316,6 +316,37 @@ public static String findAirportCode (String toFind, Airport[] airports)
  - Insertion Sort: 行ったり来たりするソート。（隣り合う２つに逆順が見つかるたびにindex=1まで戻る。パフォーマンス悪い。但しSelection Sortと違ってソートされた配列に対しては滅法早い。）<br>
       indexの0から順に隣り合う２つを比較し、swapが発生したら１つ前のindexも比較する。これをindex=1まで続ける。<br>
     　For each position position from 1 to length-1 { currInd = position; while (currInd>0 && val[currInd] < val[currInd-1]) {swap(); currInd = currInd-1;} }<br>
- -  Sort: <br>
+ - Collections.sort: Merge-sortを使っている。<br>
     　For each <br>
- - <br><br>
+```
+// Collection.sort<AirPort>のAirPortクラスオブジェクトでソートするには: genericを使う(c++との違いはimplementsキーワード)
+public class AirPort implements Comparable<AirPort> {
+  // 以下自分のオブジェクトがotherのオブジェクトより小さい時はnegativeの値を返す。
+  public int compareTo(Airport other) {
+    return (this.getCity()).compareTo(other.getCity()); // StringはComparableだからOK.
+  }
+  
+  public static void main (String[] args) {
+    ArrayList<Airport> airports = new ArrayList();
+    ...
+    airports.add(...);
+    Collections.sort(airports);
+  }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
