@@ -338,9 +338,13 @@ public class AirPort implements Comparable<AirPort> {
   {
     EarthquakeMarker[] markers = quakeMarkers.toArray(new EarthquakeMarker[quakeMarkers.size()]);
     Arrays.sort(markers, Collections.reverseOrder()); // Arrayをソートする時はArrays.sortを使う
-    for (EarthquakeMarker marker : markers) {
-      System.out.println(marker);
+    int i = 0;
+    if (numToPrint > markers.length) {
+      numToPrint = markers.length;
     }
+    for (i=0; i < numToPrint; i++) {
+      System.out.println(markers[i]);
+    }		
   }
 }
 
