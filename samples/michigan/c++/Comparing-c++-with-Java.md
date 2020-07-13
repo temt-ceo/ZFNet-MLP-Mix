@@ -327,12 +327,25 @@ public class AirPort implements Comparable<AirPort> {
   }
   
   public static void main (String[] args) {
-    ArrayList<Airport> airports = new ArrayList();
+    List<Airport> airports = new ArrayList();
     ...
     airports.add(...);
     Collections.sort(airports);
   }
+
+  // 実際にソートする時は元を壊さないように。また、以下はabstractのリスト(List<Marker>)からCompareToのあるEarthquakeMarkerにCASTしている。
+  private void sortAndPrint(int numToPrint)
+  {
+    EarthquakeMarker[] markers = quakeMarkers.toArray(new EarthquakeMarker[quakeMarkers.size()]);
+    Arrays.sort(markers, Collections.reverseOrder()); // Arrayをソートする時はArrays.sortを使う
+    for (EarthquakeMarker marker : markers) {
+      System.out.println(marker);
+    }
+  }
 }
+
+
+
 ```
 
 
