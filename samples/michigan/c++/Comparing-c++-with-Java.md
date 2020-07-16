@@ -355,9 +355,15 @@ public class AirPort implements Comparable<AirPort> {
 1. https://gluonhq.com/products/javafx/
 ここからOpen JavaFXをダウンロードし、解答、libフォルダに置く
 
-2. VSCodeの虫（Debug Launch;）をクリックし、create launch.jsonをクリック
+2. .classpathに以下を追加
+	<classpathentry kind="lib" path="lib/javafx-sdk-11.0.2/lib/javafx.base.jar"/>
+	<classpathentry kind="lib" path="lib/javafx-sdk-11.0.2/lib/javafx.controls.jar"/>
+	<classpathentry kind="lib" path="lib/javafx-sdk-11.0.2/lib/javafx.fxml.jar"/>
+	<classpathentry kind="lib" path="lib/javafx-sdk-11.0.2/lib/javafx.graphics.jar"/>
 
-3. launch.jsonの中を以下のように修正(CodeLensというのはVSCodeがRun時に用意してくれるので試しにRunしてみるといい。)
+3. VSCodeの虫（Debug Launch;）をクリックし、create launch.jsonをクリック
+
+4. launch.jsonの中を以下のように修正(CodeLensというのはVSCodeがRun時に用意してくれるので試しにRunしてみるといい。)
         {
             "type": "java",
             "name": "CodeLens (Launch) - MainApp",
