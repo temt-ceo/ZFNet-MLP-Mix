@@ -350,6 +350,25 @@ public class AirPort implements Comparable<AirPort> {
 ```
 
 # Ⅱ. Data Structures and Performance
+## 環境構築
+```
+1. https://gluonhq.com/products/javafx/
+ここからOpen JavaFXをダウンロードし、解答、libフォルダに置く
+
+2. VSCodeの虫（Debug Launch;）をクリックし、create launch.jsonをクリック
+
+3. launch.jsonの中を以下のように修正(CodeLensというのはVSCodeがRun時に用意してくれるので試しにRunしてみるといい。)
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - MainApp",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "vmArgs": "--module-path lib/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml",
+            "mainClass": "application.MainApp",
+            "projectName": "MOOCTextEditor"
+        },
+
+```
 
 
 
