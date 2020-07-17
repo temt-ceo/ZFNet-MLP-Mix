@@ -383,6 +383,16 @@ public class AirPort implements Comparable<AirPort> {
 ● JDK8でdepricatedな、かつJDK9でremoveされたメソッドを使用している時の対処方法
 install the Java 8 JDK and change the default build path and compiler compliance level in the project settings to use the older version of java instead, as well as changing the System Library that the project uses
 
+※. ライセンス規約にも注意: https://ityarou.com/ithoudan0261/
+Java SE: Java Platform, Standard Edition : デスクトップ（パソコン）やサーバーでJavaアプリケーションを開発する上で必要な機能が詰まったもの
+　（２０１８年９月のバージョン（Java SE 11）から一部有償化※2。Java SE 10以前も無償サポート終了（更新すると一部有償化）。Androidの開発元のGoogleは、OpenJDKに移行済み。KotlinやGoなど企業が採用する言語は移る可能性がある。）
+Java EE: Java Platform, Enterprise Edition(Java EE) : サーバー等の機能が詰まったもの（Web開発時はJava SEとセットで使う）
+JDK： Java SE Development Kit : Javaを開発する上で必要(Java SE Dev Kit: OpenJDKを使えば無料で開発できるがサポート期間が極端に短い（半年）)
+JRE: Java Runtime Environment(JRE) : 無料, Javaを動かす上で必要
+
+※2. Oracle Technology Network License: 2019年4月16日、米OracleはOracle JDKのライセンスを変更 :
+Oracle Binary Code License（BCL）はデスクトップ・サーバーともに商用・本番環境での無償利用が許されていたが、新しいライセンスOracle Technology Network Licenseでは個人利用・開発目的に限られる。
+商用で利用したい場合は、Oracle Java SE Subscriptionsの購入が必要。(つまり今後これらのツールを更新して開発したり更新したものは無料で使えなくなった。)
 ```
 
 
