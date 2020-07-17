@@ -352,7 +352,7 @@ public class AirPort implements Comparable<AirPort> {
 # Ⅱ. Data Structures and Performance
 ## 環境構築
 ```
-● "JavaFX 11 is not part of the JDK anymore"な為対処が必要
+● "JavaFX 11 is not part of the JDK anymore"な時の対処方法
 
 1. https://gluonhq.com/products/javafx/
 ここからOpen JavaFXをダウンロードし、解答、libフォルダに置く
@@ -379,6 +379,10 @@ public class AirPort implements Comparable<AirPort> {
                                       https://docs.oracle.com/javase/jp/9/migrate/toc.htm
    --add-exports:デフォルトでアクセスできないようになっている内部APIを使用する必要がある場合、これを使用してカプセル化を解除(--add-readsと共に使用)
    --add-opens: 非publicメンバーにアクセスするためにクラス・パスにあるコードにディープ・リフレクションの実行を許可する(Error: module javafx.graphics does not "opens javafx.scene.text" to unnamed moduleが出る対処)
+   
+● JDK8でdepricatedな、かつJDK9でremoveされたメソッドを使用している時の対処方法
+install the Java 8 JDK and change the default build path and compiler compliance level in the project settings to use the older version of java instead, as well as changing the System Library that the project uses
+
 ```
 
 
