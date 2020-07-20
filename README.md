@@ -36,7 +36,7 @@ URL. https://www.kaggle.com/takashitahara/recognizing-concrete-crack-using-pytor
 
 --------------------------------------------------------------------------------------------------
 ### Hands On
-**(1)[Facial Expression Recognition](Hands-On-Facial-Expression-Recognition.ipynb): Read the video and recognizing the face in real time and display the white box on the human face and recognize and show those facial expressions<br>ビデオを読み込み、顔を検出、正方形の枠出し及び感情をリアルタイムに枠上にテキスト化、ブラウザ上に表示する**<br>
+**(1)[Facial Expression Recognition](Hands-On-Facial-Expression-Recognition.ipynb): Read the video and recognize the face in real time and display the white box on the human face and recognize and show those facial expressions<br>ビデオを読み込み、顔を検出、正方形の枠出し及び感情をリアルタイムに枠上にテキスト化、ブラウザ上に表示する**<br>
 **(2)[Network Community Analysis](Hands-On-Community-Model-Analysis.ipynb): Using networkx analyze network nodes inside a company over the e-mails, train the model to predict node attributes such as salary, and check the model**<br>
 <br>
 **上記以外のHands Onファイルは**
