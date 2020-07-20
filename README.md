@@ -15,9 +15,9 @@ URL. https://www.kaggle.com/takashitahara/joshi-japanese-postposition-analysis
 **◉the region and the domain category**<br>
 **USA, construction materials**<br><br>
 **◉research question**<br>
-・ I will test how the results are changing by changing a series of model patterns using keras.<br>
-・ The dataset is the volumes of construction materials which is used to compose concrete, such as cement and water.<br>
-・ The strength of concrete is the target value, and I will predict and research the y-hat value by regression model and mean_squared_error value.<br>
+・ I tested how the results are changing by changing a series of model patterns using keras.<br>
+・ The dataset is the volumes of construction materials which is used to concrete composition such as cement and water.<br>
+・ The strength of concrete is the target value, and I predicted and researched the y-hat value by regression model and mean_squared_error value.<br>
 ・ This dataset also includes age of concrete mix even though age is important value for strength.<br>
 
 URL. https://www.kaggle.com/takashitahara/concrete-data-and-strength-analysis
@@ -36,7 +36,8 @@ URL. https://www.kaggle.com/takashitahara/recognizing-concrete-crack-using-pytor
 
 --------------------------------------------------------------------------------------------------
 ### Hands On
-**(1)[表情解析](Hands-On-Facial-Expression-Recognition.ipynb): ビデオを読み込み、顔を検出、正方形の枠出し及び感情をリアルタイムに枠上にテキスト化、ブラウザ上に表示する**<br>
+**(1)[Facial Expression Recognition](Hands-On-Facial-Expression-Recognition.ipynb): Read the video and recognizing the face in real time and display the white box on the human face and recognize and show those facial expressions<br>ビデオを読み込み、顔を検出、正方形の枠出し及び感情をリアルタイムに枠上にテキスト化、ブラウザ上に表示する**<br>
+**(2)[Network Community Analysis](Hands-On-Community-Model-Analysis.ipynb): Using networkx analyze network nodes inside a company over the e-mails, train the model to predict node attributes such as salary, and check the model**<br>
 <br>
 **上記以外のHands Onファイルは**
 [こちら](https://github.com/temt-ceo/ZFNet-MLP-Mix/tree/master/samples/michigan/Stanford%20University/HandsOn)にあります。<br>
