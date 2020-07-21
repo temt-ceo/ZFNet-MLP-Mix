@@ -57,9 +57,23 @@ func main() {
 
 ## Naming
  - Case Sensitive - 大文字を識別する
- - Must have type - `var x int` (varは変数を宣言するというkeyword。typeはnameの後に来る)
+ - Must have type - `var x int`, `var x, y int` (varは変数を宣言するというkeyword。typeはnameの後に来る)
+ - 整数、少数、String - それぞれGoがCompile時に専用のMachine Codeに変換する(少数はOSによって違うHardwareを使うかもしれないし、Stringはbyteの一続きを変換する)
+ - Type Declarations - aliasの定義
+   - `type Celsius float64` (温度(C))  .. `var temp Celsius`
+   - `type IDnum int`                 .. `var pid IDnum`
+ - `var x = 100` - 変数の推論ができる(c++などと同様途中で少数にはならない)
+ - Uninitialized variables have a zero value. - `var x int // x = 0`, `var x string // x = ""`
+ - 省略型がある。 - `x := 100` (宣言、推論、代入を行う。 functionの中でのみ可。)
+
+## Naming
  - 
  - 
+ - 
+ - 
+
+
+
 
 
 
