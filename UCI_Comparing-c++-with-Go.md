@@ -66,8 +66,14 @@ func main() {
  - Uninitialized variables have a zero value. - `var x int // x = 0`, `var x string // x = ""`
  - 省略型がある。 - `x := 100` (宣言、推論、代入を行う。 functionの中でのみ可。)
 
-## Naming
- - 
+## その他
+ - Pointers (c++同様)
+   - & returns the address of a variable/function
+   - * returns data at an address(dereferencing)
+ - new() function creates a variable and returns a pointer to the variable (当然.. heapメモリを使うのだから.. ここもc++と変わらず)
+   - e.g. `ptr := new(int)` `*ptr = 3`
+ - Blocks - A sequence of declarations and statements within {}. (ここもc++と変わらず)
+ - Scope - Go is lexically scoped using blocks.(外側のblockで宣言されていたらアクセスできる)
  - 
  - 
  - 
