@@ -8,7 +8,7 @@
  - JavaですらMachine language(x86)にCompiledによる変換が一部しか(partially)されていなかった。残りはPythonのように実行時に変換されるInterpretationであった。<br>
    (JavaがCompileで生成しているのはMachine Codeではなくbyte code。これを実行時にMachine Languageに変換している。)
 
-## Interpreter(PythonやJava)ぐらい使いやすい
+## Interpreter(PythonやJavaの一部)ぐらい使いやすい
 Interpreterの特徴としてコードが書きやすい<br>
  - メモリ管理(de-allocate memory)を言語が（逐次解釈なので）自動で行う
  - 変数の推論が可能
