@@ -32,9 +32,9 @@ Interpreterの特徴としてコードが書きやすい<br>
    - bin   .. executables
  - GOPATH .. 環境変数（インストール時にセットしてくれるので気しなくてよし: win=>C:\Users\yourname\go = Goのインストール先)
  - Packages .. `package billpkg` でdefineしていたら、 `import ("billpkg")` でlinkできる(`,`や`;`が要らない)<br>
-   (Packageの一つは`main`という名前でこのPackageをbuildする。当然だが...`main`にはmain()メソッドが必要だし、そこを処理起点とする。)<br>
+   (Packageの一つは`main`という名前でこのPackageをbuildする。当然だが...`main`にはmain()メソッドが必要だし、そこが処理起点)<br>
 
-**mainを有するPackage `main`**<br>
+**Main Package**<br>
 ```
 package main
 import "fmt"
@@ -42,3 +42,28 @@ func main() {
   fmt.Printf("abc\n")
 }
 ```
+
+## Go Tool
+ - import は 多くのpackageライブラリとGo Standard Libraryどちらにも使える。
+ - Searches directories specified by GOROOT and GOPATH.
+ - Several Commands:
+   - `go build` .. compiles the program (Arguments can be a list of packages or a list of .go files). 実行ファイルを作る
+   - `go run`   .. compiles .go files and runs the executable. 
+   - `go test`  .. runs tests using files ending in "_test.go"
+   - `go doc`   .. prints documentation for a package
+   - `go fmt`   .. formats source code files. インデントをしてくれる。(GoはPythonみたいにインデントを強制していないが、このコマンドは全部のsourceを整えてくれる。) 
+   - `go get`   .. downloads packages and installs them. 新しいライブラリをインストールしたい時
+   - `go list`  .. lists all installed packages 
+
+
+
+
+
+
+
+
+
+
+
+
+
