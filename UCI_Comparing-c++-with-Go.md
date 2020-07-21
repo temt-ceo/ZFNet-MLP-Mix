@@ -68,8 +68,8 @@ func main() {
 
 ## その他
  - Pointers (c++同様)
-   - & returns the address of a variable/function
-   - * returns data at an address(dereferencing)
+   - `&` returns the address of a variable/function
+   - `*` returns data at an address(dereferencing)
  - new() function creates a variable and returns a pointer to the variable (当然.. heapメモリを使うのだから.. ここもc++と変わらず)
    - e.g. `ptr := new(int)` `*ptr = 3`
  - Blocks - A sequence of declarations and statements within {}. (ここもc++と変わらず)
