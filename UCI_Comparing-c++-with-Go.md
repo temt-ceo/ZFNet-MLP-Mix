@@ -8,15 +8,27 @@
  - JavaですらMachine language(x86)にCompiledによる変換が一部しか(partially)されていなかった。残りはPythonのように実行時に変換されるInterpretationであった。<br>
    (JavaがCompileで生成しているのはMachine Codeではなくbyte code。これを実行時にMachine Languageに変換している。)
 
-## Interpreter(PythonやJavaの一部)ぐらい使いやすい
+### Interpreter(PythonやJavaの一部)ぐらい使いやすい
 Interpreterの特徴としてコードが書きやすい<br>
  - メモリ管理(de-allocate memory)を言語が（逐次解釈なので）自動で行う
  - 変数の推論が可能
  - Goはcompiled言語だが、Garbage Collection(de-allocate memory)というInterpreterの長所を取り入れた。
 
-## WorkSpace
+### Simpler objects と Concurrency
+ - c++やJavaと違ってclassという用語を使わない。structs(データ)と付属のメソッドを使う。<br>
+   (classの実装を簡単にしたもの。inheritanceもconstructorもgenericsもない。)
+ - Concurrency is the management of multiple tasks at the same time.<br>
+   (タスク間でコミュニケーションをとる機能は大規模システムほど必要。)<br>
+   専用の予約語:<br>
+   - GoRoutines .. concurrent tasks
+   - Channels   .. communicate between tasks
+   - Select     .. enables task synchronization
+
+### 
  - 
  - 
+ - 
+
 
 **mainを有するclass内**<br>
 ```
