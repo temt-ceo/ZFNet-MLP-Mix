@@ -1,6 +1,6 @@
-## 
- - Primitive types() の種類
- - Object types(Arrays and vlasses)
+## Go
+ - C言語に近い効率
+ - PythonやJavaぐらい使いやすい
 
 **mainを有するclass内**<br>
 ```
