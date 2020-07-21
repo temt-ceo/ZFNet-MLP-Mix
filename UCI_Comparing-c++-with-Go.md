@@ -55,6 +55,12 @@ func main() {
    - `go get`   .. downloads packages and installs them. 新しいライブラリをインストールしたい時
    - `go list`  .. lists all installed packages 
 
+## Naming
+ - Case Sensitive - 大文字を識別する
+ - Must have type - `var x int` (varは変数を宣言するというkeyword。typeはnameの後に来る)
+ - 
+ - 
+
 
 
 
