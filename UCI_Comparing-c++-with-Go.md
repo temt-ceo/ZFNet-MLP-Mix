@@ -1,4 +1,4 @@
-# Advantages of Go
+# 1. Advantages of Go
  - C言語に近い効率 .. Code runs fast
  - PythonやJavaぐらい使いやすい .. Garbage Collection, Simpler objects
  - 並列処理 .. Concurrency is efficient
@@ -24,7 +24,7 @@ Interpreterの特徴としてコードが書きやすい<br>
    - Channels   .. communicate between tasks
    - Select     .. enables task synchronization
 
-# Work Space
+# 2. Work Space
  - Install .. golang.org (Download Go => stable versionのみ)
  - Workspaces(Javaと変わらない。強制でもない。):
    - src   .. source code files
