@@ -112,7 +112,17 @@ func main() {
 
 
 
-
+# Memo
+```
+> go get -v github.com/ramya-rao-a/go-outline
+github.com/ramya-rao-a/go-outline (download)
+created GOPATH=/Users/taharatakashi/go; see 'go help gopath'
+get "golang.org/x/tools/go/buildutil": found meta tag get.metaImport{Prefix:"golang.org/x/tools", VCS:"git", RepoRoot:"https://go.googlesource.com/tools"} at //golang.org/x/tools/go/buildutil?go-get=1
+get "golang.org/x/tools/go/buildutil": verifying non-authoritative meta tag
+golang.org/x/tools (download)
+golang.org/x/tools/go/buildutil
+github.com/ramya-rao-a/go-outline
+```
 
 
 
