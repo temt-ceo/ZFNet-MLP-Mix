@@ -82,6 +82,21 @@ func main() {
      - 遅い（理由はInterpreterが必要だから）
      - Compiled(ここではGo)のGarbage Collectionではpointerを追跡していつ開放して良いか決めている。
      - Compiledでは本当はGarbage Collectionがない方が（例えばc++）早いが、役に立つのでGoでは採用している。
+
+**Pointerの復習(Object-Oriented Data Structures in C++より)**<br>
+```
+  int *x = new int;
+  int &y = *x; // heapのint情報にyという名前を与える。「type &」はreference variableでheap変数のエイリアスをつくる働きをする。
+  y = 4;
+
+  std::cout << &x << std::endl;　// pointer(stack memory)のaddress
+  std::cout <<  x << std::endl;　// x自体はheapのアドレス
+  std::cout << *x << std::endl;  // 4(dereferencing)
+  
+  std::cout << &y << std::endl;　// heapのアドレス
+  std::cout <<  y << std::endl;　// 4(y自体がheapを指す)
+  //std::cout << *y << std::endl;  -> yはpointerでは無い, これはcompile errorになる
+```
  - 
  - 
  - 
