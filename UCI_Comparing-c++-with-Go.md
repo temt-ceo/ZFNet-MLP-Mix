@@ -82,7 +82,7 @@ func main() {
      - 遅い（理由はInterpreterが必要だから）
      - Compiled(ここではGo)のGarbage Collectionではpointerを追跡していつ開放して良いか決めている。
      - Compiledでは本当はGarbage Collectionがない方が（例えばc++）早いが、役に立つのでGoでは採用している。
-
+     
 **Pointerの復習(Object-Oriented Data Structures in C++より)**<br>
 ```
   int *x = new int;
@@ -97,32 +97,25 @@ func main() {
   std::cout <<  y << std::endl;　// 4(y自体がheapを指す)
   //std::cout << *y << std::endl;  -> yはpointerでは無い, これはcompile errorになる
 ```
+ - Conversion characters(%s,etc)
+   - fmt.Printf("Hi %s", x)
+ - Integers
+   - int8, int16, int32, int64, uint8, uint16, uint32, uint64 これは`var x int`とすればcompilerが判別してくれるのでわざわざ示さなくても良い。
+ - Floating Point
+   - float32 (6 digits of precision), float64 (15 digits of precision)
+   - `var x float64 = 123.45`   (decimals)
+   - `var x float64 = 1.2345e2` (scientific notation)
+ - 虚数もある(complex)
+ - UTF-8(ASCIIを最初の8bitで含んでいるという利点がある) .. Goのデフォルト
+   -  
+ - Type Conversions - T()
+   - `var x int32 = 1` `var x int16 = 2` `x = y` ... Fail, `x = int32(y)` ... OK
  - 
  - 
  - 
- - 
- - 
- - 
 
 
 
-
-
-
-
-
-
-# Memo
-```
-> go get -v github.com/ramya-rao-a/go-outline
-github.com/ramya-rao-a/go-outline (download)
-created GOPATH=/Users/taharatakashi/go; see 'go help gopath'
-get "golang.org/x/tools/go/buildutil": found meta tag get.metaImport{Prefix:"golang.org/x/tools", VCS:"git", RepoRoot:"https://go.googlesource.com/tools"} at //golang.org/x/tools/go/buildutil?go-get=1
-get "golang.org/x/tools/go/buildutil": verifying non-authoritative meta tag
-golang.org/x/tools (download)
-golang.org/x/tools/go/buildutil
-github.com/ramya-rao-a/go-outline
-```
 
 
 
