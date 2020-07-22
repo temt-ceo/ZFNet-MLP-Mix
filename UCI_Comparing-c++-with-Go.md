@@ -74,6 +74,17 @@ func main() {
    - e.g. `ptr := new(int)` `*ptr = 3`
  - Blocks - A sequence of declarations and statements within {}. (ここもc++と変わらず)
  - Scope - Go is lexically scoped using blocks.(外側のblockで宣言されていたらアクセスできる)
+ - Deallocation
+   - compiled言語ではheap変数は手動でdeallocateするのがほとんど (例:C言語ではheapの変数は手動でallocate,deallocateが必要。`x = malloc(32);`, `free(x);`)
+   - Garbage Collection
+     - InterpreterではGarbage Collectionを行ってくれる。(JavaはJava Virtual Machineで行っている)
+     - エラーが起こりにくくプログラマーに優しい。
+     - 遅い（理由はInterpreterが必要だから）
+     - Compiled(ここではGo)のGarbage Collectionではpointerを追跡していつ開放して良いか決めている。
+     - Compiledでは本当はGarbage Collectionがない方が（例えばc++）早いが、役に立つのでGoでは採用している。
+ - 
+ - 
+ - 
  - 
  - 
  - 
