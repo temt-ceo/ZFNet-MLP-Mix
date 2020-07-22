@@ -89,11 +89,11 @@ func main() {
   int &y = *x; // heapのint情報にyという名前を与える。「type &」はreference variableでheap変数のエイリアスをつくる働きをする。
   y = 4;
 
-  std::cout << &x << std::endl;　// pointer(stack memory)のaddress
+  std::cout << &x << std::endl;　// pointer(stack memory)のaddress。「&」はアドレスを取得する。
   std::cout <<  x << std::endl;　// x自体はheapのアドレス
   std::cout << *x << std::endl;  // 4(dereferencing)
   
-  std::cout << &y << std::endl;　// heapのアドレス
+  std::cout << &y << std::endl;　// heapのアドレス。「&」はアドレスを取得する。
   std::cout <<  y << std::endl;　// 4(y自体がheapを指す)
   //std::cout << *y << std::endl;  -> yはpointerでは無い, これはcompile errorになる
 ```
