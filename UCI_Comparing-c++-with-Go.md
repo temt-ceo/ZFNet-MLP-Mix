@@ -107,7 +107,7 @@ func main() {
    - `var x float64 = 1.2345e2` (scientific notation)
  - 虚数もある(complex)
  - UTF-8(ASCIIを最初の8bitで含んでいるという利点がある) .. Goのデフォルト
-   -  
+   -  a
  - Type Conversions - T()
    - `var x int32 = 1` `var x int16 = 2` `x = y` ... Fail, `x = int32(y)` ... OK
  - 
