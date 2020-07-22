@@ -86,7 +86,7 @@ func main() {
 **Pointerの復習(Object-Oriented Data Structures in C++より)**<br>
 ```
   int *x = new int;
-  int &y = *x; // heapのint情報にyという名前を与える。「type &」はreference variableでheap変数のエイリアスをつくる働きをする。
+  int &y = *x; // heapのint情報にyという名前を与える。「type &」はreference variableでheap変数のエイリアスをつくる。
   y = 4;
 
   std::cout << &x << std::endl;　// pointer(stack memory)のaddress。「&」はアドレスを取得する。
