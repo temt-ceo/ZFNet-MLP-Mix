@@ -143,7 +143,6 @@ Interpreterの特徴としてコードが書きやすい<br>
   )
 ```
 
-
 ## Control Flow (for, switch, scan)
  - whileが無い
 ```
@@ -191,6 +190,43 @@ num, err := fmt.Scan(&appleNum) // ユーザー入力を待つ (5と入力しEnt
 fmt.Printf(appleNum)            // "5"と出力
 ```
 
+## Composite Data Types
+ - Arrays
+   - 指定したTypeでFixed-LengthのArrayが作れる
+   - Elementsは0(intなら0, stringなら"")で初期化される
+```
+var x [5]int
+x[0] = 2
+fmt.Printf(x[1]) // 0
+```
+ - Array Literal
+   - 値を最初から(全部)セットしておいたArray
+   - [5]の部分は[...]とすればArrayの大きさを推測してくれる
+```
+var x [5]int = [5]{1,2,3,4,5}
+// 上の式と下の式は同一
+x := [...]int{1,2,3,4,5}
+
+// Iterating (pythonと同じくrangeが使える。indexも拾える。)
+for i, v range x {
+  fmt.Printf("ind %d, val %d", i, v)
+}
+```
+ - Slices (slice .. A "window" on an underlying array。 pythonにもある。)
+   - 3つのPropertiesを持つ
+     - Pointer: indicates the start of the slice
+     - Length
+     - Capacity: the maximum number of elements
+   - Arrayと非常によく似た式でSliceを初期化できる`...`が無いだけ (内部で何が行われているかというと元となるArrayが作られた後、全部をsliceしたSliceが作られている。)
+```
+arr := [..]string{"a", "b", "c", "d", "e", "f", "g"}
+s1 := arr[1:3]
+s2 := arr[2:5] // s1とオーバーラップしても問題なし
+fmt.Printf(len(s1), cap(s1)) // -> " 2 7 "
+s := []int{1,2,3,4,5} // これはSlice。Sliceを初期化した場合は(Length = Capacityとなる。Pointerは0の位置。)
+```
+ - 
+ - 
 
 
 
