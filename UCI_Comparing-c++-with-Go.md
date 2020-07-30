@@ -107,12 +107,34 @@ func main() {
    - `var x float64 = 1.2345e2` (scientific notation)
  - 虚数もある(complex)
  - UTF-8(ASCIIを最初の8bitで含んでいるという利点がある) .. Goのデフォルト
-   -  a
  - Type Conversions - T()
    - `var x int32 = 1` `var x int16 = 2` `x = y` ... Fail, `x = int32(y)` ... OK
- - 
- - 
- - 
+
+## String Package (Functions to manipulate UTF-8 encoded strings)
+ - Unicode Package
+   - IsDigit
+   - IsSpace
+   - IsLetter
+   - IsLower
+   - IsPunct
+   - ToUpper
+   - ToLower
+ - String Package
+   - Compare(a, b) .. 0 if a==b
+   - Contains(s, substr)
+   - HasPrefix(s, prefix)
+   - Index(s, substr) .. returns the index of the first instance of substr in s.
+   - Replace(s, old, new, n) .. returns a copy of the string s with the first n instances of old replaced by new.
+   - HasPrefix(s, prefix)
+   - ToUpper(s)
+   - ToLower(s)
+   - TrimSpace(s)
+ - Strconv Package
+   - Atoi(s) .. converts string to int
+   - Itoa(s) .. converts int to string
+   - FormatFloat(f, fmt, prec, bitSize) .. converts float to string
+   - ParseFloat(s, bitSize) .. converts string to float
+   - 
 
 
 
