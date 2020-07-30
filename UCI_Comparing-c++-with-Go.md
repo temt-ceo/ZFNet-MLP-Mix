@@ -34,15 +34,6 @@ Interpreterの特徴としてコードが書きやすい<br>
  - Packages .. `package billpkg` でdefineしていたら、 `import ("billpkg")` でlinkできる(`,`や`;`が要らない)<br>
    (Packageの一つは`main`という名前でこのPackageをbuildする。当然だが...`main`にはmain()メソッドが必要だし、そこが処理起点)<br>
 
-**Main Package**<br>
-```
-package main
-import "fmt"
-func main() {
-  fmt.Printf("abc\n")
-}
-```
-
 ## Go Tool
  - import は 多くのpackageライブラリとGo Standard Libraryどちらにも使える。
  - Searches directories specified by GOROOT and GOPATH.
@@ -82,7 +73,18 @@ func main() {
      - 遅い（理由はInterpreterが必要だから）
      - Compiled(ここではGo)のGarbage Collectionではpointerを追跡していつ開放して良いか決めている。
      - Compiledでは本当はGarbage Collectionがない方が（例えばc++）早いが、役に立つのでGoでは採用している。
-     
+ - Conversion characters(%s,etc)
+   - fmt.Printf("Hi %s", x)
+ - Integers
+   - int8, int16, int32, int64, uint8, uint16, uint32, uint64 これは`var x int`とすればcompilerが判別してくれるのでわざわざ示さなくても良い。
+ - Floating Point
+   - float32 (6 digits of precision), float64 (15 digits of precision)
+   - `var x float64 = 123.45`   (decimals)
+   - `var x float64 = 1.2345e2` (scientific notation)
+ - 虚数もある(complex)
+ - UTF-8(ASCIIを最初の8bitで含んでいるという利点がある) .. Goのデフォルト
+ - Type Conversions - T()
+   - `var x int32 = 1` `var x int16 = 2` `x = y` ... Fail, `x = int32(y)` ... OK
 **Pointerの復習(Object-Oriented Data Structures in C++より)**<br>
 ```
   int *x = new int;
@@ -97,20 +99,8 @@ func main() {
   std::cout <<  y << std::endl;　// 4(y自体がheapを指す)
   //std::cout << *y << std::endl;  -> yはpointerでは無い, これはcompile errorになる
 ```
- - Conversion characters(%s,etc)
-   - fmt.Printf("Hi %s", x)
- - Integers
-   - int8, int16, int32, int64, uint8, uint16, uint32, uint64 これは`var x int`とすればcompilerが判別してくれるのでわざわざ示さなくても良い。
- - Floating Point
-   - float32 (6 digits of precision), float64 (15 digits of precision)
-   - `var x float64 = 123.45`   (decimals)
-   - `var x float64 = 1.2345e2` (scientific notation)
- - 虚数もある(complex)
- - UTF-8(ASCIIを最初の8bitで含んでいるという利点がある) .. Goのデフォルト
- - Type Conversions - T()
-   - `var x int32 = 1` `var x int16 = 2` `x = y` ... Fail, `x = int32(y)` ... OK
 
-## String Package (Functions to manipulate UTF-8 encoded strings)
+## String Package 
  - Unicode Package
    - IsDigit
    - IsSpace
@@ -119,7 +109,7 @@ func main() {
    - IsPunct
    - ToUpper
    - ToLower
- - String Package
+ - String Package(Functions to manipulate UTF-8 encoded strings)
    - Compare(a, b) .. 0 if a==b
    - Contains(s, substr)
    - HasPrefix(s, prefix)
@@ -134,9 +124,14 @@ func main() {
    - Itoa(s) .. converts int to string
    - FormatFloat(f, fmt, prec, bitSize) .. converts float to string
    - ParseFloat(s, bitSize) .. converts string to float
-   - 
 
-
+## Constants (constants .. Expression whose value is known at compile time.)
+ - Type is inferred from righthand side.(e.g. `const x = 1.3`, `const (y = 4 \r z = "Hi")`)
+ - `iota` .. Generate a `set` of related but distinct constants.(setを作る)
+   - Often represents a property which has several distinct possible values (個々の値は別々だが関連のあるconstantのset)
+     - Days of the week
+     - Months of the year
+ - 
 
 
 
