@@ -85,6 +85,7 @@ Interpreterの特徴としてコードが書きやすい<br>
  - UTF-8(ASCIIを最初の8bitで含んでいるという利点がある) .. Goのデフォルト
  - Type Conversions - T()
    - `var x int32 = 1` `var x int16 = 2` `x = y` ... Fail, `x = int32(y)` ... OK
+
 **Pointerの復習(Object-Oriented Data Structures in C++より)**<br>
 ```
   int *x = new int;
@@ -126,12 +127,21 @@ Interpreterの特徴としてコードが書きやすい<br>
    - ParseFloat(s, bitSize) .. converts string to float
 
 ## Constants (constants .. Expression whose value is known at compile time.)
- - Type is inferred from righthand side.(e.g. `const x = 1.3`, `const (y = 4 \r z = "Hi")`)
- - `iota` .. Generate a `set` of related but distinct constants.(setを作る)
-   - Often represents a property which has several distinct possible values (個々の値は別々だが関連のあるconstantのset)
+ - Type is inferred from righthand side.(e.g. `const x = 1.3`, `const (y = 4 \r z = "Hi")`) (setを作るのに便利)
+ - `iota` .. Generate a `set` of related but distinct constants.(setを作る。 個々のvalueはconstantだが値自体はなんでも良い時に使う。)
+   - Often represents a property which has several distinct possible values (個々の値は別々だが関連のあるconstantのsetを表す)
      - Days of the week
      - Months of the year
- - 
+```
+  type Grades int
+  const (
+    A Grades = iota // Each constant is assigned to a unique integer
+    B               // Starts at 1 and increments
+    C
+    D
+    F
+  )
+```
 
 
 
