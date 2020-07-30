@@ -144,6 +144,52 @@ Interpreterの特徴としてコードが書きやすい<br>
 ```
 
 
+## Control Flow (for, switch, scan)
+ - whileが無い
+```
+for i:=0; i<10; i++ {
+  fmt.Printf("hi ")
+}
+// while loop
+i := 0
+for i<10 {
+  fmt.Printf("hi ")
+}
+// infinite for loop
+for {
+  fmt.Printf("hi ")
+}
+```
+ - switch/caseにbreakが要らない
+```
+switch x {
+case 1:
+  fmt.Printf("case1") // breakが無いけどcase1しか実行されない。
+case 2:
+  fmt.Printf("case2")
+default:
+  fmt.Printf("nocase")
+}
+// for-loopのbreak and continue自体は存在する
+```
+ - Tagless Switch (タグが無い時はbooleanを式は見る)
+```
+switch {
+case x > 1: // x > 1の時に実行される。
+  fmt.Printf("case1")
+case x < -1:
+  fmt.Printf("case2")
+default:
+  fmt.Printf("nocase")
+}
+```
+ - Scan (a: pointerを引数に取る。, b: ユーザーの入力をscanする。, c: スキャンされた数をreturnする。)
+```
+var appleNum int
+fmt.Printf("Number of apples?")
+num, err := fmt.Scan(&appleNum) // ユーザー入力を待つ (5と入力しEnterが押されたら、引数に代入する)
+fmt.Printf(appleNum)            // "5"と出力
+```
 
 
 
