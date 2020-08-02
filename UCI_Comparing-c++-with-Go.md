@@ -225,7 +225,14 @@ s2 := arr[2:5] // s1とオーバーラップしても問題なし
 fmt.Printf(len(s1), cap(s1)) // -> " 2 7 "
 s := []int{1,2,3,4,5} // これはSlice。Sliceを初期化した場合は(Length = Capacityとなる。Pointerは0の位置。)
 ```
- - 
+ - Make a slice
+   - Create a slice(and array) using `make()`
+   - 引数はtypeとlength/capacityの２つ
+```
+sli = make([]int, 10)
+
+```
+ 
  - 
 
 
