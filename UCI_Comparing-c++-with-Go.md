@@ -86,7 +86,7 @@ Interpreterの特徴としてコードが書きやすい<br>
  - Type Conversions - T()
    - `var x int32 = 1` `var x int16 = 2` `x = y` ... Fail, `x = int32(y)` ... OK
 
-**Pointerの復習(Object-Oriented Data Structures in C++より)**<br>
+## Pointerの復習(Object-Oriented Data Structures in C++より)
 ```
   int *x = new int;
   int &y = *x; // heapのint情報にyという名前を与える。「type &」はreference variableでheap変数のエイリアスをつくる。
