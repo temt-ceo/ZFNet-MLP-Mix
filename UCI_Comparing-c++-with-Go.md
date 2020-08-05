@@ -142,6 +142,45 @@ Interpreterの特徴としてコードが書きやすい<br>
     F
   )
 ```
+## 課題 1-1
+ - Write a program which prompts the user to enter a floating point number and prints the integer which is a truncated version of the floating point number that was entered. Truncation is the process of removing the digits to the right of the decimal place. Submit your source code for the program, “trunc.go”.
+```
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	var ans float64
+	fmt.Printf("Please enter a 'Floating Point Number'\n")
+	fmt.Scan(&ans)
+	fmt.Printf("Your Imput is Truncated and Printed Like This: %d\n", int(ans))
+}
+```
+## 課題 1-2
+ - Write a program which prompts the user to enter a string. The program searches through the entered string for the characters ‘i’, ‘a’, and ‘n’. The program should print “Found!” if the entered string starts with the character ‘i’, ends with the character ‘n’, and contains the character ‘a’. The program should print “Not Found!” otherwise. The program should not be case-sensitive, so it does not matter if the characters are upper-case or lower-case. Submit your source code for the program, “findian.go”.
+```
+import (
+	"fmt"
+	"strings"
+)
+
+func main() {
+	var str string
+	fmt.Printf("Please enter a 'String'\n")
+	fmt.Scan(&str)
+	str = strings.ToLower(str)
+	ans1 := strings.Index(str, "i")
+	ans2 := strings.Index(str, "a")
+	ans3 := strings.Index(str, "n")
+	if ans1 == 0 && ans3 == len(str)-1 && ans2 > -1 {
+		fmt.Printf("Found!\n")
+	} else {
+		fmt.Printf("Not Found!\n")
+	}
+}
+```
 
 ## Control Flow (for, switch, scan)
  - whileが無い
