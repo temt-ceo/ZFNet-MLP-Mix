@@ -168,7 +168,7 @@ import (
 
 func main() {
 	var str string
-	fmt.Printf("Please enter a 'String'\n")
+	fmt.Printf("Please enter a string\n")
 	fmt.Scan(&str)
 	str = strings.ToLower(str)
 	ans1 := strings.Index(str, "i")
