@@ -239,7 +239,11 @@ fmt.Printf(appleNum)            // "5"と出力
  - Hash Tables
    - Maps
      - Use `make` to create a map.
-   - Structs
+     - map[`key type`] `value type`
+ - Structs
+   - 他のオブジェクトの集合体
+   - 例: Person Struct {Name, Address, phone}
+     - 方法: Make a single struct which contains all 3 vars
  - Slices (sliceとは: A "window" on an underlying array。 pythonにもある。)
    - 3つのPropertiesを持つ
      - Pointer: indicates the start of the slice
@@ -265,8 +269,30 @@ for i, v range x {            // Iterating (pythonと同じくrangeが使える�
   fmt.Printf("ind %d, val %d", i, v)
 }
 
-// Hash Tables
+// Hash Tables(Maps)
+var idMap map[string]int
+idMap = make(map[string]int)         // Use make() to create a map
+idMap := map[string]int {"joe": 123} // May define a map literal({:}の事)
+id, p := idMap["joe"]      // idはvalue, pはboolean(存在するかどうか)
+fmt.Println(idMap["joe"])  // 見つからなかったらzero(""など)が返る
+idMap["jane"] = 456
+delete(idMap, "joe")
+fmt.Println(len(idMap))    // いくつキーがあるか。
+for key, val := range idMap { // Iterating through a Map
+  fmt.Println(key, val)
+}
 
+// Structs
+type struct Person {
+  name string   // <- field
+  addr string
+  phone string
+}
+var p1 Person
+p1.name = "joe"
+x = p1.addr
+p1 := new(Person) // 初期化方法(=> 全てのfieldはzero(""など)で初期化される)
+p1 := Person(name: "joe", addr: "a st.", phone: "123") // struct literal((:)の事)でも初期化できる
 
 // Slices
 arr := [..]string{"a", "b", "c", "d", "e", "f", "g"}
