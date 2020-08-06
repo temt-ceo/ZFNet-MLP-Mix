@@ -298,7 +298,7 @@ p1 := Person(name: "joe", addr: "a st.", phone: "123") // struct literal((:)の�
 arr := [..]string{"a", "b", "c", "d", "e", "f", "g"}
 s1 := arr[1:3]
 s2 := arr[2:5] // s1とオーバーラップしても問題なし
-fmt.Printf(len(s1), cap(s1)) // -> " 2 7 "
+fmt.Printf(len(s1), cap(s1)) // -> " 2 6 " (The capacities are the difference between the length of the underlying array and the starting index of the slice.)
 s := []int{1,2,3,4,5} // これはSlice。Sliceを初期化した場合は(Length = Capacityとなる。Pointerは0の位置。)
 
 // Make a Slices
