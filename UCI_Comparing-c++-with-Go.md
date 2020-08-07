@@ -313,32 +313,32 @@ sli = append(sli, 100)
 package main
 
 import (
-	"fmt"
-	"sort"
-	"strconv"
+  "fmt"
+  "sort"
+  "strconv"
 )
 
 func main() {
-	sli := make([]int, 3)
-	i := 0
-	for {
-		fmt.Printf("Please enter a integer or 'X' if you want to exit.\n")
-		var num string
-		fmt.Scan(&num)
-		if num == "X" {
-			break
-		} else {
-			val, _ := strconv.Atoi(num)
-			if i < 3 {
-				sli[0] = val
-			} else {
-				sli = append(sli, val)
-			}
-			sort.Ints(sli)
-			fmt.Println(sli)
-		}
-		i++
-	}
+  sli := make([]int, 3)
+  i := 0
+  for {
+    fmt.Printf("Please enter a integer or 'X' if you want to exit.\n")
+    var num string
+    fmt.Scan(&num)
+    if num == "X" {
+      break
+    } else {
+      val, _ := strconv.Atoi(num)
+      if i < 3 {
+        sli[0] = val
+      } else {
+        sli = append(sli, val)
+      }
+      sort.Ints(sli)
+      fmt.Println(sli)
+    }
+    i++
+  }
 }
 ```
  - 
