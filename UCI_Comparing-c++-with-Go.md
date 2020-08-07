@@ -46,7 +46,7 @@ Interpreterの特徴としてコードが書きやすい<br>
    - `go get`   .. downloads packages and installs them. 新しいライブラリをインストールしたい時
    - `go list`  .. lists all installed packages 
 
-## Naming
+# 3. Basic Data Types
  - Case Sensitive - 大文字を識別する
  - Must have type - `var x int`, `var x, y int` (varは変数を宣言するというkeyword。typeはnameの後に来る)
  - 整数、少数、String - それぞれGoがCompile時に専用のMachine Codeに変換する(少数はOSによって違うHardwareを使うかもしれないし、Stringはbyteの一続きを変換する)
@@ -229,7 +229,7 @@ num, err := fmt.Scan(&appleNum) // ユーザー入力を待つ (5と入力しEnt
 fmt.Printf(appleNum)            // "5"と出力
 ```
 
-## Composite Data Types
+# 4. Composite Data Types
  - Arrays
    - 指定したTypeでFixed-LengthのArrayが作れる
    - Elementsは0(intなら0, stringなら"")で初期化される
@@ -341,6 +341,7 @@ func main() {
   }
 }
 ```
+# 5. Protocols and Formats
  - 
 
 
