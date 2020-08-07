@@ -341,9 +341,10 @@ func main() {
   }
 }
 ```
-# 5. Protocols and Formats
+# 5. Standardized Protocols and Formats(JSON等)
+ - RFCs(Requests for Comments)とは、Definitions of Internet protocols and formats
+
+## 
  - 
-
-
 
 
