@@ -87,19 +87,19 @@ Interpreterの特徴としてコードが書きやすい<br>
    - `var x int32 = 1` `var x int16 = 2` `x = y` ... Fail, `x = int32(y)` ... OK
 
 ## Pointerの復習(Object-Oriented Data Structures in C++より)
-```
-  int *x = new int;
-  int &y = *x; // heapのint情報にyという名前を与える。「type &」はreference variableでheap変数のエイリアスをつくる。
-  y = 4;
-
-  std::cout << &x << std::endl;　// pointer(stack memory)のaddress。「&」はアドレスを取得する。
-  std::cout <<  x << std::endl;　// x自体はheapのアドレス
-  std::cout << *x << std::endl;  // 4(dereferencing)
-  
-  std::cout << &y << std::endl;　// heapのアドレス。「&」はアドレスを取得する。
-  std::cout <<  y << std::endl;　// 4(y自体がheapを指す)
-  //std::cout << *y << std::endl;  -> yはpointerでは無い, これはcompile errorになる
-```
+     ```
+       int *x = new int;
+       int &y = *x; // heapのint情報にyという名前を与える。「type &」はreference variableでheap変数のエイリアスをつくる。
+       y = 4;
+     
+       std::cout << &x << std::endl;　// pointer(stack memory)のaddress。「&」はアドレスを取得する。
+       std::cout <<  x << std::endl;　// x自体はheapのアドレス
+       std::cout << *x << std::endl;  // 4(dereferencing)
+     
+       std::cout << &y << std::endl;　// heapのアドレス。「&」はアドレスを取得する。
+       std::cout <<  y << std::endl;　// 4(y自体がheapを指す)
+       //std::cout << *y << std::endl;  -> yはpointerでは無い, これはcompile errorになる
+     ```
 
 ## String Package 
  - Unicode Package
@@ -342,9 +342,56 @@ func main() {
 }
 ```
 # 5. Standardized Protocols and Formats(JSON等)
- - RFCs(Requests for Comments)とは、Definitions of Internet protocols and formats
-
+ - RFCs(Requests for Comments)とは、Definitions of Internet protocols and formats(=ネットワーク上で互換させるプロトコル)
+   - HTML
+   - URI
+   - HTTP
+     - net/http; http.Get("www.uci.edu")    <net/httpでencodeさせる。> 
+     - net; net.Dial("tcp", "uci.edu:80")   <netでTCP/IP and socket programmingさせる>
+   - JSON ... RFC 7159, ALL Unicode
+     - Go struct; p1 := Person(name: "joe", addr: "a st.", phone: "123")  <Go structでJSONを作る>
+     - Go structはJSONと同一; {"name": "joe", "addr": "a st.", "phone": "123"} <キーに"付ければJSONで扱う>
+     - 整列整理させたい時はGo structで;
+     ```
+     type struct Person {
+       name string
+       addr string
+       phone string
+     }
+     ```
+     - 整列整理させたい時２;
+     ```
+     p1 := Person(name: "joe", addr: "a st.", phone: "123")
+     barr, err := json.Marshal(p1)        // <Marshal()はJSONのUnicode形式から[]byteの形(だからbarr)にしたJSONを返す>
+     ```
+     - JSON(Unicode形式)に戻したい時;
+     ```
+     var p2 Person
+     err := json.Unmarshal(barr, &p2)     // c/c++の知識無いと厳しいね。 p2のアドレスにセットさせてる。この時fieldは同じである必要があるのでp2はPerson型でないとあかん。
+     ```
+ - File Access ... []byteで読み書き
+   - io/ioutil; dat, e := ioutil.ReadFile("test.txt")    <io/ioutilパッケージのFile Read機能を使う。 open/closeが必要無いが、大きいファイルだと一度に読もうとするのでメモリの問題になる。> 
+     ```
+     // ioutil File Write
+     dat = "Hello, world"
+     err := ioutil.WriteFile("outfile.txt", dat, 0777) // ファイルをcreateして書き込んでくれる。第３引数はUnix-style permission bytes。0777は誰でも許可。
+     ```
+   - os Package File Access
+     - os.Open()  ... File(file descripter)を返す。
+     - os.Close()
+     ```
+     // os File Reading
+     f, err := os.Open("dt.txt")
+     barr := make([]byte, 10)  // 10 byteの配列を作る (あらかじめ規定量の配列を用意するとこもc++の経験が欲しいかも)
+     nb, err := f.Read(barr)   // 10 byteの配列に読み込ませる
+     f.close()
+     
+     // os File Create/Write
+     f, err := os.Create("outfile.txt")
+     barr := []byte{1, 2, 3}
+     nb, err := f.Write(barr)        // []byteを書き込む
+     nb, err := f.WriteString("Hi")  // stringを書き込む
+     ```
 ## 
- - 
 
 
