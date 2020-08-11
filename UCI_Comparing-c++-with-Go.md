@@ -132,16 +132,16 @@ Interpreterの特徴としてコードが書きやすい<br>
    - Often represents a property which has several distinct possible values (個々の値は別々だが関連のあるconstantのsetを表す)
      - Days of the week
      - Months of the year
-```
-  type Grades int
-  const (
-    A Grades = iota // Each constant is assigned to a unique integer
-    B               // Starts at 1 and increments
-    C
-    D
-    F
-  )
-```
+     ```
+       type Grades int
+       const (
+         A Grades = iota // Each constant is assigned to a unique integer
+         B               // Starts at 1 and increments
+         C
+         D
+         F
+       )
+     ```
 ## 課題 1-1
  - Write a program which prompts the user to enter a floating point number and prints the integer which is a truncated version of the floating point number that was entered. Truncation is the process of removing the digits to the right of the decimal place. Submit your source code for the program, “trunc.go”.
 ```
@@ -160,13 +160,13 @@ func main() {
 ```
 ## 課題 1-2
  - Write a program which prompts the user to enter a string. The program searches through the entered string for the characters ‘i’, ‘a’, and ‘n’. The program should print “Found!” if the entered string starts with the character ‘i’, ends with the character ‘n’, and contains the character ‘a’. The program should print “Not Found!” otherwise. The program should not be case-sensitive, so it does not matter if the characters are upper-case or lower-case. Submit your source code for the program, “findian.go”.
-```
-import (
+  ```
+  import (
 	"fmt"
 	"strings"
-)
+  )
 
-func main() {
+  func main() {
 	var str string
 	fmt.Printf("Please enter a string\n")
 	fmt.Scan(&str)
@@ -179,55 +179,55 @@ func main() {
 	} else {
 		fmt.Printf("Not Found!\n")
 	}
-}
-```
+  }
+  ```
 
 ## Control Flow (for, switch, scan)
  - whileが無い
-```
-for i:=0; i<10; i++ {
-  fmt.Printf("hi ")
-}
-// while loop
-i := 0
-for i<10 {
-  fmt.Printf("hi ")
-}
-// infinite for loop
-for {
-  fmt.Printf("hi ")
-}
-```
+  ```
+  for i:=0; i<10; i++ {
+    fmt.Printf("hi ")
+  }
+  // while loop
+  i := 0
+  for i<10 {
+    fmt.Printf("hi ")
+  }
+  // infinite for loop
+  for {
+    fmt.Printf("hi ")
+  }
+  ```
  - switch/caseにbreakが要らない
-```
-switch x {
-case 1:
-  fmt.Printf("case1") // breakが無いけどcase1しか実行されない。
-case 2:
-  fmt.Printf("case2")
-default:
-  fmt.Printf("nocase")
-}
-// for-loopのbreak and continue自体は存在する
-```
+  ```
+  switch x {
+  case 1:
+    fmt.Printf("case1") // breakが無いけどcase1しか実行されない。
+  case 2:
+    fmt.Printf("case2")
+  default:
+    fmt.Printf("nocase")
+  }
+  // for-loopのbreak and continue自体は存在する
+  ```
  - Tagless Switch (タグが無い時はbooleanを式は見る)
-```
-switch {
-case x > 1: // x > 1の時に実行される。
-  fmt.Printf("case1")
-case x < -1:
-  fmt.Printf("case2")
-default:
-  fmt.Printf("nocase")
-}
-```
+  ```
+  switch {
+  case x > 1: // x > 1の時に実行される。
+    fmt.Printf("case1")
+  case x < -1:
+    fmt.Printf("case2")
+  default:
+    fmt.Printf("nocase")
+  }
+  ```
  - Scan (a: pointerを引数に取る。, b: ユーザーの入力をscanする。, c: スキャンされた数をreturnする。)
-```
-var appleNum int
-fmt.Printf("Number of apples?")
-num, err := fmt.Scan(&appleNum) // ユーザー入力を待つ (5と入力しEnterが押されたら、引数に代入する)
-fmt.Printf(appleNum)            // "5"と出力
-```
+  ```
+  var appleNum int
+  fmt.Printf("Number of apples?")
+  num, err := fmt.Scan(&appleNum) // ユーザー入力を待つ (5と入力しEnterが押されたら、引数に代入する)
+  fmt.Printf(appleNum)            // "5"と出力
+  ```
 
 # 4. Composite Data Types
  - Arrays
@@ -256,91 +256,91 @@ fmt.Printf(appleNum)            // "5"と出力
    - Append
      - sliceのSizeを増やしたい時、末尾に追加する
      - 但し、sliceだけではなくarrayにもinsertされる。(そのためarrayのサイズを増やす必要がある時は増やされる)
-```
-// Arrays
-var x [5]int
-x[0] = 2
-fmt.Printf(x[1]) // 0
-
-// Array Literal
-var x [5]int = [5]{1,2,3,4,5} // 下の式と同一
-x := [...]int{1,2,3,4,5}
-for i, v range x {            // Iterating (pythonと同じくrangeが使える。indexも拾える。)
-  fmt.Printf("ind %d, val %d", i, v)
-}
-
-// Hash Tables(Maps)
-var idMap map[string]int
-idMap = make(map[string]int)         // Use make() to create a map
-idMap := map[string]int {"joe": 123} // May define a map literal({:}の事)
-id, p := idMap["joe"]      // idはvalue, pはboolean(存在するかどうか)
-fmt.Println(idMap["joe"])  // 見つからなかったらzero(""など)が返る
-idMap["jane"] = 456
-delete(idMap, "joe")
-fmt.Println(len(idMap))    // いくつキーがあるか。
-for key, val := range idMap { // Iterating through a Map
-  fmt.Println(key, val)
-}
-
-// Structs
-type struct Person {
-  name string   // <- field
-  addr string
-  phone string
-}
-var p1 Person
-p1.name = "joe"
-x = p1.addr
-p1 := new(Person) // 初期化方法(=> 全てのfieldはzero(""など)で初期化される)
-p1 := Person(name: "joe", addr: "a st.", phone: "123") // struct literal((:)の事)でも初期化できる
-
-// Slices
-arr := [..]string{"a", "b", "c", "d", "e", "f", "g"}
-s1 := arr[1:3]
-s2 := arr[2:5] // s1とオーバーラップしても問題なし
-fmt.Printf(len(s1), cap(s1)) // -> " 2 6 " (The capacities are the difference between the length of the underlying array and the starting index of the slice.)
-s := []int{1,2,3,4,5} // これはSlice。Sliceを初期化した場合は(Length = Capacityとなる。Pointerは0の位置。)
-
-// Make a Slices
-sli = make([]int, 10) // 0で初期化したい時でlength=capacityとしたい時
-   - 引数はtypeとlength/capacityの２つ
-sli = make([]int, 10, 15) // lengthとcapacityを別々に指定する時
-sli = append(sli, 100)
-```
+     ```
+     // Arrays
+     var x [5]int
+     x[0] = 2
+     fmt.Printf(x[1]) // 0
+     
+     // Array Literal
+     var x [5]int = [5]{1,2,3,4,5} // 下の式と同一
+     x := [...]int{1,2,3,4,5}
+     for i, v range x {            // Iterating (pythonと同じくrangeが使える。indexも拾える。)
+       fmt.Printf("ind %d, val %d", i, v)
+     }
+     
+     // Hash Tables(Maps)
+     var idMap map[string]int
+     idMap = make(map[string]int)         // Use make() to create a map
+     idMap := map[string]int {"joe": 123} // May define a map literal({:}の事)
+     id, p := idMap["joe"]      // idはvalue, pはboolean(存在するかどうか)
+     fmt.Println(idMap["joe"])  // 見つからなかったらzero(""など)が返る
+     idMap["jane"] = 456
+     delete(idMap, "joe")
+     fmt.Println(len(idMap))    // いくつキーがあるか。
+     for key, val := range idMap { // Iterating through a Map
+       fmt.Println(key, val)
+     }
+     
+     // Structs
+     type struct Person {
+       name string   // <- field
+       addr string
+       phone string
+     }
+     var p1 Person
+     p1.name = "joe"
+     x = p1.addr
+     p1 := new(Person) // 初期化方法(=> 全てのfieldはzero(""など)で初期化される)
+     p1 := Person(name: "joe", addr: "a st.", phone: "123") // struct literal((:)の事)でも初期化できる
+     
+     // Slices
+     arr := [..]string{"a", "b", "c", "d", "e", "f", "g"}
+     s1 := arr[1:3]
+     s2 := arr[2:5] // s1とオーバーラップしても問題なし
+     fmt.Printf(len(s1), cap(s1)) // -> " 2 6 " (The capacities are the difference between the length of the underlying array and the starting index of the slice.)
+     s := []int{1,2,3,4,5} // これはSlice。Sliceを初期化した場合は(Length = Capacityとなる。Pointerは0の位置。)
+     
+     // Make a Slices
+     sli = make([]int, 10) // 0で初期化したい時でlength=capacityとしたい時
+     // 引数はtypeとlength/capacityの２つ
+     sli = make([]int, 10, 15) // lengthとcapacityを別々に指定する時
+     sli = append(sli, 100)
+     ```
 ## 課題 2
  - Write a program which prompts the user to enter integers and stores the integers in a sorted slice. The program should be written as a loop. Before entering the loop, the program should create an empty integer slice of size (length) 3. During each pass through the loop, the program prompts the user to enter an integer to be added to the slice. The program adds the integer to the slice, sorts the slice, and prints the contents of the slice in sorted order. The slice must grow in size to accommodate any number of integers which the user decides to enter. The program should only quit (exiting the loop) when the user enters the character ‘X’ instead of an integer.
-```
-package main
-
-import (
-  "fmt"
-  "sort"
-  "strconv"
-)
-
-func main() {
-  sli := make([]int, 3)
-  i := 0
-  for {
-    fmt.Printf("Please enter a integer or 'X' if you want to exit.\n")
-    var num string
-    fmt.Scan(&num)
-    if num == "X" {
-      break
-    } else {
-      val, _ := strconv.Atoi(num)
-      if i < 3 {
-        sli[0] = val
+  ```
+  package main
+  
+  import (
+    "fmt"
+    "sort"
+    "strconv"
+  )
+  
+  func main() {
+    sli := make([]int, 3)
+    i := 0
+    for {
+      fmt.Printf("Please enter a integer or 'X' if you want to exit.\n")
+      var num string
+      fmt.Scan(&num)
+      if num == "X" {
+        break
       } else {
-        sli = append(sli, val)
+        val, _ := strconv.Atoi(num)
+        if i < 3 {
+          sli[0] = val
+        } else {
+          sli = append(sli, val)
+        }
+        sort.Ints(sli)
+        fmt.Println(sli)
       }
-      sort.Ints(sli)
-      fmt.Println(sli)
+      i++
     }
-    i++
   }
-}
-```
+  ```
 # 5. Standardized Protocols and Formats(JSON等)
  - RFCs(Requests for Comments)とは、Definitions of Internet protocols and formats(=ネットワーク上で互換させるプロトコル)
    - HTML
