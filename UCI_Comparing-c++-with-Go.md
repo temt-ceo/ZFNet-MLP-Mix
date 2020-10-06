@@ -371,7 +371,7 @@ func main() {
      ```
      
      - JSONオブジェクト プリントアウトSample
-     ```
+```
 package main
 
 import "fmt"
@@ -402,7 +402,7 @@ func main() {
 	fmt.Println(zoo)
 	fmt.Println(string(zooJson))
 }
-     ```
+```
  - File Access ... []byteで読み書き
    - io/ioutil; dat, e := ioutil.ReadFile("test.txt")    <io/ioutilパッケージのFile Read機能を使う。 open/closeが必要無いが、大きいファイルだと一度に読もうとするのでメモリの問題になる。> 
      ```
