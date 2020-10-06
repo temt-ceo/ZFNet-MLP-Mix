@@ -353,7 +353,7 @@ func main() {
      - Go structはJSONと同一; {"name": "joe", "addr": "a st.", "phone": "123"} <キーに"付ければJSONで扱う>
      - 整列整理させたい時はGo structで;
      ```
-     type struct Person {
+     type Person struct {
        name string
        addr string
        phone string
