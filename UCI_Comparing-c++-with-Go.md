@@ -369,6 +369,40 @@ func main() {
      var p2 Person
      err := json.Unmarshal(barr, &p2)     // c/c++の知識無いと厳しいね。 p2のアドレスにセットさせてる。この時fieldは同じである必要があるのでp2はPerson型でないとあかん。
      ```
+     
+     - JSONオブジェクト プリントアウトSample
+     ```
+package main
+
+import "fmt"
+import "encoding/json"
+
+type Zoo struct {
+	Name    string
+	Animals []Animal
+}
+type Animal struct {
+	Species string
+	Says    string
+}
+
+func main() {
+	zoo := Zoo{"Magical Mystery Zoo",
+		[]Animal{
+			{"Cow", "Moo"},
+			{"Cat", "Meow"},
+			{"Fox", "???"},
+		},
+	}
+	zooJson, err := json.Marshal(zoo)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(zoo)
+	fmt.Println(string(zooJson))
+}
+     ```
  - File Access ... []byteで読み書き
    - io/ioutil; dat, e := ioutil.ReadFile("test.txt")    <io/ioutilパッケージのFile Read機能を使う。 open/closeが必要無いが、大きいファイルだと一度に読もうとするのでメモリの問題になる。> 
      ```
