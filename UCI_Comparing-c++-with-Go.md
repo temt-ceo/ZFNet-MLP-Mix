@@ -361,7 +361,7 @@ func main() {
      ```
      - 整列整理させたい時２;
      ```
-     p1 := Person(name: "joe", addr: "a st.", phone: "123")
+     p1 := Person{"joe", "a st.", "123"}
      barr, err := json.Marshal(p1)        // <Marshal()はJSONのUnicode形式から[]byteの形(だからbarr)にしたJSONを返す>
      ```
      - JSON(Unicode形式)に戻したい時;
