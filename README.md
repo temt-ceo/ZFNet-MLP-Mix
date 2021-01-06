@@ -11,7 +11,7 @@ In this research, I checked how Japanese Joshi is working in linguistic roles. T
 URL. https://www.kaggle.com/takashitahara/joshi-japanese-postposition-analysis
 <br><br><br>
 
-**◉Comparing the results by changing the hyper-parameters.(ハイパーパラメータを変更したときの結果への影響を計測)**<br>
+**◉Comparing the results by changing the hyper-parameters.(パラメータを変更したときの結果への影響の計測)**<br>
 The y-value is the strength of concrete, and the dataset is each volumes of construction materials and age of concrete. And analyze the y-hat values by comparing the varieties of hyper parameters using regression model and mean_squared_error value.<br>
 URL. https://www.kaggle.com/takashitahara/concrete-data-and-strength-analysis
 <br><br><br>
