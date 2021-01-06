@@ -5,6 +5,7 @@ This Homepage is organized for the purpose of aggregating the results of Kaggle 
 <br><br>
 ### AI research portfolios
 <br>
+
 **◉Linguistic research of Japanese Joshi words (日本語の助詞と英語の前置詞の役割の比較)**<br>
 In this research, I checked how Japanese Joshi is working in linguistic roles. To compare how is it important to the English words, I researched the frequencies of Japanese Joshi and English prepositions.<br>
 URL. https://www.kaggle.com/takashitahara/joshi-japanese-postposition-analysis
@@ -21,7 +22,7 @@ URL. https://www.kaggle.com/takashitahara/recognizing-concrete-crack-using-pytor
 <br><br><br>
 
 **◉Recognition system of Facial Expression(顔表情解析システム)**<br>
-The total system of facial expression recognitions package through the video and APIs. You can recognize in both real time and later because this package includes server side programmes for both pattern.<br>
+The total system of facial expression recognition packages through the video and APIs. You can recognize in both real time and later because this package includes server side programmes for both pattern.<br>
 URL. [HERE](Hands-On-Facial-Expression-Recognition.ipynb)
 <br><br><br>
 
