@@ -4,6 +4,7 @@ ZFNet-MLP Mix ML Project<br>
 This Homepage is organized for the purpose of aggregating the results of Kaggle Research. Each portfolios of AI research can be seen in following link.<br>
 <br><br>
 ### AI research portfolios
+<br>
 **◉Linguistic research of Japanese Joshi words (日本語の助詞と英語の前置詞の役割の比較)**<br>
 In this research, I checked how Japanese Joshi is working in linguistic roles. To compare how is it important to the English words, I researched the frequencies of Japanese Joshi and English prepositions.<br>
 URL. https://www.kaggle.com/takashitahara/joshi-japanese-postposition-analysis
@@ -14,16 +15,16 @@ The y-value is the strength of concrete, and the dataset is each volumes of cons
 URL. https://www.kaggle.com/takashitahara/concrete-data-and-strength-analysis
 <br><br><br>
 
-**◉The final assignemnt of IBM AI Engineering Professional(IBM認定AI Engineering Professionalの最終課題、127x127x3の画像をPyTorchを使ってクラス解析)**<br>
+**◉The final assignemnt of IBM AI Engineering Professional(IBM認定AI Engineering Professionalの最終課題)**<br>
 Classify the concrete cracks using photo image of concretes and PyTorch.<br>
-**これはする、**<br>
 URL. https://www.kaggle.com/takashitahara/recognizing-concrete-crack-using-pytorch
 <br><br><br>
 
---------------------------------------------------------------------------------------------------
-### Hands On
-**◉Linguistic research of Japanese Joshi words (日本語の助詞と英語の前置詞の役割の比較)**<br>
-**(1)[Facial Expression Recognition](Hands-On-Facial-Expression-Recognition.ipynb): Read the video and recognize the face in real time and display the white box on the human face and recognize and show those facial expressions<br>ビデオを読み込み、顔を検出、正方形の枠出し及び感情をリアルタイムに枠上にテキスト化、ブラウザ上に表示する**<br>
+**◉Recognition system of Facial Expression(顔表情解析システム)**<br>
+The total system of facial expression recognition through the video and APIs. You can recognize in both real time and later because this package includes server side programmes for both pattern.<br>
+URL. [HERE](Hands-On-Facial-Expression-Recognition.ipynb)
+<br><br><br>
+
 **(2)[Network Community Analysis](Hands-On-Community-Model-Analysis.ipynb): Using networkx analyze network nodes inside a company over the e-mails, train the model to predict node attributes such as salary, and check the model**<br>
 <br>
 **上記以外のHands Onファイルは**
