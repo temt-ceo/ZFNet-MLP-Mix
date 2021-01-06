@@ -1,23 +1,19 @@
 # ZFNet-MLP-Mix
-ZFNet-MLP Mix ML Project
+ZFNet-MLP Mix ML Project<br>
 
-This Homepage is organized for the purpose of aggregating the results of Kaggle Research. Each portfolios of AI research can be seen in following link.
+This Homepage is organized for the purpose of aggregating the results of Kaggle Research. Each portfolios of AI research can be seen in following link.<br>
 
 ### AI research portfolios
 **◉Linguistic research of Japanese Joshi words (日本語の助詞と英語の前置詞の役割の比較)**<br>
 In this research, I checked how Japanese Joshi is working in linguistic roles. To compare how is it important to the English words, I researched the frequencies of Japanese Joshi and English prepositions.<br>
 URL. https://www.kaggle.com/takashitahara/joshi-japanese-postposition-analysis
-<br><br>
-**◉the region and the domain category**<br>
-**USA, construction materials**<br><br>
-**◉research question**<br>
-・ I tested how the results are changing by changing a series of model patterns using keras.<br>
-・ The dataset is the volumes of construction materials which is used to concrete composition such as cement and water.<br>
-・ The strength of concrete is the target value, and I predicted and researched the y-hat value by regression model and mean_squared_error value.<br>
-・ This dataset also includes age of concrete mix even though age is important value for strength.<br>
+<br><br><br>
 
+**◉Comparing the results by changing the hyper-parameters.(ハイパーパラメータを変更したときの結果への影響を計測)**<br>
+The dataset is the volumes of construction materials which is used to concrete composition such as cement and water.The strength of concrete is the target value, and analyze the y-hat value by regression model and mean_squared_error value.<br>
 URL. https://www.kaggle.com/takashitahara/concrete-data-and-strength-analysis
-<br><br>
+<br><br><br>
+
 **◉the region and the domain category**<br>
 **USA, CONCRETE STRUCTURE IMAGES**<br><br>
 **◉research question**<br>
