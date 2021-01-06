@@ -26,7 +26,12 @@ The total system of facial expression recognition packages through the video and
 URL. [HERE](Hands-On-Facial-Expression-Recognition.ipynb)
 <br><br><br>
 
-**(2)[Network Community Analysis](Hands-On-Community-Model-Analysis.ipynb): Using networkx analyze network nodes inside a company over the e-mails, train the model to predict node attributes such as salary, and check the model**<br>
-<br>
-**上記以外のHands Onファイルは**
-[こちら](https://github.com/temt-ceo/ZFNet-MLP-Mix/tree/master/samples/michigan/Stanford%20University/HandsOn)にあります。<br>
+**◉Evaluation of fine amount of violation (Michigan Univ. Assignment)(違反罰則金額予測<ミシガン大学課題>)**<br>
+This assignment of university of Michigan is very well organized and using Random Forest Classifier.<br>
+URL. [HERE](samples/michigan/AppliedMachineLearningAssignment4.ipynb)
+<br><br><br>
+
+**◉Networkx analysis between the network nodes inside a company over the e-mails(E-Mailを通じた社内ネットワークの繋がり分析)**<br>
+The final Assignment of university of Michigan.
+URL. [Network Community Analysis](Hands-On-Community-Model-Analysis.ipynb)
+<br><br><br>
