@@ -1,7 +1,7 @@
 # ZFNet-MLP-Mix
 ZFNet-MLP Mix ML Project
 
-This Homepage is used as aggregation of Kaggle Research Results. Each portfolios can be seen in following link.
+This Homepage is organized for the purpose of aggregating the results of Kaggle Research. Each portfolios of AI research can be seen in following link.
 
 ### Kaggle web sites
 **◉the region and the domain category**<br>
