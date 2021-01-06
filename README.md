@@ -3,13 +3,9 @@ ZFNet-MLP Mix ML Project
 
 This Homepage is organized for the purpose of aggregating the results of Kaggle Research. Each portfolios of AI research can be seen in following link.
 
-### Kaggle web sites
-**◉the region and the domain category**<br>
-**Japan and Linguistics**<br><br>
-**◉research question**<br>
-I always have thought Japanese Joshi is very unique and frequencies are top level in Japanese and I am interested in how different with English prepositions.<br>
-In this report I'm examining "How word frequency are different and which has more significant role between English preposition and Japanese Joshi(postposition)?"<br>
-
+### AI research portfolios
+**◉Linguistic research of Japanese Joshi words (日本語の助詞と英語の前置詞の役割の比較)**<br>
+In this research, I checked how Japanese Joshi is working in linguistic roles. To compare how is it important to the English words, I researched the frequencies of Japanese Joshi and English prepositions.<br>
 URL. https://www.kaggle.com/takashitahara/joshi-japanese-postposition-analysis
 <br><br>
 **◉the region and the domain category**<br>
