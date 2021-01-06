@@ -21,7 +21,7 @@ URL. https://www.kaggle.com/takashitahara/recognizing-concrete-crack-using-pytor
 <br><br><br>
 
 **◉Recognition system of Facial Expression(顔表情解析システム)**<br>
-The total system of facial expression recognition through the video and APIs. You can recognize in both real time and later because this package includes server side programmes for both pattern.<br>
+The total system of facial expression recognitions package through the video and APIs. You can recognize in both real time and later because this package includes server side programmes for both pattern.<br>
 URL. [HERE](Hands-On-Facial-Expression-Recognition.ipynb)
 <br><br><br>
 
