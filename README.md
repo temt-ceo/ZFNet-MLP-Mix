@@ -31,7 +31,7 @@ This assignment of university of Michigan is very well organized and using Rando
 URL. [HERE](samples/michigan/AppliedMachineLearningAssignment4.ipynb)
 <br><br><br>
 
-**◉Networkx analysis between the network nodes inside a company over the e-mails(E-Mailを通じた社内ネットワークの繋がり分析)**<br>
-The final Assignment of university of Michigan.
-URL. [Network Community Analysis](Hands-On-Community-Model-Analysis.ipynb)
+**◉Networkx analysis between the network nodes inside a company over the e-mails(社内Networkの繋がり分析)**<br>
+The final Assignment of university of Michigan.<br>
+URL. [HERE](Hands-On-Community-Model-Analysis.ipynb)
 <br><br><br>
