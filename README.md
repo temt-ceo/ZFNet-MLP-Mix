@@ -26,7 +26,7 @@ The total system of facial expression recognition packages through the video and
 URL. [HERE](Hands-On-Facial-Expression-Recognition.ipynb)
 <br><br><br>
 
-**◉Evaluation of whether the fines of violation will be paid(Michigan Univ. Assignment)(罰則金支払い確率予測<ミシガン大学課題>)**<br>
+**◉Evaluation of whether the fines of violation will be delay(Michigan Univ. Assignment)(罰則金支払い遅延予測<ミシガン大学課題>)**<br>
 This assignment of university of Michigan is very well organized and using Random Forest Classifier.<br>
 URL. [HERE](samples/michigan/AppliedMachineLearningAssignment4.ipynb)
 <br><br><br>
