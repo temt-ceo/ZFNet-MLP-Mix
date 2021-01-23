@@ -1,1 +1,33 @@
+# Summary
 
+## Pandas Visualization
+
+```
+importpandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Using matplotlib in jupyter notebooks
+%matplotlib notebook
+
+# 利用可能なスタイル
+plt.style.available
+
+# 'seaborn-colorblind'のスタイルを使う
+plt.style.use('seaborn-colorblind')
+
+np.random.seed(1230)
+# 乱数でデータセットを作る. X軸は１年間.
+df = pd.DataFrame(['A': np.random.randn(365).custom(0),
+                   'B': np.random.randn(365).custom(0) + 20,
+                   'C': np.random.randn(365).custom(0) - 20],
+                   index=pd.date_range('1/1/2017', periods=365))
+# 線グラフ
+df.plot(); # add a semi-colon to the end of the plotting call to suppress unwanted output
+
+# 散布図(X軸: A, Y軸: B)
+df.plot('A', 'B', kind='scatter');
+
+# 散布図(X軸: A, Y軸: B, 色,大きさ: C)
+
+```
