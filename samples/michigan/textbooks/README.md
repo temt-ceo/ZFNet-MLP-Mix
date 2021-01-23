@@ -29,5 +29,27 @@ df.plot(); # add a semi-colon to the end of the plotting call to suppress unwant
 df.plot('A', 'B', kind='scatter');
 
 # 散布図(X軸: A, Y軸: B, 色,大きさ: C)
+df.plot.scatter('A', 'C', c='B', s=df['B'], colormap='viridis')
 
+# X軸とY軸のアスペクトをそろえる
+ax = df.plot.scatter('A', 'C', c='B', s=df['B'], colormap='viridis')
+ax.set_aspect('equal')
+
+# ヒストグラム(Y軸: Frequency)
+df.plot.hist(alpha=0.7)
+df.plot.kde() # Kernel density estimation plots
 ```
+
+### pandas.tools.plotting
+```
+# ハナショウブ
+iris = pd.read_csv('iris.csv')
+
+# それぞれのデータ間の相関をマトリックスで確認
+pd.tools.plotting.scatter_matrix(iris)
+
+# 名称ごとに線グラフ色分け(X軸: 名称以外カラム, Y軸: 値(全てのカラムが同じようなデータ幅である必要がある))
+plt.figure()
+pd.tools.plotting.parallel_coordinates(iris, 'Name');
+```
+
