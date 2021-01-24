@@ -173,7 +173,13 @@ df = df[df['Rank'] <= 15]
 df.set_index(['Country'], inplace=True)
 return df
 
-# function2~12 は複雑なのでsamples/michigan/IntroductionAssignment3.ipynb 参照
+# function2
+# function3
+# function4
+# function5
+# function6
+#     :
+# function12 は複雑なのでsamples/michigan/IntroductionAssignment3.ipynb 参照
 ```
 
 ### Introduction Assignment 4 <仮説のテスト(ttest)>
@@ -245,9 +251,83 @@ p = ttest(housing_df_0['price_ratio'], housing_df_1['price_ratio'], nan_policy='
 return p < 0.01
 ```
 
-### Plotting Assignment 1 <実践> -> samples/michigan/PlottingChartingAssignment2.ipynb 参照
+### Plotting Assignment 1 <実践>
+```
+# samples/michigan/PlottingChartingAssignment2.ipynb 参照
+```
 
 ### Plotting Assignment 2 <Custom Visualization>
 ```
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+  
+np.random.seed(1234)
+df = pd.DataFrame([np.random.normal(32000, 200000, 3650),
+                  np.random.normal(43000, 100000, 3650),
+                  np.random.normal(43500, 140000, 3650),
+                  np.random.normal(48000, 70000, 3650)],
+                  index=[1992,1993,1994,1995])
+df
+
+# データの標準偏差などの統計情報を取得
+df.describe()
+
+# 3650のカラムを全て合計して統計を求める(表形式)
+df.mean(axis=1)
+df.std(axis=1)
+
+# 3650のカラムを全て合計して統計を求める(indexとvalueを分ける)
+values = df.mean(axis=1)
+values.index.get_values()
+values.values
+
+# standard error = std sample/ sqrt(number of samples)
+std_values = df.std(axis=1)
+standard_error = std_values  / (len(std_values) ** 0.5)
+
+#(長いので)残り省略 samples/michigan/PlottingChartingAssignment3.ipynb 参照
+```
+
+### Plotting Assignment 3 <実践>
+```
+# samples/michigan/PlottingChartingAssignment4.ipynb 又は
+# https://www.kaggle.com/takashitahara/joshi-japanese-postposition-analysis　参照
+# 一部抜粋
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# kaggleにアップロードしたデータを取得する
+# import od
+# for dirname, _, filenames in os.walk('../input'):
+#     for filename in filenames:
+#         print(os.path.join(dirname, filename))
+jp_df = pd.read_csv('./input/japanesewordsfrequency/japanese_lemmas.csv')
+en_df = pd.read_csv('./input/englishwordsfrequency/unigram_freq.csv')
+
+# 使用頻度TOP100だけ選ぶ
+jp_df = jp_df[0:100]
+en_df = en_df[0:100]
+
+# これはrename使った方がメモリ的にいいな
+#  jp_df.rename(columns={'lemma': 'word'}, inplace=True)
+jp_df['word'] = jp_df['lemma']
+jp_df['frequency'] = jp_df['frequency'].apply(lambda x: int(x))
+jp_df = jp_df[['word', 'frequency', 'rank']]
+
+# グラフに表示可能なようにアスペクトをそろえる
+en_df['frequency'] = (en_df['count'] * (jp_df.iloc[0]['frequency'] / en_df.iloc[0]['count'])).apply(lambda x: int(x))
+
+# en_dfにranカラムを作る
+en_df['rank'] = None
+en_df = en_df[['word', 'frequency', 'rank']]
+
+jp_df['word length'] = jp_df['word'].apply(lambda x: len(x))
+en_df['word length'] = en_df['word'].apply(lambda x: len(str(x)))
+
+# 途中省略
+prepositions
 ```
 
