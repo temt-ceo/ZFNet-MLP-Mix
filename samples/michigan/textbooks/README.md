@@ -328,6 +328,16 @@ jp_df['word length'] = jp_df['word'].apply(lambda x: len(x))
 en_df['word length'] = en_df['word'].apply(lambda x: len(str(x)))
 
 # 途中省略
-prepositions
+prepositions = pd.readcsv('./input/prepositions/prepositions-in-english.csv')
+for idx, row in en_df.iterrows():
+    en_df.iloc[idx, en_df.columns.get_loc('rank')] = idx + 1
+    for preposition in prepositions['Word']:
+        if row['word'] == preposition:
+            en_df.iloc[idx, en_df.columns.get_loc('Preposition or Joshi')] = 'Yes'
+
+df = pd.concat([jp_df, en_df])
+g = sns.factorplot(x='Word Length', y='frequency', data=df, hue='Preposition or Joshi', kind='swarm', col='Language')
+g.set_axis_labels('Word Length', 'Words Frequency').set_titles('{col_name} {col_var} Top 100 Words')
+plt.show()
 ```
 
