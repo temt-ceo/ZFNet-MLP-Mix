@@ -175,3 +175,79 @@ return df
 
 # function2~12 は複雑なのでsamples/michigan/IntroductionAssignment3.ipynb 参照
 ```
+
+### Introduction Assignment 4 <仮説のテスト(ttest)>
+```
+import pandas as pd
+import numpy as np
+from scipy.stats import ttest_ind
+import re
+
+wikipedia_univ_homes = pd.read_csv('university_towns.txt', header=None, names=['city'], sep='\n')
+citis = list(wikipedia_univ_homes['city'])
+state = ''
+df_list = []
+for data in citis:
+    if '[edit]' in data:
+        state = data.replace('[edit]', '')
+    else:
+        town = re.sub('\s?\(.*$', '', data)
+        df_list.append([state, town])
+df = pd.DataFrame(df_list, columns=['State', 'RegionName'])
+df
+# (途中略)
+
+# ハウジングデータをquarterごとに変換し、平均をデータとするDataframeを作成
+housing_df = pd.read_csv('City_Zhvi_AllHomes.csv')
+states = {'OH': 'Ohio', 'KY': 'Kentucky', 'AS': ' .... ', 'VA': 'Verginia'}
+housing_df['State'] = housing_df['State'].apply(lambda a: states[a])
+
+# 第1カラムをstate, 第2カラムをRegionNameという名のindexにする
+housing_df.set_index(['State', 'RegionName'], inplace=True)
+
+# 不要なカラムを全て取る(dropは取り除いたdfを返し、popは取り除いたカラムを返す)
+housing_df.pop('RegionID')
+# (途中略)
+
+aggregated_df = housing_df.groupby(pd.PeriodIndex.columns, freq='Q'), axis=1).mean()
+targets = []
+for quarter in aggregated_df.columns:
+    if quarter.startswith('2'): #2000年以降
+        targets.append(quarter)
+aggregated_df = aggregated_df[targets]
+
+# OhioのAkronとDayton地域の2010q3と2015q2を表示する
+aggregated_df.loc[[('Ohio','Akron), ('Ohio', 'Dayton')]].loc[:, ['2010q3', '2015q2']]
+
+# ttest
+from scipy.stats import ttest_ind
+# (途中略 以下初見のメソッドがあるがsamples/michigan/IntroductionAssignment4.ipynb　を参照)
+st_column = get_recession_start()
+bt_column = get_recession_bottom()
+
+# リセッション前のクォーターを取得
+before_st_column = aggregated_df.columns[aggregated_df.columns.get_loc(st_column) - 1]
+
+# pandas.divの方が / よりメモリが軽くなる
+housing_df = aggregated_df[before_st_column].div(aggregated_df[bt_column])
+
+univ_towns_list = df.values.to_list()
+def is_university_town(row):
+    if list(row.name) in univ_towns_list:
+        return 1
+    else:
+        return 0
+housing_df['has_univ'] = housing_df.apply(is_university_town, axis=1)
+housing_df_1 = housing_df[housing_df['has_univ'] == 1][['price_ratio']]
+housing_df_0 = housing_df[housing_df['has_univ'] == 0][['price_ratio']]
+
+p = ttest(housing_df_0['price_ratio'], housing_df_1['price_ratio'], nan_policy='omit').pvalue
+return p < 0.01
+```
+
+### Plotting Assignment 1 <実践> -> samples/michigan/PlottingChartingAssignment2.ipynb 参照
+
+### Plotting Assignment 2 <Custom Visualization>
+```
+```
+
