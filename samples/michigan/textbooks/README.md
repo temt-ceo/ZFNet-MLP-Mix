@@ -341,3 +341,68 @@ g.set_axis_labels('Word Length', 'Words Frequency').set_titles('{col_name} {col_
 plt.show()
 ```
 
+### ClassificationとKNN(K nearest neighbors)
+```
+%matplotlib notebook
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+fruits = pd.read_table('readonly/fruit_data_with_colors.txt')
+
+# ユニークなIDとフルーツ名を取得しmapを作成する
+lookup_fruit_name = dict(zip(fruits.fruit_label.unique(), fruits.fruit_name.unique()))
+lookup_fruit_name
+
+# 検証
+from matplotlib import cm
+X = fruits[['height', 'width', 'mass', 'color_score']]
+y = fruits['fruit_label']
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
+
+# gnuplotと呼ばれるColor Mapを使用する
+cmap = cm.get_cmap('gnuplot')
+scatter = pd.scatter_matrix(X_train, c=y_train, marker='o', s=40, hist_kwds={'bins': 15}, figsize=(9,9), cmap=cmap)
+
+# 3Dの散布図
+from mpl_toolkits.mplot3d import Axes3D
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+# widthをX軸, heightをy軸, color_scoreをz軸にし、yを色別の〇印でプロット
+ax.scatter(X_train['width'], X_train['height'], X_train['color_score'], c=y_train, marker='o', s=100)
+ax.set_xlabel('width')
+ax.set_ylabel('height')
+ax.set_zlabel('color_scale')
+plt.show()
+
+# 省略(KNNについてはsamples/michigan/textbooks/AppliedMachineLearningTextbook1.ipynb　参照
+```
+
+### Supervised Part1(KNN Regression)
+```
+# 途中省略 (前提条件はsamples/michigan/textbooks/AppliedMachineLearningTextbook2.ipynb　参照)
+from sklearn.neighbors import KNeighborsRegressor
+X_train, X_test, y_train, y_test = train_test_split(X_R1, y_R1, random_state=0)
+knnreg = KNeighborsRegressor(n_neighbors=5).fit(X_train, y_train)
+
+print(knnreg.predict(X_test))
+print('R-squared test score: {:.3f}'.format(knnreg.score(X_test, y_test)))
+
+# 横にグラフを並べてプロットする
+fig, subaxes = plt.subplots(1, 2, figsize=(8, 4))
+
+# 等間隔の数値のsetを用意
+X_predict_input = np.linspace(-3, 3, 50).reshape(-1, 1)
+X_train, X_test, y_train, y_test = train_test_split(X_R1[0::5], y_R1[0::5], random_state=0)
+
+# KNN regression(K=1とK=3を比較)
+for thisaxis, K in zip(subaxes, [1, 3]):
+    knnreg = KNeighborsRegressor(n_neighbors=K).fit(X_train, y_train)
+
+
+
+```
+
