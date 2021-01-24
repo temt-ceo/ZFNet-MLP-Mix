@@ -164,5 +164,14 @@ def convert_country_name(val):
 energy['Country'] = energy['Country'].apply(convert_country_name)
 # カラム名をそろえる 
 GDP.rename(columns={'Country Name': 'Country'}, inplace=True 
+# (途中略)
+df.merge(energy, GDP, how='inner', left_on='Country', right_on='Country')
+# 必要なカラムに絞る
+df = df[['Country', 'Rank', ' .... ', '2015']]
+df = df.sort('Rank')
+df = df[df['Rank'] <= 15]
+df.set_index(['Country'], inplace=True)
+return df
 
+# function2~12 は複雑なのでsamples/michigan/IntroductionAssignment3.ipynb 参照
 ```
