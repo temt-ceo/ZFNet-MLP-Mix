@@ -864,5 +864,29 @@ return X, y
 ```
 
 
-### Machine Learning Assignment 2 <イントロダクション>
+### Machine Learning Assignment 2 <Supervised>
+```
+# Part1 Regression
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+# 試験用データ
+np.random.seed(0)
+n = 15
+x = np.linspace(0, 10, n) + np.random.randn(n) / 5
+y = np.sin(x) + x / 6 + np.random.randn(n) / 10
+X_train, X_test, y_train, y_test = train_test_split(x, y, random_state=0)
+
+# function1 1,3,6,9次式でModelを作り、等間隔のtestデータを作成し、yを求める
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
+
+# 1次元のデータをpolyに渡すとfeaturesに対し１つのデータと扱われるのでその対処
+X_train_reshape = X_train.reshape(-1, 1)
+
+test_x_data_points = np.linspace(0, 10, 100) # 0から10までの100点
+test_x = test_x_data_points.reshape(-1, 1)
+
+
 ```
