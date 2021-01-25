@@ -821,4 +821,48 @@ plt.scatter(X_R1, y_R1, marker= 'o', s=50)
 plt.show()
 ```
 
-### Applied Machine Learning Assignment 2 <データ・クリーニング>
+### Machine Learning Assignment 1 <イントロダクション>
+```
+import numpy as np
+import pandas as pd
+from sklearn.datasets import load_breast_cancer
+
+cancer = load_breast_cancer()
+print(cancer.DESCR) # data set description
+
+cancer.keys() # This object is similar to a dictionary. Output dictionary's keys
+
+# function1 sklearn.datasetからpandas.DataFrameに変換する
+df = pd.DataFrame(data=np.c_[cancer['data'], cancer['target']], columns=np.append(cancer['feature_names'], ['target']))
+return df
+
+# function2 class分布(distribution)を表示
+cancerdf = function1
+cancerdf['target'] = cancerdf['target'].apply(int) # lambdaいらない
+count_malignant = len(cancerdf[cancerdf['target'] == 0])
+count_benign = len(cancerdf[cancerdf['target'] == 1])
+
+s_dict = {
+    'malignant': count_malignant,
+    'benign': count_benign
+}
+return pd.Series(s_dict, name='target')
+
+# function3 DataFrameをXとyに分ける
+cancerdf = function1()
+X = cancerdf[np.array(cancerdf.columns)[0:-1]]
+y = cancerdf['target']
+
+return X, y
+
+# function4
+# function5 (knnを使う)
+# function6 ( 〃)
+# function7 ( 〃)
+# function8 ( 〃)
+# 省略 (samples/michigan/AppliedMachineLearningAssignment1.ipynb 参照)
+```
+
+
+### Machine Learning Assignment 2 <イントロダクション>
+```
