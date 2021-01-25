@@ -983,4 +983,11 @@ clf = DecisionTreeClassifier(random_state=0).fit(X_train2, y_train2)
 zipped = list(zip(X_train2.columns, clf.feature_importances_))
 
 # ソート、TOP5を抽出
+sorted_zip = sorted(zipped, key=how_to_sort, reverse=True)[:5]
+top5_features= list(map(pick_feature_name, sorted_zip))
+
+return top5_features
+
+# function6 (SVCを使う)
+# 省略 (samples/michigan/AppliedMachineLearningAssignment2.ipynb 参照)
 ```
