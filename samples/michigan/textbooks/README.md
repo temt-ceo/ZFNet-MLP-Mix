@@ -888,5 +888,99 @@ X_train_reshape = X_train.reshape(-1, 1)
 test_x_data_points = np.linspace(0, 10, 100) # 0から10までの100点
 test_x = test_x_data_points.reshape(-1, 1)
 
+arr = []
+for degree in [1, 3, 6, 9]:
+    X_train_scaled = PolynomialFeatures(degree=degree).fit_transform(X_train_reshape)
+    clf = LinearRegression().fit(X_train_scaled, y_train)
+    predicted = clf.predict(PolynomialFeatures(degree=degree).fit_transform(test_x))
+    arr.append(predicted)
+return arr
 
+# 予測したものをプロットする
+def plot_one(degree_predictions):
+    import mathplotlib.pyplot as plt
+    %matplotlib notebook
+    plt.figure(figsize=(10,5))
+    plt.plot(X_train, y_train, 'o', label='training data', markersize=10)
+    plt.plot(X_test, y_test, 'o', label='test data', markersize=10)
+    for i, degree in enumerate([1, 3, 6, 9]):
+        plt.plot(np.linspace(0, 10, 100), degree_predictions[i], alpha=0.8, lw=2, label='degree={}'.format(degree))
+    plt.ylim(-1, 2.5)
+    plt.legend(loc=4)
+plot_one(arr)
+
+# function2 degree=0~9のR2(coefficient of determination) regression scoreを求める
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.metrics.regression import r2_score
+
+# 1次元のデータをpolyに渡すとfeaturesに対し１つのデータと扱われるのでその対処
+X_train_r = X_train.reshape(-1, 1)
+X_test_r = X_test.reshape(-1, 1)
+
+# 0から9次元のリグレッションを実施
+r_squared_values_train = []
+r_squared_values_test = []
+for deg in list(range(0, 10)):
+    X_train_scaled = PolynomialFeatures(degree=deg).fit_transform(X_train_r)
+    X_test_scaled = PolynomialFeatures(degree=deg).fit_transform(X_test_r)
+    clf = LinearRegression().fit(X_train_scaled, y_train)
+    r_squared_values_train.append(clf.score(X_train_scaled, y_train))
+    r_squared_values_test.append(clf.score(X_test_scaled, y_test))
+return r_squared_values_train, r_squared_values_test
+    
+# function3 testのR2が一番良いdegreeが一番良いdegree
+for i in list(range(0, 10)):
+    print('deg{}: {:.2f}, {:.2f}'.format(i, r_squared_values_train[i], r_squared_values_test[i]))
+
+
+# function4 12次のModelを作成しOverfittingが起きやすい状態にし、testの重相関係数(r-square)値をLassoを使用した場合と使用しない場合で比較する。
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import Lasso, LinearRegression
+from sklearn.metrics.regression import r2_score
+
+lasso_model = Lasso(alpha=0.01, max_iter=10000)
+X_train_scaled = PolynomialFeatures(degree=12).fit_transform(X_train.reshape(-1, 1))
+X_test_scaled = PolynomialFeatures(degree=12).fit_transform(X_test.reshape(-1, 1))
+
+clf1 = LinearRegression().fit(X_train_scalaed, y_train)
+clf2 = lasso_model.fit(X_train_scalaed, y_train)
+
+r_squared_test_linear = clf1.score(X_test_scaled, y_test)
+r_squared_test_lasso = clf2.score(X_test_scaled, y_test)
+
+return r_squared_test_linear, r_squared_test_lasso
+
+# 答えは(-4.31, 0.84)になる
+
+# Part2 Classification(Decision Tree)
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+
+mush_df = pd.read_csv('mushrooms.csv')
+mush_df2 = pd.get_dummies(mush_df)
+
+# Xとyに分ける
+X_mush = mush_df2.iloc[:, 2:]
+y_mush = mush_df2.iloc[:, 1]
+
+X_train2, X_test2, y_train2, y_test2 = train_test_split(X_mush, y_mush, random_state=0)
+
+X_subset = X_test2
+y_subset = y_test2
+
+# function5 feature importancesを求め、TOP5の要因を抽出する
+from sklearn.tree import DecisionTreeClassifier
+def how_to_sort(elem):
+    return elem[1]
+def pick_feature_name(elem):
+    return elem[0]
+    
+clf = DecisionTreeClassifier(random_state=0).fit(X_train2, y_train2)
+
+# Feature NameとImportance Valueをzipする
+zipped = list(zip(X_train2.columns, clf.feature_importances_))
+
+# ソート、TOP5を抽出
 ```
