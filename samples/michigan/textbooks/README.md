@@ -381,7 +381,7 @@ plt.show()
 # 省略(KNNについてはsamples/michigan/textbooks/AppliedMachineLearningTextbook1.ipynb　参照
 ```
 
-### Supervised Part1(KNN Regression)
+### Supervised Part1(KNN Regression, Linear models)
 ```
 # 途中省略 (前提条件はsamples/michigan/textbooks/AppliedMachineLearningTextbook2.ipynb　参照)
 from sklearn.neighbors import KNeighborsRegressor
@@ -401,7 +401,179 @@ X_train, X_test, y_train, y_test = train_test_split(X_R1[0::5], y_R1[0::5], rand
 # KNN regression(K=1とK=3を比較)
 for thisaxis, K in zip(subaxes, [1, 3]):
     knnreg = KNeighborsRegressor(n_neighbors=K).fit(X_train, y_train)
+    y_predict_output = knnreg.predict(X_predict_input)
+    thisaxis.set_xlim([-2.5, 0.75])
+    # 散布図に結果をプロット
+    thisaxis.plot(X_predict_input, y_predict_input, '^', markersize=10,
+                  label='Predicted', alpha=0.8)
+    thisaxis.plot(X_train, y_train, 'o', label='True Value', alpha=0.8)
+    thisaxis.set_xlabel('Input feature')
+    thisaxis.set_ylabel('Target value')
+    thisaxis.set_title('KNN regression (K={})'.format(K))
+    thisaxis.legend()
+# グラフ出力
+plt.tight_layout()
 
+# 途中省略(KNNは散布図で予測できる（単純）ものに向く。結果も視覚化しやすい) samples/michigan/textbooks/AppliedMachineLearningTextbook2.ipynb 参照
+
+# Linear regression
+from sklearn.linear_model import LinearRegression
+
+X_train, X_test, y_train, y_test = train_test_split(X_R1, y_R1, random_state=0)
+linreg = LinearRegression().fit(X_train, y_train)
+
+print('linear model coeff (w) : {}'.format(linreg.coef_))
+print('linear model intercept (b) : {:.3f}'.format(linreg.intercept_))
+print('R-squared score (training) : {:.3f}'.format(linreg.score(X_train, y_train)))
+print('R-squared score (test) : {:.3f}'.format(linreg.score(X_test, y_test)))
+
+# 途中省略
+
+# Ridge regression(多重回帰曲線の弊害をペナルティにより誤差を軽減するテクニック)
+from sklearn.linear_model import Ridge
+
+X_train, X_test, y_train, y_test = train_test_split(X_crime, y_crime, random_state=0)
+linridge = Ridge(alpha=20.0).fit(X_train, y_train)
+
+print('ridge regression linear model coeff (w) : {}'.format(linridge.coef_))
+print('ridge regression linear model intercept (b) : {:.3f}'.format(linridge.intercept_))
+print('R-squared score (training) : {:.3f}'.format(linridge.score(X_train, y_train)))
+print('R-squared score (test) : {:.3f}'.format(linridge.score(X_test, y_test)))
+print('Number of non-zero features: {}'.format(np.sum(linridge.coef_ != 0)))
+
+# Ridge regression with feature normalization 
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+
+from sklearn.linear_model import Ridge
+X_train, X_test, y_train, y_test = train_test_split(X_crime, y_crime, random_state=0)
+
+X_tain_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+linridge = Ridge(alpha=20.0).fit(X_train_scaled, y_train)
+
+print('ridge regression linear model coeff (w) : {}'.format(linridge.coef_))
+print('ridge regression linear model intercept (b) : {:.3f}'.format(linridge.intercept_))
+print('R-squared score (training) : {:.3f}'.format(linridge.score(X_train_scaled, y_train)))
+print('R-squared score (test) : {:.3f}'.format(linridge.score(X_test_scaled, y_test)))
+print('Number of non-zero features: {}'.format(np.sum(linridge.coef_ != 0)))
+
+# Ridge regression with regularization parameter: alpha
+print('Ridge regression: effect of alpha regularization parameter\n')
+for this_alpha in [0, 1, 10, 20, 50, 100, 1000]:
+    linridge = Ridge(alpha = this_alpha).fit(X_train_scaled, y_train)
+    r2_train = linridge.score(X_train_scaled, y_train)
+    r2_test = linridge.score(X_test_scaled, y_test)
+    num_coeff_bigger = np.sum(abs(linridge.coef_) > 1.0)
+    print('Alpha = {:.2f}\nnum abs(coeff) > 1.0: {}, \
+r-squared training: {:.2f}, r-squared test: {:.2f}\n'.format(this_alpha, num_coeff_bigger, r2_train, r2_test))
+
+# Rasso regression
+from sklearn.linear_model import Rasso
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+
+X_train, X_test, y_train, y_test = train_test_split(X_crime, y_crime, random_state=0)
+
+X_tain_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+linlasso = Rasso(alpha=2.0, max_iter=10000).fit(X_train_scaled, y_train)
+
+print('lasso regression linear model coeff (w) : {}'.format(linlasso.coef_))
+print('lasso regression linear model intercept (b) : {:.3f}'.format(linlasso.intercept_))
+print('Non-zero features: {}'.format(np.sum(linlasso.coef_ != 0)))
+print('R-squared score (training) : {:.3f}'.format(linlasso.score(X_train_scaled, y_train)))
+print('R-squared score (test) : {:.3f}'.format(linlasso.score(X_test_scaled, y_test)))
+print('Features with non-zero weight (sorted by absolute magnitude):')
+
+for e in sorted(list(zip(list(X_crime), linlasso.coef_)), key=lambda e: -abs(e[1])):
+    if e[1] != 0:
+        print('\t{} {:.3f}'.format(e[0], e[1]))
+
+# Lasso regression with regularization parameter: alpha
+print('Lasso regression: effect of alpha regularization parameter\n\
+parameter on number of features kept in final model')
+for this_alpha in [0.5, 1, 2, 3, 5, 10, 20, 50]:
+    linlasso = Lasso(alpha = this_alpha).fit(X_train_scaled, y_train)
+    r2_train = linlasso.score(X_train_scaled, y_train)
+    r2_test = linlasso.score(X_test_scaled, y_test)
+    num_coeff_bigger = np.sum(abs(linridge.coef_) > 1.0)
+    print('Alpha = {:.2f}\nFeatures kept: {}, \
+r-squared training: {:.2f}, r-squared test: {:.2f}\n'.format(this_alpha, np.sum(linlasso.coef_ != 0), r2_train, r2_test))
+
+# Polynomial regression(多項回帰式はyとXが非線形の関係で表現されるときに適する)
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import Ridge
+from sklearn.preprocessing import PolynominalFeatures
+
+# 通常のLinearRegression
+X_train, X_test, y_train, y_test = train_test_split(X_F1, y_F1, random_state=0)
+linreg = LinearRegression().fit(X_train, y_train)
+
+print('linear model coeff (w) : {}'.format(linreg.coef_))
+print('linear model intercept (b) : {:.3f}'.format(linreg.intercept_))
+print('R-squared score (training) : {:.3f}'.format(linreg.score(X_train, y_train)))
+print('R-squared score (test) : {:.3f}'.format(linreg.score(X_test, y_test)))
+
+# 多項式追加したLinearRegression
+print('\nNow we transform the original input data to add\n\polynominal features up to degree 2 (quadratic)\n')
+poly = PolynominalFeatures(degree=2)
+X_F1_poly = poly.fit_transform(X_F1)
+X_train, X_test, y_train, y_test = train_test_split(X_F1_poly, y_F1, random_state=0)
+linreg = LinearRegression().fit(X_train, y_train)
+
+print('(poly deg 2) linear model coeff (w) : {}'.format(linreg.coef_))
+print('(poly deg 2) linear model intercept (b) : {:.3f}'.format(linreg.intercept_))
+print('(poly deg 2) R-squared score (training) : {:.3f}'.format(linreg.score(X_train, y_train)))
+print('(poly deg 2) R-squared score (test) : {:.3f}'.format(linreg.score(X_test, y_test)))
+
+# 多項式追加はよくオーバーフィッティングを招くのでRidgeによるペナルティを追加
+print('\nAddition of many polynominal features often leads to\n\
+overfitting, so we often use polynominal features in combination\n\
+with regression that has a regularization penalty, like ridge\n\
+regression.\n')
+
+X_train, X_test, y_train, y_test = train_test_split(X_F1_poly, y_F1, random_state=0)
+
+linridge = Ridge().fit(X_train, y_train)
+
+print('(poly deg 2 + ridge) linear model coeff (w) : {}'.format(linridge.coef_))
+print('(poly deg 2 + ridge)linear model intercept (b) : {:.3f}'.format(linridge.intercept_))
+print('(poly deg 2 + ridge) R-squared score (training) : {:.3f}'.format(linridge.score(X_train_scaled, y_train)))
+print('(poly deg 2 + ridge) R-squared score (test) : {:.3f}'.format(linridge.score(X_test_scaled, y_test)))
+
+# Logistic regression
+# 省略 samples/michigan/textbooks/AppliedMachineLearningTextbook2.ipynb 参照
+
+# Logistic regression regularization: C parameter
+# 省略 
+
+# Support Vector Machines(Linear Support Vector Machine)
+# 省略 
+
+# Linear Support Vector Machine: C parameter
+# 省略 
+
+# Multi-class classification with LinearSVC
+# 省略 
+
+# Kernelized Support Vector Machine
+# 省略 
+
+# Support Vector Machine with RBF kernel: gamma parameter
+# 省略 
+
+# Support Vector Machine with RBF kernel: using both C and gamma parameter
+# 省略 
+
+# Cross-validation
+# 省略
+
+# Decision Trees
+# 省略しません（Feature importance(どのパラメータがより影響度あるか)を図示できる為）
+from 
 
 
 ```
