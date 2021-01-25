@@ -650,7 +650,7 @@ print('Accuracy of DT classifier on training set: {:.2f}'
      .format(clf.score(X_train, y_train)))
 print('Accuracy of DT classifier on test set: {:.2f}'
      .format(clf.score(X_test, y_test)))
-
+samples/michigan/textbooks/AppliedMachineLearningTextbook4.ipynb
 plt.figure(figsize=(10,6),dpi=80)
 plot_feature_importances(clf, cancer.feature_names)
 plt.tight_layout()
@@ -660,4 +660,9 @@ plt.show()
 
 ### Supervised Learning Part2
 ```
+# Naive Bayes
+# 省略 (samples/michigan/textbooks/AppliedMachineLearningTextbook4.ipynb 参照)
+
+# Random forests
+from sklearn.ensemble import RandomForestClassifier
 ```
