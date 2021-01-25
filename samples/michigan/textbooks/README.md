@@ -820,3 +820,5 @@ X_R1, y_R1 = make_regression(n_samples = 100, n_features=1,
 plt.scatter(X_R1, y_R1, marker= 'o', s=50)
 plt.show()
 ```
+
+### Applied Machine Learning Assignment 2 <データ・クリーニング>
