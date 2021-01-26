@@ -445,3 +445,11 @@ def date_sorter():
 
 df_sorted = date_sorter()
 ```
+### Assignment2 NLTK
+```
+# 省略 (samples/michigan/TextMiningAssignment2.ipynb 参照)
+```
+### Assignment3 実践(CountVectorizer or Tfidf and Naive Bayes or SVM or LogisticRegression)
+```
+# 省略 (samples/michigan/TextMiningAssignment3.ipynb 参照)
+```
