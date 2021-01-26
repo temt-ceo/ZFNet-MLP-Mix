@@ -231,4 +231,20 @@ saved_clf.score(X_test, y_test)
 # => 0.89604 # 感情予測としてはとても良い(ほぼ90%なのでとても良いと言える)精度が出ている。
 ```
 
+# ミシガン大学応用データサイエンス Text-Mining Summary
+### Working With Text
+```
+text1 = "Ethics are built right into the ideals and objectives of the United Nations "
+len(text1) # length of text1
+
+text2 = text1.split(' ')
+len(text2) # length of list of words
+
+# 特定のwordのみに絞る
+[w for w in text2 if len(w) > 3]
+
+[w for w in text2 if w.endswith('s')]
+
+
+```
 
