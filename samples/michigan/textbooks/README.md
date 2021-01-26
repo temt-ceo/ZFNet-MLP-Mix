@@ -1065,3 +1065,89 @@ plt.legend(loc='lower right', font_size=11)
 plt.axes().set_aspect('equal')
 plt.show()
 ```
+
+### Machine Learning Assignment 4 <実践>
+```
+# blight model
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import roc_curve, auc
+from sklearn.preprocessing import MinMaxScaler
+
+df = pd.read_csv('readonly/train.csv', encoding='ISO-8859-1')
+addresses = pd.read_csv('readonly/addresses.csv', encoding='ISO-8859-1')
+latlons = pd.read_csv('readonly/latlons.csv', encoding='ISO-8859-1')
+evel_df = pd.read_csv('readonly/test.csv', encoding='ISO-8859-1')
+
+df = df.merge(addresses,on='ticket_id', how='left')
+
+df = df.merge(latlons, on='address', how='left')
+#
+#  TRAIN対象のカラムを導き出す
+#
+# test時にはまだ分からないカラムをdfから除外(但し学習のtargetは含める)
+# inspector_nameを除外（人名は年月とともに変わるし、経験等、不確定要素もある為）
+# すでにlatとlonがある為、violation_zip_codeを除外。
+# 郵送先住所のcityを除外（種類が多すぎる為）
+# hearing_dateを除外（日付を含めるには、必要な情報に整形するのに時間がかかりすぎる為）
+# violation_codeを除外（情報が整理されておらず、種類が多すぎる為）
+study_columns = ['lat', 'lon', 'agency_name', 'state', 'country', 'disposition', 'fine_amount', 'discount_amount', 'clean_up_cost', 'judgment_amount', 'compliance']
+df = df[study_columns]
+
+print(df.dtypes)
+print(df['compliance']).unique())
+for col in study_columns:
+    if df[col] != 'float64':
+        print(df[col].unique)
+        print(eval_df[col].unique)
+
+def preprocess(df, stage):
+    if stage == 'train':
+        # floatではないtarget値をNaNに変換し除外する
+        df['compliance'] = pd.to_numeric(df['compliance'], errors='coerce')
+        #df = df.copy() # To deal with SettingWithCopyWarning, Make a copy of the subset and modify that copy.
+        df = df.dropna(subset=['compliance'])
+        
+    # floatでないlat, lon値をNaNに変換し、穴埋めする
+    latlon = ['lat', 'lon']
+    df[latlon] = df[latlon].apply(pd.to_numeric, errors='coerce')
+    df.fillna(0, inplace=True)
+    
+    # Normalization
+    continuous = ['lat', 'lon', 'fine_amount', 'discount_amount', 'clean_up_cost', 'judgment_amount']
+    
+    # Convert to Bins
+    categorical = ['agency_name','state','country','disposition']
+    
+    for columns in categorical:
+        one_hot = pd.get_dummies(df[column], prefix=column[0:2])
+        df = df.drop(column, axis=1)
+        df = df.join(one_hot)
+    return df
+
+train_df = preprocess(df, stage = 'train')
+X_train = train_df.drop('compliance', axis=1)
+y_train = train_df['compliance']
+
+eval_df = eval_df.merge(addresses, on='ticket_id', how='left')
+eval_df = eval_df.merge(latlons, on='address', how='left')
+X_eval = preprocess(eval_df[study_columns[0:-1]], stage = eval')
+
+# trainとevalのカラム数を合わせる
+X_train, X_eval = X_train.align(X_eval, join='left', axis=1)
+print(X_train.shape[1] == X_eval.shape[1])
+
+model = RandomForestClassifier().fit(X_train, y_train)
+
+X_eval.fillna(0, inplace=True)
+predictions = model.predict_proba(X_eval)
+
+answer = pd>DataFrame(predictions, index=eval_df['ticket_id'], columns=[model.classes_[0], 'compliance'])
+answer = answer['compliance'] # Seriesに変換
+
+# 予測したclasses_を確認
+print(model.classes_)
+# 返却するSeriesが61001件であることを確認
+print(answer.shape)
+```
