@@ -76,3 +76,8 @@ def create_model():
 
 
 ```
+## Evaluate and Deploy
+```
+epochs = 15
+steps_per_epoch
+```
