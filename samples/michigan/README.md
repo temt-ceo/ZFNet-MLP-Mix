@@ -378,6 +378,70 @@ df['text'].str.extract(r'(\d?\d):(\d\d)')
 df['text'].str.extractall(r'((\d?\d):(\d\d) ?([ap]m))') # 0:全体のtime, 1:hour, 2:minuts, 3:am/pmをマッチしただけ抽出する
 
 ```
-### Working with Text in pandas
+### Assignment1 (全く整理されていないテキストから日付を抽出)
 ```
+def date_sorter():
+    
+    # Your code here
+    
+    def func_agg_various_ymd_str(df):
+#         print(df['all'])
+        # 英語表記Month (これが一番日時として判別しやすい)
+        if not pd.isnull(df['word_ymd']):
+            mConverter = {'Jan': '1', 'Feb': '2', 'Mar': '3', 'Apr': '4', 'May': '5', 'Jun': '6', 'Jul': '7', 'Aug': '8', 'Sep': '9', 'Oct': '10', 'Nov': '11', 'Dec': '12'}
+            
+            if not pd.isnull(df['wdpre']):                      # 20 Mar 2009; 20 March 2009; 20 Mar. 2009; 20 March, 2009のタイプ
+                return  mConverter[str(df['wm'])[0:3]] + '/'+ df['wdpre'] + '/' +df['wy']
+            
+            elif not pd.isnull(df['wdpost']):                 # Mar 20th, 2009; Mar 21st, 2009; Mar 22nd, 2009, Mar-20-2009; Mar 20, 2009; March 20, 2009; Mar. 20, 2009; Mar 20 2009;のタイプ
+                return mConverter[str(df['wm'])[0:3]]  + '/' + str(int(df['wdpost'].replace('.', ''))) + '/' + df['wy'] # "."は整数変換できないので除去する
+            
+            else:                                                              # Feb 2009; Sep 2009; Oct 2010のタイプ
+                return mConverter[str(df['wm'])[0:3]] + '/1/' + df['wy']                
+        # ベーシックスタイル１
+        elif not pd.isnull(df['basic_ymd_1']):
+            if pd.isnull(df['bfdy']):
+                return df['bm_1'].replace('-', '/') + df['bd'].replace('-', '/') + '19' + df['btdy'] # btdy: basic two digit yearの略
+            else:
+                return df['basic_ymd_1'].replace('-', '/') # dd-mm-yyyyをdd/mm/yyyyに変換する
+        # ベーシックスタイル2
+        elif not pd.isnull(df['basic_ymd_2']):
+            return df['bm_2'].replace('-', '/') + '1/' + df['by']                
+        # 年のみ
+        elif not pd.isnull(df['year_only']) and int(df['year_only']) > 1900:
+                return '1/1/'  + df['year_only']
+        # 例外
+        else:
+            print('...Something wrong!...', df)
+            return ''
+
+    # 【1】様々な表記を抽出する。
+    # 1. ベーシックスタイル。 "Series.str" can be used to access the values of the series as strings and apply several methods to it.
+    df1_1 = df.str.extract(r'(?P<basic_ymd_1>(?P<bm_1>\d{1,2}[/-])(?P<bd>\d{1,2}[/-])(?P<btdy>\d{2})(?P<bfdy>\d{2})?)')
+    df1_2 = df.str.extract(r'(?P<basic_ymd_2>(?P<bm_2>\d{1,2}[/-])(?P<by>\d{4}))') # dd-ddは年月で無いので含めないように分けた
+
+    # 2. 英語表記Month
+    df2  = df.str.extract(r'(?P<word_ymd>(?P<wdpre>\d{1,2})?.?(?P<wm>(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*)(?P<wdpost>\W{0,2}\d{1,2}\w{0,2})?.{1,2}(?P<wy>\d{4}))')
+
+    # 3. 年のみ
+    df3 = df.str.extract(r'(?P<year_only>\d{4})')
+
+    # 【2】様々な表記を１つのカラムに集約する
+    df_extracted = pd.concat([df1_1, df1_2, df2, df3], axis=1)
+    df_extracted['all'] = df.values
+    df_extracted['answer_ymd'] = df_extracted.agg(func_agg_various_ymd_str, axis='columns')
+
+    # デバッグ用に調整
+#     print(df_extracted.columns)
+    df_extracted = df_extracted[['answer_ymd', 'word_ymd', 'year_only']]
+        
+    # 【3】年月日でソート
+    df_extracted['ymd_datetype'] = pd.to_datetime(df_extracted['answer_ymd'], format='%m/%d/%Y')
+    df_sorted = df_extracted.sort_values(by='ymd_datetype')
+    print(df_sorted)
+    print(df_sorted.index)
+
+    return df_sorted.index # Your answer here
+
+df_sorted = date_sorter()
 ```
