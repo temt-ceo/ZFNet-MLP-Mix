@@ -347,3 +347,37 @@ print('Largest Coefs:\n{}'.format(feature_names[sorted_coef_index[:-11:-1]]))
 print(model.predict(vect.transform(['not an issue, phone is working', 'an issue, phone is not working'])))
 #-> [1 0]
 ```
+
+### Working with Text in pandas
+```
+import pandas as pd
+time_sentences = ["Monday: The doctor's appointment is at 2:45pm.", 
+                  "Tuesday: The dentist's appointment is at 11:30 am.",
+                  "Wednesday: At 7:00pm, there is a basketball game!",
+                  "Thursday: Be back home by 11:15 pm at the latest.",
+                  "Friday: Take the train at 08:10 am, arrive at 09:00am."]
+df = pd.DataFrame(time_sentences, columns=['text'])
+df
+
+df['text'].str.len() # それぞれの文の長さ
+df['text'].str.split().str.len() # それぞれの文の単語数
+
+# データフレームの中で特定の言葉を含むかどうか全行調査
+df['text'].str.contains('appointment')
+# データフレームの中で数字を何回生じるか全行調査
+df['text'].str().count(r'\d')
+# データフレームの中で全行で数字を抽出
+df['text'].str.findall(r'\d')
+df['text'].str.findall(r'(\d?\d):(\d\d)') # 時間:分
+# 置換(曜日を全て???や省略形にする)
+df['text'].str.replace(r'\w+day\b', '???')
+df['text'].str.replace(r'\w+day\b', lambda x: x.groups()[0][:3])
+
+# マッチしたものを抽出し新しいカラム(0,1)を作って格納する
+df['text'].str.extract(r'(\d?\d):(\d\d)')
+df['text'].str.extractall(r'((\d?\d):(\d\d) ?([ap]m))') # 0:全体のtime, 1:hour, 2:minuts, 3:am/pmをマッチしただけ抽出する
+
+```
+### Working with Text in pandas
+```
+```
