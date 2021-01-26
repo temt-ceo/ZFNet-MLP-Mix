@@ -242,9 +242,18 @@ len(text2) # length of list of words
 
 # 特定のwordのみに絞る
 [w for w in text2 if len(w) > 3]
-
 [w for w in text2 if w.endswith('s')]
 
+# set()を使いuniqueな単語を抽出
+len(set(text2))
+set(text2)
+len(set([w.lower() for w in text2]))
 
+# regular expression
+import re
+[w for w in text2 if re.search('@[A-Za-z0-9_]+', w)] #@から始まるすべての語
 ```
 
+### Working With Text
+```
+```
