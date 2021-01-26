@@ -451,5 +451,21 @@ df_sorted = date_sorter()
 ```
 ### Assignment3 実践(CountVectorizer or Tfidf and Naive Bayes or SVM or LogisticRegression)
 ```
+function1
+function2 (CountVectorizerを使う)
+function3 (Naive Bayesを使う)
+function4 (TfidfVectorizerを使う)
+function5
+function6
+function7 (SVMを使う)
+function8
+function9 (LogisticRegressionを使う)
+function10
+function11
+
 # 省略 (samples/michigan/TextMiningAssignment3.ipynb 参照)
+```
+### Assignment4 Document Similarity(NLTKを使う)
+```
+# 省略 (samples/michigan/TextMiningAssignment4.ipynb 参照)
 ```
