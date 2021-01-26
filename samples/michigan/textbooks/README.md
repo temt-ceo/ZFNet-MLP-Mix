@@ -991,3 +991,77 @@ return top5_features
 # function6 (SVCを使う)
 # 省略 (samples/michigan/AppliedMachineLearningAssignment2.ipynb 参照)
 ```
+
+### Machine Learning Assignment 3 <評価>
+```
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+df = pd.read_csv('fraud_data.csv')
+X = df.iloc[:,:-1]
+y = df.iloc[:, -1]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
+
+# function1 y=1の割合を求む
+df_fraud = df[df['Class'] == 1]
+return len(df_fraud) / len(df)
+
+# function2 dummy classifierをtrainして精度を求める
+from sklearn.dummy import DummyClassifier
+from sklearn.metrics import recall_score
+
+d_majority = DummyClassifier(strategy='most_frequent').fix(X_train, y_train)
+predicted = d_majority.predict(X_test)
+
+acc = d_majority.score(X_test, y_test)
+recall = recall_score(y_test, predicted)
+
+return acc, recall
+
+# function3 (SVCを使う)
+# function4 ( 〃 )
+# 省略 (samples/michigan/AppliedMachineLearningAssignment3.ipynb 参照)
+
+# function5 LogisticRegressionを使いRPC CurveとPrecision-Recall curveを求める
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import precision_recall_curve
+from sklearn.metrics import roc_curve, auc
+import matplotlib.pyplot as plt
+
+# デフォルトのパラメータで行う
+model = LogisticRegression().fit(X_train, y_train)
+y_predicted = model.decision_function(X_test)
+#y_predicted = model.predict(X_test)
+
+precision, recall, threshold = precision_recall_curve(y_test, y_predicted)
+closest_zero = np.argmin(np.abs(threshold))
+closest_zero_p = precision[closest_zero]
+closest_zero_r = recall[closest_zero]
+
+# Precision-Recall curve
+plt.figure()
+plt.xlim([0.0, 1.01])
+plt.ylim([0.0, 1.01])
+plt.plot(precision, recall, lw=3)
+plt.xlabel('Precision', fontsize=16)
+plt.ylabel('Recall', fontsize=16)
+plt.title('Precision-Recall curve', fontsize=16)
+plt.axes().set_aspect('equal')
+plt.show()
+
+# ROC curve
+fpr, tpr, _ = roc_curve(y_test, y_predicted)
+roc_auc = auc(fpr, tpr)
+plt.figure()
+plt.xlim([0.0, 1.01])
+plt.ylim([0.0, 1.01])
+plt.plot(fpr, tpr, lw=3, label=' (area = {:0.2f}'.format(roc_auc))
+plt.xlabel('False Positive Rate', fontsize=16)
+plt.ylabel('True Positive Rate', fontsize=16)
+plt.title('ROC Curve', fontsize=16)
+plt.legend(loc='lower right', font_size=11)
+plt.axes().set_aspect('equal')
+plt.show()
+```
