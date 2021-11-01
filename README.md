@@ -2,7 +2,9 @@
 ZFNet-MLP Mix ML Project<br>
 <br>
 This Homepage is organized for the purpose of aggregating the results of Kaggle Research. Each portfolios of AI research can be seen in following link.<br>
-<br><br>
+<br>
+#### LinkedIn Web Page:　https://jp.linkedin.com/in/tahara-takashi-em-technology
+<br>
 ### AI research portfolios
 <br>
 
